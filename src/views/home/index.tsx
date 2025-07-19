@@ -1,13 +1,9 @@
-import * as React from "react"
-import { OpenInV0Button } from "@/components/open-in-v0-button"
-import { HelloWorld } from "@/registry/new-york/hello-world/hello-world"
-import { ExampleForm } from "@/registry/new-york/example-form/example-form"
-import PokemonPage from "@/registry/new-york/complex-component/page"
+import { OpenInV0Button } from "@/components/open-in-v0-button";
+import { PokemonPage } from "@/registry/new-york/complex-component/page";
+import { ExampleForm } from "@/registry/new-york/example-form/example-form";
+import { HelloWorld } from "@/registry/new-york/hello-world/hello-world";
 
-// This page displays items from the custom registry.
-// You are free to implement this with your own design as needed.
-
-export default function Home() {
+export const ViewHome = () => {
   return (
     <div className="max-w-3xl mx-auto flex flex-col min-h-svh px-4 py-8 gap-8">
       <header className="flex flex-col gap-1">
@@ -54,5 +50,5 @@ export default function Home() {
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
