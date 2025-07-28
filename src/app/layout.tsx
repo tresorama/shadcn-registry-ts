@@ -4,6 +4,7 @@ import "./tailwind.css";
 
 import { ds } from "@/lib/ds";
 import { GlobalNextServerDataProvider } from "@/components/views/global-next-server-data/server-component";
+import { RootWithSidebar } from "@/components/views/root-with-sidebar/server-component/root";
 
 // seo metadata
 
@@ -30,7 +31,9 @@ export default function RootLayout({
       >
         <GlobalNextServerDataProvider>
           <ThemeProvider attribute="class">
-            {children}
+            <RootWithSidebar>
+              {children}
+            </RootWithSidebar>
           </ThemeProvider>
         </GlobalNextServerDataProvider>
       </body>
