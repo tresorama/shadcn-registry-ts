@@ -9,6 +9,9 @@ import { generateStaticSidebarData, type StaticSidebarData } from '#root/registr
 
 const getData = {
   registryForNext: async () => {
+    if (APP_DATA_MODE === 'compute') {
+      return await generateStaticRegistryForNext();
+    }
     if (APP_DATA_MODE === 'static') {
       // NOTE: 
       // Webpack/Turbopack, before the build process, statically anaylze every import, also dynamic `import()`, and :
@@ -19,12 +22,12 @@ const getData = {
       const path = '#root/registry/output/' + 'static-registry.for-next-app.json';
       return await import(path).then((m) => m.default as RegistryForNext);
     }
-    if (APP_DATA_MODE === 'compute') {
-      return await generateStaticRegistryForNext();
-    }
     throw new Error(`Invalid APP_DATA_MODE: ${APP_DATA_MODE}`);
   },
   sidebarData: async () => {
+    if (APP_DATA_MODE === 'compute') {
+      return await generateStaticSidebarData();
+    }
     if (APP_DATA_MODE === 'static') {
       // NOTE: 
       // Webpack/Turbopack, before the build process, statically anaylze every import, also dynamic `import()`, and :
@@ -34,9 +37,6 @@ const getData = {
       // So we "fake" the path to be dynamic splitting the string in two part (forcing resolution at build time).
       const path = '#root/registry/output/' + 'static-sidebar-data.json';
       return await import(path).then((m) => m.default as StaticSidebarData);
-    }
-    if (APP_DATA_MODE === 'compute') {
-      return await generateStaticSidebarData();
     }
     throw new Error(`Invalid APP_DATA_MODE: ${APP_DATA_MODE}`);
   },
