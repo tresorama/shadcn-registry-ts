@@ -76,7 +76,7 @@
   --sidebar: hsl(240 5.9% 10%);
 }
 
-/* Tailwind Config */
+/* Shadcn Tailwind Config */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -127,6 +127,8 @@
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
 }
+
+/* Tailwind v4 base */
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
