@@ -1,8 +1,7 @@
 import { LinkWithIconExternal } from "@/components/mine/link-with-icon-external";
 
-// TODO: update link
 const LINKS = {
-  githubRepo: "https://github.com/tresorama/tresorama-ts-utils",
+  githubRepo: "https://github.com/tresorama/shadcn-registry-ts",
 };
 
 export const SidebarFooterContent = () => {
