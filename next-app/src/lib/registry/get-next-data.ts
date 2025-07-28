@@ -10,10 +10,14 @@ import { generateStaticSidebarData, type StaticSidebarData } from '#root/registr
 const getData = {
   registryForNext: async () => {
     if (APP_DATA_MODE === 'static') {
-      return await import(
-        /* webpackIgnore: true */
-        '#root/registry/output/static-registry.for-next-app.json'
-      ).then((m) => m.default as RegistryForNext);
+      // NOTE: 
+      // Webpack/Turbopack, before the build process, statically anaylze every import, also dynamic `import()`, and :
+      // - IF THE PATH IS A SINGLE STRING, like `'path/to/file'`, it check if file exists
+      //   This lead to the error: "Cannot find module '#root/registry/output/static-registry.for-next-app.json'" if the file is not present.
+      // - IF THE PATH IS A CONCAT STRING, like `'path/to' + 'file'`, it skips the check
+      // So we "fake" the path to be dynamic splitting the string in two part (forcing resolution at build time).
+      const path = '#root/registry/output/' + 'static-registry.for-next-app.json';
+      return await import(path).then((m) => m.default as RegistryForNext);
     }
     if (APP_DATA_MODE === 'compute') {
       return await generateStaticRegistryForNext();
@@ -22,10 +26,14 @@ const getData = {
   },
   sidebarData: async () => {
     if (APP_DATA_MODE === 'static') {
-      return await import(
-        /* webpackIgnore: true */
-        '#root/registry/output/static-sidebar-data.json'
-      ).then((m) => m.default as StaticSidebarData);
+      // NOTE: 
+      // Webpack/Turbopack, before the build process, statically anaylze every import, also dynamic `import()`, and :
+      // - IF THE PATH IS A SINGLE STRING, like `'path/to/file'`, it check if file exists
+      //   This lead to the error: "Cannot find module '#root/registry/output/static-sidebar-data.json'" if the file is not present.
+      // - IF THE PATH IS A CONCAT STRING, like `'path/to' + 'file'`, it skips the check
+      // So we "fake" the path to be dynamic splitting the string in two part (forcing resolution at build time).
+      const path = '#root/registry/output/' + 'static-sidebar-data.json';
+      return await import(path).then((m) => m.default as StaticSidebarData);
     }
     if (APP_DATA_MODE === 'compute') {
       return await generateStaticSidebarData();
