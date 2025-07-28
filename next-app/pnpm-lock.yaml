@@ -23,6 +23,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.7
         version: 1.2.7(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@sefinek/random-emoji':
+        specifier: ^2.1.0
+        version: 2.1.0
       '@shikijs/rehype':
         specifier: ^3.8.1
         version: 3.8.1
@@ -108,9 +111,6 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.3.1
-      '@sefinek/random-emoji':
-        specifier: ^2.1.0
-        version: 2.1.0
       '@tailwindcss/postcss':
         specifier: ^4.1.11
         version: 4.1.11
