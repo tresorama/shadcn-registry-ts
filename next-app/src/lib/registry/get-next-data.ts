@@ -10,7 +10,10 @@ import { generateStaticSidebarData, type StaticSidebarData } from '#root/registr
 const getData = {
   registryForNext: async () => {
     if (APP_DATA_MODE === 'static') {
-      return await import('#root/registry/output/static-registry.for-next-app.json').then((m) => m.default as RegistryForNext);
+      return await import(
+        /* webpackIgnore: true */
+        '#root/registry/output/static-registry.for-next-app.json'
+      ).then((m) => m.default as RegistryForNext);
     }
     if (APP_DATA_MODE === 'compute') {
       return await generateStaticRegistryForNext();
@@ -19,7 +22,10 @@ const getData = {
   },
   sidebarData: async () => {
     if (APP_DATA_MODE === 'static') {
-      return await import('#root/registry/output/static-sidebar-data.json').then((m) => m.default as StaticSidebarData);
+      return await import(
+        /* webpackIgnore: true */
+        '#root/registry/output/static-sidebar-data.json'
+      ).then((m) => m.default as StaticSidebarData);
     }
     if (APP_DATA_MODE === 'compute') {
       return await generateStaticSidebarData();
