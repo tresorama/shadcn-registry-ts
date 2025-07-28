@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import "./tailwind.css";
 
 import { ds } from "@/lib/ds";
@@ -19,12 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      // NOTE: suppressHydrationWarning is required for next-themes
+      suppressHydrationWarning
+    >
       <body
         className={`${ds.bodyClassName} antialiased`}
       >
         <GlobalNextServerDataProvider>
-          {children}
+          <ThemeProvider attribute="class">
+            {children}
+          </ThemeProvider>
         </GlobalNextServerDataProvider>
       </body>
     </html>
