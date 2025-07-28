@@ -1,6 +1,10 @@
 import {
-  generateStaticRegistryForShadcnCli
+  generateStaticRegistryForShadcnCli,
+  generateStaticRegistryForNext
 } from "./generate.static-registry-derivates";
+import {
+  generateStaticSidebarData
+} from "./generate.static-sidebar-data";
 
 (async () => {
   try {
@@ -18,4 +22,7 @@ import {
 
 async function run() {
   await generateStaticRegistryForShadcnCli();
+  await generateStaticRegistryForNext();
+
+  await generateStaticSidebarData();
 }
