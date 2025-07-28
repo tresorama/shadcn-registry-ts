@@ -1,6 +1,8 @@
 import Link from "next/link";
 // import { BoxIcon } from "lucide-react";
 
+import { SearchHint } from "@/components/views/command-palette/client-component/search-hint";
+
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -28,6 +30,9 @@ export const SidebarHeaderContent = () => {
         <ModeToggle />
         <SidebarTrigger />
       </SidebarMenu>
+      <div className="px-1 pb-2">
+        <SearchHint />
+      </div>
     </>
   );
 };

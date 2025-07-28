@@ -3,6 +3,8 @@
 import { Fragment } from "react";
 import Link from "next/link";
 
+import { SearchHint } from "@/components/views/command-palette/client-component/search-hint";
+
 import { useSidebarNavData } from "./use-sidebar-nav-data";
 
 import { useSidebar, SidebarTrigger } from "@/components/shadcn/ui/sidebar";
@@ -20,6 +22,9 @@ export const SidebarInsetHeader = () => {
     <div className="h-16 w-full px-4 flex items-center gap-4 bg-sidebar border-b">
       <SidebarToggler />
       <PageBreadcrumb />
+      <div className="ml-auto">
+        <SearchHint />
+      </div>
     </div>
   );
 };
