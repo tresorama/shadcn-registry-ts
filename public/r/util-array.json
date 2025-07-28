@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "util-array",
+  "type": "registry:file",
+  "title": "Array",
+  "description": "Utilities for working with arrays.",
+  "files": [
+    {
+      "path": "registry/input/items/utility/array.ts",
+      "content": "export const getLastArrayItem = <T>(array: T[]) => array[array.length - 1];\n",
+      "type": "registry:file",
+      "target": "utils/array.ts"
+    }
+  ],
+  "categories": [
+    "utility"
+  ]
+}

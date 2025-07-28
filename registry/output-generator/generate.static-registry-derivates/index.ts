@@ -1,0 +1,3 @@
+export {
+  generateStaticRegistryForShadcnCli,
+} from './generate';

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "util-db-mock",
+  "type": "registry:file",
+  "title": "DB Mock",
+  "description": "Simple in memory sync db, for mock or playground only. Do not use in production.",
+  "files": [
+    {
+      "path": "registry/input/items/utility/db-mock.ts",
+      "content": "export const repeat = (times: number) => new Array(times).fill('');\n\ntype BaseDbRecord = {\n  id: number;\n};\n\nexport type DbRecord<Extended extends { [key: string]: unknown; }> = BaseDbRecord & Extended;\n\n/**\n * DB Table creator, for a in memory DB.\n * NOTE: USE THIS ONLY FOR PLAYGROUND DB, NOT IN REAL APP\n */\nexport const createDbTable = <\n  SelectItem extends BaseDbRecord,\n  InsertItem = Omit<SelectItem, 'id'>,\n  UpdateItem = Partial<Omit<SelectItem, 'id'>>\n>(initialRecords: SelectItem[]) => {\n\n  let items: SelectItem[] = [...initialRecords];\n\n  const generateId = () => items.length + 1;\n\n  return {\n    getAll: () => items,\n    getById: (id: number) => items.find(item => item.id === id),\n    create: (item: InsertItem) => {\n      const id = generateId();\n      // @ts-expect-error ts don't allow unknown properties\n      const newItem: SelectItem = {\n        id,\n        ...item\n      };\n\n      const newItems = [...items, newItem];\n      items = newItems;\n\n      return newItem;\n    },\n    update: (id: number, item: UpdateItem) => {\n      const index = items.findIndex(item => item.id === id);\n      if (index === -1) {\n        throw new Error('Item not found');\n      }\n\n      const newItems = [...items];\n      newItems[index] = { ...newItems[index], ...item };\n      items = newItems;\n\n      return newItems[index];\n    },\n    delete: (id: number) => {\n      const index = items.findIndex(item => item.id === id);\n      if (index === -1) {\n        throw new Error('Item not found');\n      }\n\n      const newItems = [...items];\n      const deletedItems = newItems.splice(index, 1);\n      items = newItems;\n\n      return deletedItems[0];\n    }\n  };\n};\n",
+      "type": "registry:file",
+      "target": "utils/db-mock.ts"
+    }
+  ],
+  "categories": [
+    "utility"
+  ]
+}

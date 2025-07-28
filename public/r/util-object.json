@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "util-object",
+  "type": "registry:file",
+  "title": "Object Utils",
+  "description": "Utilities for working with objects, like pick and omit.",
+  "files": [
+    {
+      "path": "registry/input/items/utility/object.ts",
+      "content": "\n\n/**\n * Omit keys from an object\n * \n * @example\n * const item = {\n *   id: 56,\n *   name: 'Luke',\n * }\n * const output = omit(item, ['id'])\n * // { name: 'Luke' }\n */\nexport const omit = <\n  Obj extends Record<string, any>,\n  KeysToOmit extends Array<keyof Obj>,\n  Output extends Omit<Obj, KeysToOmit[number]>\n>(\n  obj: Obj,\n  keysToOmit: KeysToOmit,\n) => {\n  const output = { ...obj };\n  keysToOmit.forEach(key => {\n    delete output[key];\n  });\n  return output as unknown as Output;\n};\n\n\n/**\n * Pick keys of an object\n * \n * @example\n * const item = {\n *   id: 56,\n *   name: 'Luke',\n * }\n * const output = pick(item, ['id'])\n * // { id: 56 }\n */\nexport const pick = <\n  Obj extends Record<string, any>,\n  KeysToPick extends Array<keyof Obj>,\n  Output extends Pick<Obj, KeysToPick[number]>\n>(\n  obj: Obj,\n  keysToPick: KeysToPick,\n) => {\n  const output = {};\n  keysToPick.forEach(key => {\n    // @ts-expect-error key is not in obj\n    output[key] = obj[key];\n  });\n  return output as Output;\n};",
+      "type": "registry:file",
+      "target": "utils/object.ts"
+    }
+  ],
+  "categories": [
+    "utility"
+  ]
+}
