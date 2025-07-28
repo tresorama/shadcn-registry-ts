@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "util-promise",
+  "type": "registry:file",
+  "title": "Promise Utils",
+  "description": "Utilities for working with promises.",
+  "registryDependencies": [
+    "http://localhost:3000/r/util-sleep.json"
+  ],
+  "files": [
+    {
+      "path": "registry/input/items/utility/promise.ts",
+      "content": "import { sleep } from \"./sleep\";\n\n/**\n * A promise that can randomly:\n * - return `true` (simulate success)\n * - throw an error (simulate failure)\n * Use this to test code that must handle promise success/failure reliably.\n */\nexport const fakePromiseThatCanRandomlyThrow = () => {\n  return new Promise<true>(async (resolve, reject) => {\n    await sleep(1000);\n    const mustThrow = Math.random() > 0.5;\n    if (!mustThrow) return resolve(true);\n    reject(new Error('Fake error'));\n  });\n};\n",
+      "type": "registry:file",
+      "target": "utils/promise.ts"
+    }
+  ],
+  "categories": [
+    "utility"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "util-try-catch-async",
+  "type": "registry:file",
+  "title": "Try Catch Async",
+  "description": "Utility for handling async functions, and forcing you to handle error cases.",
+  "files": [
+    {
+      "path": "registry/input/items/utility/try-catch-async.ts",
+      "content": "\ntype Result<T> = {\n  status: 'success';\n  data: T;\n} | {\n  status: 'error';\n  error: unknown;\n};\n\nexport const tryCatchAsync = async <T>(fn: () => Promise<T>): Promise<Result<T>> => {\n  try {\n    const data = await fn();\n    return { status: 'success', data } as const;\n  } catch (error) {\n    return { status: 'error', error } as const;\n  }\n};\n\n",
+      "type": "registry:file",
+      "target": "utils/try-catch-async.ts"
+    }
+  ],
+  "categories": [
+    "utility"
+  ]
+}

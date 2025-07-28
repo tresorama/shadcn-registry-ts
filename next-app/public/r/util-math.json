@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "util-math",
+  "type": "registry:file",
+  "title": "Math",
+  "description": "Math utilities like lerp, clamp, etc.",
+  "files": [
+    {
+      "path": "registry/input/items/utility/math.ts",
+      "content": "/**\n * Clamp function, constraints a value to be in a range.\n * Outliers will be clamped to the relevant extreme of the range.\n * @param min Minimin possibile value.\n * @param max Maximinum possible value.\n * @param value Value you want to clamp\n */\nexport function clamp({ min, max, value }: { min: number, max: number, value: number; }) {\n  if (value < min) return min;\n  if (value > max) return max;\n  return value;\n}\n\n/**\n * Lerp function, used to get a value in range based on a percentage.\n * Outliers will be clamped.\n * @param a Lower part of the a-b range. Minumum value passibile.\n * @param b Upper part of the a-b range. Maximum value possible.\n * @param t Number, decimal, from 0.0 to 1.0, which rapresent where value lives between a-b range.\n */\nexport function lerp({ min, max, t }: { min: number, max: number, t: number; }) {\n  const value = (max - min) * t + min;\n  return clamp({ min, max, value });\n}\n/**\n * Lerp Inversed function, used to get the percentage of a value in a range.\n * Outliers will be clamped.\n * @param a Lower part of the a-b range. Minumum value passibile.\n * @param b Upper part of the a-b range. Maximum value possible.\n * @param value Number that must be in range a-b, rapresent the value that you want to know where it sits in a-b range.\n */\nexport function lerpInverse({ min, max, value }: { min: number, max: number, value: number; }): number {\n  const t = (value - min) / (max - min);\n  return clamp({ min: 0, max: 1, value: t });\n}\n\n\n/**\n * Sum function. Accept array of numbers and return the sum.\n * @param nums Array of numbers\n */\nexport const sum = (nums: number[]): number => {\n  return nums.reduce((acc, num) => acc + num, 0);\n};\n\n/**\n * Mean function. Accept array of numbers and return the mean.\n * @param nums Array of numbers\n */\nexport function mean(nums: number[]): number {\n  return sum(nums) / nums.length;\n}\n\n\n/**\n * Wrap value in range [min, max].\n * If value is greater than max, min is returned.  \n * If value is lower than min, max is returned.\n * If value is in between min and max, value is returned.\n * @param min Lower part of the range.\n * @param max Upper part of the range.\n * @param value Value to wrap.\n */\nexport function wrap({ min, max, value }: { min: number, max: number, value: number; }) {\n  if (value < min) return max;\n  if (value > max) return min;\n  return value;\n}\n\n\n",
+      "type": "registry:file",
+      "target": "utils/math.ts"
+    }
+  ],
+  "categories": [
+    "utility"
+  ]
+}

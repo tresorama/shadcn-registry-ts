@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "util-random",
+  "type": "registry:file",
+  "title": "Random",
+  "description": "Random utilities like getRandomString, etc.",
+  "registryDependencies": [
+    "http://localhost:3000/r/util-math.json"
+  ],
+  "files": [
+    {
+      "path": "registry/input/items/utility/random.ts",
+      "content": "import { lerp, clamp } from './math';\n\nexport const getRandomInteger = (min: number, max: number) => {\n  const value = lerp({ min, max, t: Math.random() });\n  return clamp({ min, max, value: Math.round(value) });\n};\n\nexport const getRandomArrayItem = <T>(array: T[]): T => {\n  const index = getRandomInteger(0, array.length - 1);\n  return array[index];\n};\n\n\nexport const getRandomColor = ({\n  h,\n  s,\n  l,\n}: {\n  h?: number,\n  s?: number,\n  l?: number,\n} = {}) => {\n  const _h = h ?? getRandomInteger(0, 360);\n  const _s = s ?? getRandomInteger(0, 100);\n  const _l = l ?? getRandomInteger(0, 100);\n  return {\n    h: _h,\n    s: _s,\n    l: _l,\n    hsl: `hsl(${_h} ${_s}% ${_l}%)`,\n  };\n};\n\nexport const getRandomString = () => {\n  return `${new Date().valueOf()}-${Number(Math.random() * 100000).toFixed(0)}`;\n};\ngetRandomString(); // 1642345678-12345\n\nexport const getRandomString2 = () => Math.random().toString(36).substring(3, 8);\n\n\n\nexport const getRandomImage = (options?: {\n  w?: number,\n  h?: number,\n}) => {\n\n  const {\n    w = 900,\n    h = 700,\n  } = options ?? {};\n\n  // https://picsum.photos/200/300?random=234\n  const url = new URL(`https://picsum.photos/${w}/${h}`);\n  url.searchParams.append('random', getRandomInteger(0, 1000).toString());\n\n  return url.toString();\n};\n\nexport const getRandomDateInRange = (start: Date, end: Date) => {\n  const DAY_IN_MS = 1000 * 60 * 60 * 24;\n  const differenceBetweenStartAndEnd_inMs = end.getTime() - start.getTime();\n  const differenceBetweenStartAndEnd_inDays = differenceBetweenStartAndEnd_inMs / DAY_IN_MS;\n  const randomNumberOfDays = getRandomInteger(0, differenceBetweenStartAndEnd_inDays);\n  const randomNumberOfDays_inMs = randomNumberOfDays * DAY_IN_MS;\n  const randomDate = new Date(start.getTime() + randomNumberOfDays_inMs);\n  return randomDate;\n};\n",
+      "type": "registry:file",
+      "target": "utils/random.ts"
+    }
+  ],
+  "categories": [
+    "utility"
+  ]
+}
