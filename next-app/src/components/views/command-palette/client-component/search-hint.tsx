@@ -18,7 +18,7 @@ export const SearchHint = () => {
   return (
     <div
       onClick={() => setIsCommandPaletteOpen(prev => !prev)}
-      className="min-h-8 px-2 pr-1 py-1.5 flex justify-between items-center gap-1 bg-muted text-muted-foreground/70 rounded-md"
+      className="min-h-8 px-2 pr-1 py-1.5 flex justify-between items-center gap-1 bg-muted border border-border text-muted-foreground/70 rounded-md"
     >
       <div className="inline-flex items-center gap-1.5">
         <SearchIcon className="size-4" />
