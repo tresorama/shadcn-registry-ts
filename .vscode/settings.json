@@ -22,5 +22,5 @@
     "strings": "on"
   },
   "tailwindCSS.experimental.configFile": "next-app/src/app/tailwind.css",
-  "githubIssues.issueBranchTitle": "${user}/I#${issueNumber}/${sanitizedLowercaseIssueTitle}"
+  "githubIssues.issueBranchTitle": "I#${issueNumber}/${sanitizedLowercaseIssueTitle}"
 }
