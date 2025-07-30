@@ -2,7 +2,7 @@ import z from "zod";
 import { runCli } from "../cli";
 
 let DEBUG: boolean = false;
-DEBUG = true;
+// DEBUG = true;
 
 // zod validation
 
