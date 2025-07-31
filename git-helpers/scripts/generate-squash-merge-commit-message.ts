@@ -4,6 +4,7 @@ import { clipboard } from './lib/clipboard';
 import { getGithubIssueData } from "./lib/github/get-github-issue-data";
 import { getGithubPrData } from "./lib/github/get-github-pr-data";
 
+// IRRELEVANT LINE
 
 // ===========================================
 // 1. get data
