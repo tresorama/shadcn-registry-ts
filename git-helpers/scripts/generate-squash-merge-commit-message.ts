@@ -55,13 +55,13 @@ if (prData.status === 'error') {
 const output = `
 Merge branch '${branchName}'
 
----
-
 This branch/PR closes Issue #${issueData.data.number}
 
----
-# Issue 
-#${issueData.data.number}  
+------------------------------------------------------------------------------
+# ISSUE 
+------------------------------------------------------------------------------
+
+Number: #${issueData.data.number}  
 Title: \`${issueData.data.title}\`  
 Author:  
 - Username: ${issueData.data.author.login}  
@@ -71,9 +71,14 @@ URL Link: [${issueData.data.url}](${issueData.data.url})
 
 ${issueData.data.body}
 
----
+
+
+
+------------------------------------------------------------------------------
 # PR 
-#${prData.data.number}  
+------------------------------------------------------------------------------
+
+Number: #${prData.data.number}  
 Title: ${prData.data.title}  
 Author:  
 - Username: ${prData.data.author.login}  
@@ -85,18 +90,53 @@ URL Link: [${prData.data.url}](${prData.data.url})
 
 <!--# FILL THIS PART MANUALLY -->
 
----
-# GIT Branch Commits
-From least recent to most recent
+
+
+
+
+
+------------------------------------------------------------------------------
+# GIT BRANCH COMMITS - Merged into one string (from oldest to most recent)
+------------------------------------------------------------------------------
+${prData.data.commits.map(commit => {
+  const commitRawTitle = commit.messageHeadline;
+  const commitRawBody = commit.messageBody;
+
+  const commitFullBody = (
+    // if the commit title is truncated...
+    commitRawTitle.endsWith('…') && commitRawBody.startsWith('…')
+  )
+    ? `${commitRawTitle.split('…')[0]}${commitRawBody.split('…')[1]}`
+    : commitRawTitle + "\n\n" + commitRawBody;
+
+  return [
+    `\n----- commit ${commit.oid} on ${commit.authoredDate} by ${commit.authors[0].name} --------------`,
+    `\n${commitFullBody}  `,
+  ].join("\n");
+
+}).join("\n\n")}
+
+
+
+
+
+------------------------------------------------------------------------------
+# GIT BRANCH COMMITS - separated (in Git Format) (from oldest to most recent)
+------------------------------------------------------------------------------
 
 Squashed commit of the following:
 
 ${prData.data.commits.map(commit => {
   const commitRawTitle = commit.messageHeadline;
   const commitRawBody = commit.messageBody;
-  const commitCleanedTitle = commitRawTitle.endsWith('…') ? commitRawTitle.split('…')[0] : commitRawTitle;
-  const commitCleanedBody = commitRawBody.startsWith('…') ? commitRawBody.split('…')[1] : commitRawBody;
-  const commitFullBody = `${commitCleanedTitle}${commitCleanedBody}`;
+
+  const commitFullBody = (
+    // if the commit title is truncated...
+    commitRawTitle.endsWith('…') && commitRawBody.startsWith('…')
+  )
+    ? `${commitRawTitle.split('…')[0]}${commitRawBody.split('…')[1]}`
+    : commitRawTitle + "\n\n" + commitRawBody;
+
   // console.log({
   //   commitRawTitle,
   //   commitRawBody,
@@ -106,10 +146,12 @@ ${prData.data.commits.map(commit => {
   // });
 
   return [
-    `Title: ${commitRawTitle}  `,
+    "---------------------------------------------",
+    `\nTitle: ${commitRawTitle}  `,
     `\ncommit ${commit.oid}  `,
     `\nAuthor: ${commit.authors.map(author => `${author.name} <${author.email}>`).join(' | ')}  `,
     `\nDate: ${commit.committedDate}  `,
+    "\n---------------------------------------------",
     `\n\n    ${commitFullBody}  `,
   ].join("");
 
