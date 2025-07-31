@@ -53,9 +53,9 @@ if (prData.status === 'error') {
 // ===========================================
 
 const output = `
-Merge branch '${branchName}'
+Merge branch '${branchName}' (PR#${prData.data.number})
 
-This branch/PR closes Issue #${issueData.data.number}
+This branch/PR #${prData.data.number} closes Issue #${issueData.data.number}
 
 ------------------------------------------------------------------------------
 # ISSUE 
