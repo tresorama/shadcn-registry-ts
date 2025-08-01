@@ -1,8 +1,14 @@
-## General
+# Git and Github workflow
+
+> Need somethig else? Go to [Getting Started](./01-getting-started.md)
+
+## Intro
 
 This project uses [git](https://git-scm.com/) and [github](https://github.com/) to holds the remote repo.
 
 ## Product flow
+
+Product Flow is how we change the product (the app) over time.
 
 When we want to add a new code changes to the app, we follow this workflow:
 1. create a new github issue
@@ -15,11 +21,13 @@ When we want to add a new code changes to the app, we follow this workflow:
 
 ## Setup
 
-We reccomend to use: 
-- [VSCode](https://code.visualstudio.com/)
-- [VSCode Github Pull Request](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github) extension for VSCode.
-- [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph) extension for VSCode.
-- [Git Lens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) extension for VSCode.
+We reccomend to use these tools: 
+- [VSCode](https://code.visualstudio.com/) - Code Editor / IDE
+- [VSCode Github Pull Request](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github) extension for VSCode that integrate with Github (for Issue and Pull Request)
+- [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph) extension for VSCode, that enhance the Git experience
+- [Git Lens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) extension for VSCode, that enhance the Git experience
 
-Then go to `git-helpers/readme.md` and follow the [**Setup**](../git-helpers/readme.md#setup) instructions.
-Then go to `git-helpers/readme.md` and follow the [**Usage**](../git-helpers//readme.md#usage)  instructions.
+## Usage
+
+- Read [**Setup**](../git-helpers/readme.md#setup) instructions
+- Read [**Usage**](../git-helpers/readme.md#usage) instructions
