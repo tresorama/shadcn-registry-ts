@@ -34,5 +34,4 @@ We reccomend to use these tools:
 
 ## Usage
 
-- Read [**Setup**](../git-helpers/readme.md#setup) instructions
-- Read [**Usage**](../git-helpers/readme.md#usage) instructions
+Read **Setup** and **Usage** in `git-helpers/readme.md` 

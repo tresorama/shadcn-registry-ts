@@ -13,6 +13,6 @@ description: How to deploy/launch a production version of the app
 
 Follow the guide of the PaaS provider (Vercel, Netlify, etc), and when you need to customize env var and build script, follow the following steps:
 - next.js (backend + frontend)
-  - **Environment Variables**: read [Env Varas](./environments.md)
+  - **Environment Variables**: read [Env Vars](./environments.md#what-each-env-vars-does)
   - **Build script**: `cd next-app && pnpm run build`
   - **Start script** `cd next-app && pnpm run next:start`
