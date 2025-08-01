@@ -1,26 +1,10 @@
-# Typical workflow when developing the app
+# Common workflow when developing the app
 
-**What this app does?**  
-This app is a custom shadcn registry.  
-A schadn registry, is a collection of files that can be imported in any project.  
-The consumer (who want to install a component of the registry in their project) with `npx shadcn@latest add [registry-item-name]`.  
-The `registry-item-name` can be:
-- a simple string like `sidebar`, that implies that the item is from the [offical shadcn registry](https://ui.shadcn.com/) (not our case).
-    - `npx shadcn@latest add sidebar`
-- a full url, like `https://some-website.com/r/fancy-component.json`, that implies that the item is from a custom shadcn registry (like our case, this project).
-    - `npx shadcn@latest add https://some-website.com/r/fancy-component.json`
-
-**When we develop this app what we does?**
-
-This repo contains a single next.js website, that has two main parts:
-- `documentation` - html pages that explain every items of the registry.
-- `registry-files` - json files that contains the items of the registry, used by the `npx shadcn@latest add` command. This section is served as static files by next(`public/r/[name].json`).
-
-Said so, in development we focus on two things:
-- add/remove/edit registry items
-- curate the documentation
+> Need somethig else? Go to [Getting Started](./01-getting-started.md)
 
 ## Workflows
+
+These are the workflows that you can do to develop the app.  
 
 ### registry-items development
 
