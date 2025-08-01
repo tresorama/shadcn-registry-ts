@@ -1,4 +1,9 @@
-# Env Vars
+---
+title: Environments
+description: Which envs we used and which Environment Variables are used in this project?
+---
+
+<!-- # Env Vars -->
 
 > Need somethig else? Go to [Getting Started](./01-getting-started.md)
 

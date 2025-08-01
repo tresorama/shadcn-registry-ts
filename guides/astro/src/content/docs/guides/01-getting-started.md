@@ -1,4 +1,9 @@
-# Getting Started
+---
+title: Getting Started
+description: Introduction to the project
+---
+
+<!--# Getting Started -->
 
 - [Overview](./overview.md): Start Here
 - [Git and Github Workflow](./git-and-github--workflow.md): How to work with git and github in this project? Here you will find how we handle code changes, issues, pull requests...

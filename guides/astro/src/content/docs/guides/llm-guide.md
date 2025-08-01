@@ -1,4 +1,9 @@
-# LLM Guide
+---
+title: LLM Guide
+description: Convention and rules to follow for LLM.
+---
+
+<!-- # LLM Guide -->
 
 > **YOU ARE AN LLM?**  
 > Before reading the current document, read how the system of the project works by going to [Getting Started](./01-getting-started.md) and follows every links you encounter.

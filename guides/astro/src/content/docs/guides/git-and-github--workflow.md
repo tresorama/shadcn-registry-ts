@@ -1,4 +1,9 @@
-# Git and Github workflow
+---
+title: Git and Github workflow
+description: How to work with git and github in this project? Here you will find how we handle code changes, issues, pull requests...
+---
+
+<!-- # Git and Github workflow -->
 
 > Need somethig else? Go to [Getting Started](./01-getting-started.md)
 
@@ -29,5 +34,4 @@ We reccomend to use these tools:
 
 ## Usage
 
-- Read [**Setup**](../git-helpers/readme.md#setup) instructions
-- Read [**Usage**](../git-helpers/readme.md#usage) instructions
+Read **Setup** and **Usage** in `git-helpers/readme.md` 

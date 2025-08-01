@@ -1,4 +1,9 @@
-# Common workflow when developing the app
+---
+title: Development - Common Workflow
+description: How to work in this project on a daily basis? Here you will find which script to run...
+---
+
+<!-- # Common workflow when developing the app -->
 
 > Need somethig else? Go to [Getting Started](./01-getting-started.md)
 
