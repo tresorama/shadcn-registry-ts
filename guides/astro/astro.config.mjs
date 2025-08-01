@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,4 +25,21 @@ export default defineConfig({
       ],
     }),
   ],
+  markdown: {
+    rehypePlugins: [
+
+      // Why This?
+      // we want to keep link inside markdown files as if astro was not used, like this:
+      // `[read more [here](./other-sibiling-file.md)`
+      // But astro requires to write links like this:
+      // `[read more [here](/docs/other-sibiling-file)`
+      // This plugin handle this conversion
+      [rehypeAstroRelativeMarkdownLinks,
+        {
+          // NOTE: collectionBase: false, remove "/docs" from start of URL links
+          collectionBase: false,
+        }
+      ]
+    ],
+  },
 });
