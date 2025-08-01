@@ -15,6 +15,7 @@ export default defineConfig({
             { label: 'Getting Started', slug: 'guides/01-getting-started' },
             { label: 'Overview', slug: 'guides/overview' },
             { label: 'Environments', slug: 'guides/environments' },
+            { label: 'Git and Github Workflow', slug: 'guides/git-and-github--workflow' },
             { label: 'Development - Common Workflow', slug: 'guides/dev--common-workflow' },
             { label: 'Production - Deploy', slug: 'guides/prod--launch' },
             { label: 'LLM Guide', slug: 'guides/llm-guide' },
