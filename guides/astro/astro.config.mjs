@@ -4,23 +4,23 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
-	integrations: [
-		starlight({
-			title: 'My Docs',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
-			sidebar: [
-				{
-					label: 'Guides',
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
-					],
-				},
-				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
-				},
-			],
-		}),
-	],
+  integrations: [
+    starlight({
+      title: 'My Docs',
+      social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+      sidebar: [
+        {
+          label: 'Guides',
+          items: [
+            { label: 'Getting Started', slug: 'guides/01-getting-started' },
+            { label: 'Overview', slug: 'guides/overview' },
+            { label: 'Environments', slug: 'guides/environments' },
+            { label: 'Development - Common Workflow', slug: 'guides/dev--common-workflow' },
+            { label: 'Production - Deploy', slug: 'guides/prod--launch' },
+            { label: 'LLM Guide', slug: 'guides/llm-guide' },
+          ],
+        },
+      ],
+    }),
+  ],
 });
