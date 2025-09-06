@@ -35,7 +35,11 @@
         }
       ],
       "dependencies": [
-        "pretty-ms"
+        "pretty-ms",
+        "date-fns"
+      ],
+      "registryDependencies": [
+        "{{THIS_REGISTRY}}/util-array.json"
       ]
     },
     {
