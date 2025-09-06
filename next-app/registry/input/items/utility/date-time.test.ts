@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { formatMillisecondsToHumanReadable } from './date-time';
+import { formatMillisecondsToHumanReadable, createTimeRanges } from './date-time';
 
 describe('date-time - formatMillisecondsToHumanReadable', () => {
 
@@ -43,6 +43,96 @@ describe('date-time - formatMillisecondsToHumanReadable', () => {
 
   it("strange input", () => {
     expect(formatMillisecondsToHumanReadable(-50)).toBe('-50ms');
+  });
+
+});
+
+describe('date-time - createTimeRanges', () => {
+
+  it('do it', () => {
+    const ranges = createTimeRanges({
+      firstDay: new Date(2022, 0, 1),
+      rangeSizeInMonths: 1,
+      formatName: ({ from, to, rangeSizeInMonths, format }) => rangeSizeInMonths === 1
+        ? format(from, "MMM")
+        : `${format(from, "MMM")} ${format(to, "MMM")}`
+    });
+    expect(ranges.length).toBe(12);
+    expect(ranges).toMatchObject([
+      { name: 'Jan' },
+      { name: 'Feb' },
+      { name: 'Mar' },
+      { name: 'Apr' },
+      { name: 'May' },
+      { name: 'Jun' },
+      { name: 'Jul' },
+      { name: 'Aug' },
+      { name: 'Sep' },
+      { name: 'Oct' },
+      { name: 'Nov' },
+      { name: 'Dec' },
+    ]);
+    expect(ranges[0].matchRange(new Date(2022, 0, 1))).toBe(true);
+    expect(ranges[0].matchRange(new Date(2022, 1, 1))).toBe(false);
+
+  });
+
+  it('do it', () => {
+    const ranges = createTimeRanges({
+      firstDay: new Date(2022, 0, 1),
+      rangeSizeInMonths: 4,
+      formatName: ({ from, to, rangeSizeInMonths, format }) => rangeSizeInMonths === 1
+        ? format(from, "MMM")
+        : `${format(from, "MMM")} ${format(to, "MMM")}`
+    });
+    expect(ranges.length).toBe(3);
+    expect(ranges).toMatchObject([
+      { name: 'Jan Apr' },
+      { name: 'May Aug' },
+      { name: 'Sep Dec' },
+    ]);
+
+    expect(ranges[0].matchRange(new Date(2022, 0, 1))).toBe(true);
+    expect(ranges[0].matchRange(new Date(2022, 10, 1))).toBe(false);
+  });
+
+  it('do it', () => {
+    const data = [
+      {
+        price: 90,
+        date: new Date(2022, 2, 10), // 10 march
+      },
+      {
+        price: 100,
+        date: new Date(2022, 3, 20), // 20 april
+      }
+    ];
+    const ranges = createTimeRanges({
+      firstDay: new Date(2022, 0, 1),
+      rangeSizeInMonths: 1,
+      formatName: ({ from, format }) => format(from, "MMM"),
+    });
+
+    const groupedByMonths = ranges.map(range => {
+      const itemsOfThisRange = data.filter(item => range.matchRange(item.date));
+      return {
+        rangeName: range.name,
+        items: itemsOfThisRange,
+      };
+    });
+
+    groupedByMonths.forEach(group => {
+      if (group.rangeName === 'Mar') {
+        expect(group.items.length).toBe(1);
+        expect(group.items[0].price).toBe(90);
+        return;
+      }
+      if (group.rangeName === 'Apr') {
+        expect(group.items.length).toBe(1);
+        expect(group.items[0].price).toBe(100);
+        return;
+      }
+    });
   });
 
 });

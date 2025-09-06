@@ -6,8 +6,7 @@ const reqInfo = getExpressRequestInfo(
   res,
   'an-id-for-this-request-used-only-by-you-to-identify-it',
 );
-
-// output
+// ⏬
 {
   reqData: {
     id: 'an-id-for-this-request-used-only-by-you-to-identify-it',

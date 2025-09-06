@@ -8,7 +8,7 @@ const executionTimer = createExecutionTimeMeter();
 
 // 3. get elapsed time
 const elapsedTime = executionTimer.getResult();
-// output
+// ⏬
 {
   inMs: 2000,
   humanReadable: '2s,

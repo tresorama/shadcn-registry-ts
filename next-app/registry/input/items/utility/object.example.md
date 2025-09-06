@@ -1,12 +1,13 @@
 ```ts
-import { omit, pick } from './object';
+import { omit, pick, groupBy } from './object';
 
 // omit
 const item = {
   id: 56,
   name: 'Luke',
 }
-const output = omit(item, ['id'])
+omit(item, ['id'])
+// ⏬
 { 
   name: 'Luke' 
 }
@@ -16,9 +17,26 @@ const item = {
   id: 56,
   name: 'Luke',
 }
-const output = pick(item, ['id'])
+pick(item, ['id'])
 { 
   id: 56 
 }
 
+// groupBy
+const items = [
+  { group: 'one', name: 'Luke' },
+  { group: 'one', name: 'Leia' },
+  { group: 'two', name: 'Han' },
+];
+groupBy(items, (item) => item.group);
+// ⏬
+{
+  one: [
+    { group: 'one', name: 'Luke' },
+    { group: 'one', name: 'Leia' },
+  ],
+  two: [
+    { group: 'two', name: 'Han' },
+  ],
+}
 ```

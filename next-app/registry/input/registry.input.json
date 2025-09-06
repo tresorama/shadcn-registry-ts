@@ -20,6 +20,22 @@
       ]
     },
     {
+      "name": "util-array-sort",
+      "categories": [
+        "utility"
+      ],
+      "type": "registry:file",
+      "title": "Array Sort",
+      "description": "Utilities for sorting arrays.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/array-sort.ts",
+          "type": "registry:file",
+          "target": "utils/array-sort.ts"
+        }
+      ]
+    },
+    {
       "name": "util-date-time",
       "categories": [
         "utility"
@@ -35,7 +51,11 @@
         }
       ],
       "dependencies": [
-        "pretty-ms"
+        "pretty-ms",
+        "date-fns"
+      ],
+      "registryDependencies": [
+        "{{THIS_REGISTRY}}/util-array.json"
       ]
     },
     {
@@ -223,6 +243,22 @@
           "path": "registry/input/items/utility-type/ts-result.ts",
           "type": "registry:file",
           "target": "utils/ts-result.ts"
+        }
+      ]
+    },
+    {
+      "name": "util-ts-result-zod",
+      "categories": [
+        "utility-type"
+      ],
+      "type": "registry:file",
+      "title": "Ts Result Zod",
+      "description": "Result pattern with Zod instead of Typescript Types a source.",
+      "files": [
+        {
+          "path": "registry/input/items/utility-type/ts-result-zod.ts",
+          "type": "registry:file",
+          "target": "utils/ts-result-zod.ts"
         }
       ]
     },

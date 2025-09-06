@@ -6,7 +6,7 @@
     "build": "npm run registry:generate && npm run next:build",
     "next:dev": "next dev --turbopack",
     "next:dev:no-turbo": "next dev",
-    "next:build": "next build",
+    "next:build": "npm run registry:generate && next build",
     "next:start": "next start",
     "next:lint": "next lint",
     "next:react-scan:dev": "next dev & npx react-scan@latest localhost:3000",
@@ -67,6 +67,7 @@
   "peerDependencies": {
     "@sefinek/random-emoji": "^2.1.0",
     "@types/express": "^5.0.3",
+    "date-fns": "^4.1.0",
     "express": "^5.1.0",
     "pretty-ms": "^9.2.0"
   },
