@@ -20,6 +20,22 @@
       ]
     },
     {
+      "name": "util-array-sort",
+      "categories": [
+        "utility"
+      ],
+      "type": "registry:file",
+      "title": "Array Sort",
+      "description": "Utilities for sorting arrays.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/array-sort.ts",
+          "type": "registry:file",
+          "target": "utils/array-sort.ts"
+        }
+      ]
+    },
+    {
       "name": "util-date-time",
       "categories": [
         "utility"
