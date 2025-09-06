@@ -227,6 +227,22 @@
       ]
     },
     {
+      "name": "util-ts-result-zod",
+      "categories": [
+        "utility-type"
+      ],
+      "type": "registry:file",
+      "title": "Ts Result Zod",
+      "description": "Result pattern with Zod instead of Typescript Types a source.",
+      "files": [
+        {
+          "path": "registry/input/items/utility-type/ts-result-zod.ts",
+          "type": "registry:file",
+          "target": "utils/ts-result-zod.ts"
+        }
+      ]
+    },
+    {
       "name": "util-express-utils",
       "categories": [
         "utility-framework"
