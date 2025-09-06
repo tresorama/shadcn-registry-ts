@@ -59,3 +59,41 @@ export const pick = <
   });
   return output as Output;
 };
+
+
+/**
+ * Group an array by a key
+ * 
+ * @example
+ * ```ts
+ * const items = [
+ *   { group: 'one', name: 'Luke' },
+ *   { group: 'one', name: 'Leia' },
+ *   { group: 'two', name: 'Han' },
+ * ]
+ * const grouped = groupBy(items, (item) => item.group);
+ * // ⏬
+ * {
+ *   one: [
+ *     { group: 'one', name: 'Luke' },
+ *     { group: 'one', name: 'Leia' },
+ *   ],
+ *   two: [
+ *     { group: 'two', name: 'Han' },
+ *   ],
+ * }
+ * ```
+ */
+export const groupBy = <T>(
+  array: T[],
+  getGroupKey: (item: T) => string
+): { [key: string]: T[]; } => {
+  return array.reduce((acc, item) => {
+    const key = getGroupKey(item);
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(item);
+    return acc;
+  }, {} as { [key: string]: T[]; });
+};

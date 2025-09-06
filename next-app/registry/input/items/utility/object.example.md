@@ -1,5 +1,5 @@
 ```ts
-import { omit, pick } from './object';
+import { omit, pick, groupBy } from './object';
 
 // omit
 const item = {
@@ -21,4 +21,21 @@ const output = pick(item, ['id'])
   id: 56 
 }
 
+// groupBy
+const items = [
+  { group: 'one', name: 'Luke' },
+  { group: 'one', name: 'Leia' },
+  { group: 'two', name: 'Han' },
+];
+const grouped = groupBy(items, (item) => item.group);
+// ⏬
+{
+  one: [
+    { group: 'one', name: 'Luke' },
+    { group: 'one', name: 'Leia' },
+  ],
+  two: [
+    { group: 'two', name: 'Han' },
+  ],
+}
 ```
