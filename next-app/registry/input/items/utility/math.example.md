@@ -56,6 +56,7 @@ numIsBetween({ min: 1, max: 10, num: 1, isInclusive: false }); // false
 
 // calculateFrequenciesStats
 calculateFrequenciesStats({ A: 4, B: 6 }));
+// ⏬
 {
   total: 10,
   groups: {
@@ -63,7 +64,9 @@ calculateFrequenciesStats({ A: 4, B: 6 }));
     B: { count: 6, percentageOnTotal: 0.6 },
   }
 }
+
 calculateFrequenciesStats({ A: 1, B: 2 }));
+// ⏬
 {
   total: 3,
   groups: {

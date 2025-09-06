@@ -5,7 +5,9 @@ import {
 } from './date-time';
 
 // formatMillisecondsToHumanReadable
-formatMillisecondsToHumanReadable(2000); // '2s'
+formatMillisecondsToHumanReadable(2000);
+// ⏬
+ '2s'
 
 
 // createTimeRanges

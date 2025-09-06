@@ -6,7 +6,8 @@ const item = {
   id: 56,
   name: 'Luke',
 }
-const output = omit(item, ['id'])
+omit(item, ['id'])
+// ⏬
 { 
   name: 'Luke' 
 }
@@ -16,7 +17,7 @@ const item = {
   id: 56,
   name: 'Luke',
 }
-const output = pick(item, ['id'])
+pick(item, ['id'])
 { 
   id: 56 
 }
@@ -27,7 +28,7 @@ const items = [
   { group: 'one', name: 'Leia' },
   { group: 'two', name: 'Han' },
 ];
-const grouped = groupBy(items, (item) => item.group);
+groupBy(items, (item) => item.group);
 // ⏬
 {
   one: [
