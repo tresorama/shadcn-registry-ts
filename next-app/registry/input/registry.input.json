@@ -260,6 +260,9 @@
           "type": "registry:file",
           "target": "utils/ts-result-zod.ts"
         }
+      ],
+      "dependencies": [
+        "zod"
       ]
     },
     {
