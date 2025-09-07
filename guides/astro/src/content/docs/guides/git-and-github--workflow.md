@@ -33,16 +33,17 @@ When we want to add a new code changes to the app, we follow this workflow:
    In VsCode, got to `Left Sidebar > Github Panel > Issues` then hover over the issue you want to work on, and click on `Start working on this issue` (button on right side)
    :::
 1. Add commits to the branch
-1. Push the branch to github
-1. Create a pull request from the branch.  
+1. Run lint command `pnpm run lint` often to check for errors
+3. Push the branch to github
+4. Create a pull request from the branch.  
    :::tip
    In VsCode, when you push the branch to github, a quick button will appear to create a pull request (bottom right corner).
    :::
-1. Check that the build is ok, by manually checking the Deploy Preview.  
+5. Check that the build is ok, by manually checking the Deploy Preview.  
    You will find the link in the Pull Request comments.
-1. When ready, merge the pull request with squash merge.  
+6. When ready, merge the pull request with squash merge.  
    :::tip
    To produce the squash commit message we have a script that generate it. Read More at `git-helpers/readme.md`
    :::
-1. **❌ NEVER DELETE A MERGED BRANCH**
+7. **❌ NEVER DELETE A MERGED BRANCH**
 
