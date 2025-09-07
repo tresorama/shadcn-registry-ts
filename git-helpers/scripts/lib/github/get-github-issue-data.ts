@@ -49,6 +49,34 @@ const schemaIssue = z.object({
       }),
     })
   ),
+  comments: z.array(z.object({
+    /** comment id  @example "IC_kwDOIGHObc6_0ao3" */
+    id: z.string(),
+    /** comment author */
+    author: z.object({
+      /** comment author login  @example "tresorama" */
+      login: z.string(),
+    }),
+    /** comment author association  @example "OWNER" */
+    authorAssociation: z.string(),
+    /** comment body  @example "we need to do this...." */
+    body: z.string(),
+    /** comment creation date iso string  @example "2025-08-24T15:27:28Z" */
+    createdAt: z.iso.datetime(),
+    /** ??  @example true | false */
+    // includesCreatedEdit: z.boolean(),
+    /** ??  @example true | false */
+    // isMinimized: z.boolean(),
+    /** ??  @example "" */
+    // minimizedReason: z.string(),
+    // reactionGroups: z.array(z.object({
+    //   content: z.string(),
+    //   count: z.number(),
+    // })),
+    /** comment url  @example "https://github.com/tresorama/pipocas-sales-analysis/issues/33#issuecomment-3218188855" */
+    url: z.string(),
+    // viewerDidAuthor: z.boolean(),
+  }))
 });
 
 
@@ -87,7 +115,7 @@ export function getGithubIssueData(issueNumber: number): Result {
         // "closed",
         // "closedAt",
         "closedByPullRequestsReferences",
-        // "comments",
+        "comments",
         "createdAt",
         "id",
         // "isPinned",
