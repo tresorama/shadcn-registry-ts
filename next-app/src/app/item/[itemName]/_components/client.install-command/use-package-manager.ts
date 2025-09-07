@@ -1,6 +1,6 @@
 import { atom, useAtom } from 'jotai';
 
-import type { PackageManagerKey } from '#root/registry/output-generator/generate.static-registry-derivates/types.package-manager';
+import type { PackageManagerKey } from '#root/registry/output-generator/generate-next/registry/types.package-manager';
 
 export { type PackageManagerKey };
 
