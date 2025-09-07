@@ -2,13 +2,8 @@ import {
   // type Registry as ShadcnRegistry,
   type RegistryItem as ShadcnRegistryItem,
 } from 'shadcn/registry';
+
 import type { PackageManagerKey } from './types.package-manager';
-
-
-// for shadcn cli
-
-/// TODO
-
 
 // for next
 

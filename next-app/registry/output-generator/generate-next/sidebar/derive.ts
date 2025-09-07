@@ -1,10 +1,11 @@
 import MAP_CATEGORY_TO_LABEL from "#root/registry/input/config/sidebar-page-groups-map.json";
+
 import type { StaticSidebarData, StaticSidebarPageGroup } from "./types";
 
-import { getRegistryInput } from "../utils/get-registry-input";
+import { getRegistryInput } from "../../utils/get-registry-input";
 
-export const calculateStaticSidebarData = (): StaticSidebarData => {
-  const regitryInput = getRegistryInput();
+export const calculateStaticSidebarData = async (): Promise<StaticSidebarData> => {
+  const regitryInput = await getRegistryInput();
 
   // build page groups (as js object)
   const pagesGroupsMap: Record<string, StaticSidebarPageGroup> = {};

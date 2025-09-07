@@ -40,7 +40,7 @@ const getFileDataCache = {
  * - `fileContent`: content of file as text (string)
  * - `fileAbsolutePath`: absolute file path 
  */
-export const getFileAsString = async (fileAbsolutePath: string): Promise<FileData> => {
+export const getFileData = async (fileAbsolutePath: string): Promise<FileData> => {
 
   // get last modified date from disk
   const fileStat = await fs.stat(fileAbsolutePath);

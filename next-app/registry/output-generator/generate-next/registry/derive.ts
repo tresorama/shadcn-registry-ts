@@ -1,39 +1,32 @@
 import {
-  type Registry as ShadcnRegistry,
+  // type Registry as ShadcnRegistry,
   type RegistryItem as ShadcnRegistryItem,
 } from 'shadcn/registry';
 
 import type { RegistryForNext, RegistryForNextItem } from './types.registry';
-import { getRegistryInput } from '../utils/get-registry-input';
+import { getRegistryInput } from '../../utils/get-registry-input';
 
 import { APP_BASE_URL } from '@/constants/server';
-import { getFileAsString, getFilePathFromRoot } from "@/lib/utils/file";
+import { getFileData, getFilePathFromRoot } from "@/lib/utils/file";
 
-
-// for shadcn cli
 
 /**
- * Create a version of registry input, ready to be used as input for `shadcn cli` usage.  
- * This functions does the following:
- * - replace all occurrency of {{THIS_REGISTRY}} in with the url of the next app.
+ * Create a version of registry ready for rendering in the `next app`.  
+ * This functions return {@link RegistryForNext}
  */
-export async function calculateRegistryForShadcnCli() {
-  const registryInput = getRegistryInput();
+export async function calculateRegistryForNext(): Promise<RegistryForNext> {
+  const registryInput = await getRegistryInput();
+
+  // 1. create augmented items
+  const items = await Promise.all(
+    registryInput.items.map(async (item) => calculateRegistryForNextItem(item))
+  );
+
   return {
-    ...registryInput,
-    items: registryInput.items.map((item) => {
-      return {
-        ...item,
-        registryDependencies: item.registryDependencies?.map((dep) => {
-          return dep.replace("{{THIS_REGISTRY}}", `${APP_BASE_URL}/r`);
-        })
-      };
-    })
+    items,
   };
-}
 
-
-// for next
+};
 
 /**
  * Create a version of registry item ready for rendering in the `next app.  
@@ -42,17 +35,15 @@ export async function calculateRegistryForShadcnCli() {
  */
 async function calculateRegistryForNextItem(item: ShadcnRegistryItem): Promise<RegistryForNextItem> {
 
-  // emsure that at least one "file" is present
+  // ensure that at least one "file" is present
   if (!item.files?.length) {
     throw new Error("Item has no files.");
   }
 
-
-
   // get file with content of every "files" of the item
   const filesWithContent: RegistryForNextItem['filesWithContent'] = await Promise.all(
     (item.files ?? []).map(async (file) => {
-      const fileData = await getFileAsString(getFilePathFromRoot(file.path));
+      const fileData = await getFileData(getFilePathFromRoot(file.path));
       return {
         ...file,
         fileName: fileData.fileName,
@@ -63,7 +54,7 @@ async function calculateRegistryForNextItem(item: ShadcnRegistryItem): Promise<R
 
   // get file example
   const fileExamplePath = item.files[0].path.replace('.ts', '.example.md');
-  const fileExample: RegistryForNextItem['fileExample'] = await getFileAsString(getFilePathFromRoot(fileExamplePath))
+  const fileExample: RegistryForNextItem['fileExample'] = await getFileData(getFilePathFromRoot(fileExamplePath))
     .then(fileData => ({
       fileName: fileData.fileName,
       fileContent: fileData.fileContent,
@@ -73,7 +64,7 @@ async function calculateRegistryForNextItem(item: ShadcnRegistryItem): Promise<R
   const fileTestPath = item.files[0].path.replace('.ts', '.test.ts');
   let fileTest: RegistryForNextItem['fileTest'] | undefined;
   try {
-    const fileData = await getFileAsString(getFilePathFromRoot(fileTestPath));
+    const fileData = await getFileData(getFilePathFromRoot(fileTestPath));
     fileTest = {
       fileName: fileData.fileName,
       fileContent: fileData.fileContent,
@@ -114,20 +105,3 @@ async function calculateRegistryForNextItem(item: ShadcnRegistryItem): Promise<R
   };
 }
 
-/**
- * Create a version of registry ready for rendering in the `next app`.  
- * This functions return {@link RegistryForNext}
- */
-export const calculateRegistryForNext = async (): Promise<RegistryForNext> => {
-  const registryInput = getRegistryInput() as ShadcnRegistry;
-
-  // 1. create augmented items
-  const items = await Promise.all(
-    registryInput.items.map(async (item) => calculateRegistryForNextItem(item))
-  );
-
-  return {
-    items,
-  };
-
-};
