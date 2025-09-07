@@ -93,6 +93,22 @@ const schemaPr = z.object({
     createdAt: z.iso.datetime(),
     /** comment url  @example "https://github.com/tresorama/pipocas-sales-analysis/issues/33#issuecomment-3218188855" */
     url: z.string(),
+  })),
+  /** pr reviews list (comments of developers are here and not in comments)  */
+  reviews: z.array(z.object({
+    /** review id  @example "R_kwDOIGHObc7G2pch" */
+    id: z.string(),
+    /** review author */
+    author: z.object({
+      /** review author login  @example "tresorama" */
+      login: z.string(),
+    }),
+    /** review author association  @example "OWNER" */
+    authorAssociation: z.string(),
+    /** review body  @example "we need to do this...." */
+    body: z.string(),
+    /** review creation date iso string  @example "2025-08-24T15:27:28Z" */
+    submittedAt: z.iso.datetime(),
   }))
 }).transform((data) => {
   return {
@@ -136,9 +152,18 @@ const schemaPr = z.object({
     conversation: (() => {
       const commits = data.commits.map((commit) => ({ ...commit, type: 'COMMIT' }) as const);
       const comments = data.comments.map((comment) => ({ ...comment, type: 'COMMENT' }) as const);
-      const itemsSorted = [...commits, ...comments].sort((a, b) => {
-        const aCreatedAt = new Date(a.type === 'COMMIT' ? a.authoredDate : a.createdAt);
-        const bCreatedAt = new Date(b.type === 'COMMIT' ? b.authoredDate : b.createdAt);
+      const reviews = data.reviews.map((review) => ({ ...review, type: 'REVIEW' }) as const);
+      const itemsSorted = [...commits, ...comments, ...reviews].sort((a, b) => {
+        const aCreatedAt = new Date(
+          a.type === 'COMMIT' ? a.authoredDate
+            : a.type === 'COMMENT' ? a.createdAt
+              : a.submittedAt
+        );
+        const bCreatedAt = new Date(
+          b.type === 'COMMIT' ? b.authoredDate
+            : b.type === 'COMMENT' ? b.createdAt
+              : b.submittedAt
+        );
         return aCreatedAt.getTime() - bCreatedAt.getTime();
       });
       return itemsSorted;
@@ -216,7 +241,7 @@ export function getGithubPrData(prNumber: number): Result {
         // "reactionGroups",
         // "reviewDecision",
         // "reviewRequests",
-        // "reviews",
+        "reviews",
         // "state",
         // "statusCheckRollup",
         "title",

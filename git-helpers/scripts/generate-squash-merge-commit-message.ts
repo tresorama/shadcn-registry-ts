@@ -83,6 +83,11 @@ const sanitizeString = (
 };
 const indentEveryLines = (str: string, padNumber: number) => str.split('\n').map(line => " ".repeat(padNumber) + line).join('\n');
 
+/**
+ * Return true if a piece of text is the output of this script
+ */
+const getIsThisScriptOutputText = (text: String) => text.includes('MERGE SUMMARY');
+
 const output = `
 Merge branch '${branchName}' (PR#${prData.data.number})
 
@@ -212,18 +217,32 @@ ${prData.data.allCommitters.map((commit) => `- ${commit.login} (${commit.name}) 
 > From oldest to most recent
 ---------------------------------------------
 ${prData.data.conversation.map(
-      commitOrComment => {
+      item => {
 
-        if (commitOrComment.type === 'COMMENT') {
-          const comment = commitOrComment;
+        if (item.type === 'COMMENT') {
+          const comment = item;
           return [
             `\n- 💬 ${comment.author.login}  `,
             `\n${indentEveryLines(comment.body, 3)}  `,
           ].join("\n");
         }
 
-        if (commitOrComment.type === 'COMMIT') {
-          const commit = commitOrComment;
+        if (item.type === 'REVIEW') {
+          // in case the developer has added as comment this generated squash commit (the outputt of this script), we need to ignore it
+          const isThisScriptOutput = getIsThisScriptOutputText(item.body);
+          if (isThisScriptOutput) {
+            return '';
+          }
+
+          const comment = item;
+          return [
+            `\n- 💬 ${comment.author.login}  `,
+            `\n${indentEveryLines(comment.body, 3)}  `,
+          ].join("\n");
+        }
+
+        if (item.type === 'COMMIT') {
+          const commit = item;
           let commitMessage = commit.formatted.fullBody;
           commitMessage = sanitizeString('commit-message', commitMessage);
           commitMessage = indentEveryLines(commitMessage, 3);
