@@ -34,8 +34,8 @@ export const SidebarNav = () => {
                   asChild
                   isActive={page.isActive}
                   onClick={() => {
-                    if (sidebar.isMobile) {
-                      sidebar.setOpen(false);
+                    if (sidebar.isMobile && sidebar.openMobile) {
+                      sidebar.setOpenMobile(false);
                     }
                   }}
                 >
