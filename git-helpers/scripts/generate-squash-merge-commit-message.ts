@@ -89,6 +89,28 @@ const indentEveryLines = (str: string, padNumber: number) => str.split('\n').map
 const getIsThisScriptOutputText = (text: String) => text.includes('MERGE SUMMARY');
 
 
+const sanitizeString = (
+  purpose: 'branch-name' | 'issue' | 'pr' | 'commit-message',
+  str: string,
+) => {
+  if (purpose === 'issue' || purpose === 'pr' || purpose === 'branch-name') {
+    return str
+      // replace all backticks with nothing
+      .replace(/\n/g, ' ');
+  }
+  // if commit...
+  return str
+    // replace <TAGNAME> with `<TAGNAME>` (wrap in backticks)
+    .replace(/<([A-Za-z]+)>/g, (_, word) => `\`<${word}>\``);
+};
+const indentEveryLines = (str: string, padNumber: number) => str.split('\n').map(line => " ".repeat(padNumber) + line).join('\n');
+
+/**
+ * Return true if a piece of text is the output of this script
+ */
+const getIsThisScriptOutputText = (text: String) => text.includes('MERGE SUMMARY');
+
+
 const output = `
 Merge branch '${branchName}' (PR#${prData.data.number})
 
