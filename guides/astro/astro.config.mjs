@@ -9,6 +9,9 @@ export default defineConfig({
     starlight({
       title: 'My Docs',
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+      tableOfContents: {
+        maxHeadingLevel: 4
+      },
       sidebar: [
         {
           label: 'Guides',
