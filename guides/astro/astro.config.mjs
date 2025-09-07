@@ -26,6 +26,7 @@ export default defineConfig({
           ],
         },
       ],
+      customCss: ['./src/custom-styles.css'],
     }),
   ],
   markdown: {
