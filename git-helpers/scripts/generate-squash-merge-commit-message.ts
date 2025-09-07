@@ -52,6 +52,28 @@ if (prData.status === 'error') {
 // 2. compose output
 // ===========================================
 
+const sanitizeString = (
+  purpose: 'branch-name' | 'issue' | 'pr' | 'commit-message',
+  str: string,
+) => {
+  if (purpose === 'issue' || purpose === 'pr' || purpose === 'branch-name') {
+    return str
+      // replace all backticks with nothing
+      .replace(/\n/g, ' ');
+  }
+  // if commit...
+  return str
+    // replace <TAGNAME> with `<TAGNAME>` (wrap in backticks)
+    .replace(/<([A-Za-z]+)>/g, (_, word) => `\`<${word}>\``);
+};
+const indentEveryLines = (str: string, padNumber: number) => str.split('\n').map(line => " ".repeat(padNumber) + line).join('\n');
+
+/**
+ * Return true if a piece of text is the output of this script
+ */
+const getIsThisScriptOutputText = (text: String) => text.includes('MERGE SUMMARY');
+
+
 const output = `
 Merge branch '${branchName}' (PR#${prData.data.number})
 
@@ -90,39 +112,69 @@ URL Link: [${prData.data.url}](${prData.data.url})
 
 <!--# FILL THIS PART MANUALLY -->
 
+<br>
+<br>
+<br>
+<br>
 
+---------------------------------------------
+# PR CONVERSATION: COMMITS + COMMENTS  
 
+> Merged into one string.  
+> From oldest to most recent
+---------------------------------------------
+${prData.data.conversation.map(
+  item => {
 
+    if (item.type === 'COMMENT') {
+      const comment = item;
+      return [
+        `\n- 💬 ${comment.author.login}  `,
+        `\n${indentEveryLines(comment.body, 3)}  `,
+      ].join("\n");
+    }
 
+    if (item.type === 'REVIEW') {
+      // in case the developer has added as comment this generated squash commit (the outputt of this script), we need to ignore it
+      const isThisScriptOutput = getIsThisScriptOutputText(item.body);
+      if (isThisScriptOutput) {
+        return '';
+      }
 
-------------------------------------------------------------------------------
-# GIT BRANCH COMMITS - Merged into one string (from oldest to most recent)
-------------------------------------------------------------------------------
-${prData.data.commits.map(commit => {
-  const commitRawTitle = commit.messageHeadline;
-  const commitRawBody = commit.messageBody;
+      const comment = item;
+      return [
+        `\n- 💬 ${comment.author.login}  `,
+        `\n${indentEveryLines(comment.body, 3)}  `,
+      ].join("\n");
+    }
 
-  const commitFullBody = (
-    // if the commit title is truncated...
-    commitRawTitle.endsWith('…') && commitRawBody.startsWith('…')
-  )
-    ? `${commitRawTitle.split('…')[0]}${commitRawBody.split('…')[1]}`
-    : commitRawTitle + "\n\n" + commitRawBody;
+    if (item.type === 'COMMIT') {
+      const commit = item;
+      let commitMessage = commit.formatted.fullBody;
+      commitMessage = sanitizeString('commit-message', commitMessage);
+      commitMessage = indentEveryLines(commitMessage, 3);
+      return [
+        `\n- 🧑‍💻 ${commit.oid.slice(0, 7)} by ${commit.authors[0].login}  `,
+        `\n${commitMessage}  `,
+      ].join("\n");
+    }
 
-  return [
-    `\n----- commit ${commit.oid} on ${commit.authoredDate} by ${commit.authors[0].name} --------------`,
-    `\n${commitFullBody}  `,
-  ].join("\n");
+    return '';
 
-}).join("\n\n")}
+  }
+).join("\n<br><br>\n")}
 
+<br>
+<br>
+<br>
+<br>
 
+---------------------------------------------
+# GIT BRANCH COMMITS  
 
-
-
-------------------------------------------------------------------------------
-# GIT BRANCH COMMITS - separated (in Git Format) (from oldest to most recent)
-------------------------------------------------------------------------------
+> Separated -- in Git Format --  
+> From oldest to most recent
+---------------------------------------------
 
 Squashed commit of the following:
 
