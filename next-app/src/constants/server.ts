@@ -12,12 +12,7 @@ export const {
   APP_BASE_URL,
   APP_DATA_MODE
 } = {
-  DEBUG_CONSTANTS: envVars.DEBUG_CONSTANTS,
+  DEBUG_CONSTANTS: envVars.DEBUG_CONSTANTS === 'true',
   APP_DATA_MODE: envVars.APP_DATA_MODE,
   APP_BASE_URL: getVercelUrl() || "http://localhost:3000",
 };
-
-// console.log({
-//   APP_BASE_URL,
-//   APP_DATA_MODE
-// });
