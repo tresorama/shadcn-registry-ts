@@ -2,25 +2,25 @@ import { cache } from 'react';
 
 import { APP_DATA_MODE } from '@/constants/server';
 
-import { generateStaticRegistryForNext, type RegistryForNext } from '#root/registry/output-generator/generate.static-registry-derivates';
-import { generateStaticSidebarData, type StaticSidebarData } from '#root/registry/output-generator/generate.static-sidebar-data';
+import { generateStaticRegistryForNext, type RegistryForNext } from '#root/registry/output-generator/generate-next/registry/generate';
+import { generateStaticSidebarData, type StaticSidebarData } from '#root/registry/output-generator/generate-next/sidebar/generate';
 
 //  input
 
-const getData = {
+const getInputData = {
   registryForNext: cache(
     async () => {
       if (APP_DATA_MODE === 'compute') {
-        return await generateStaticRegistryForNext();
+        return await generateStaticRegistryForNext({ saveAlsoToDisk: false });
       }
       if (APP_DATA_MODE === 'static') {
         // NOTE: 
         // Webpack/Turbopack, before the build process, statically anaylze every import, also dynamic `import()`, and :
         // - IF THE PATH IS A SINGLE STRING, like `'path/to/file'`, it check if file exists
-        //   This lead to the error: "Cannot find module '#root/registry/output/static-registry.for-next-app.json'" if the file is not present.
+        //   This lead to the error: "Cannot find module '#root/registry/output/next/static-registry.json'" if the file is not present.
         // - IF THE PATH IS A CONCAT STRING, like `'path/to' + 'file'`, it skips the check
         // So we "fake" the path to be dynamic splitting the string in two part (forcing resolution at build time).
-        const path = '#root/registry/output/' + 'static-registry.for-next-app.json';
+        const path = '#root/registry/output/' + 'next/static-registry.json';
         return await import(path).then((m) => m.default as RegistryForNext);
       }
       throw new Error(`Invalid APP_DATA_MODE: ${APP_DATA_MODE}`);
@@ -29,16 +29,16 @@ const getData = {
   sidebarData: cache(
     async () => {
       if (APP_DATA_MODE === 'compute') {
-        return await generateStaticSidebarData();
+        return await generateStaticSidebarData({ saveAlsoToDisk: false });
       }
       if (APP_DATA_MODE === 'static') {
         // NOTE: 
         // Webpack/Turbopack, before the build process, statically anaylze every import, also dynamic `import()`, and :
         // - IF THE PATH IS A SINGLE STRING, like `'path/to/file'`, it check if file exists
-        //   This lead to the error: "Cannot find module '#root/registry/output/static-sidebar-data.json'" if the file is not present.
+        //   This lead to the error: "Cannot find module '#root/registry/output/next/static-sidebar-data.json'" if the file is not present.
         // - IF THE PATH IS A CONCAT STRING, like `'path/to' + 'file'`, it skips the check
         // So we "fake" the path to be dynamic splitting the string in two part (forcing resolution at build time).
-        const path = '#root/registry/output/' + 'static-sidebar-data.json';
+        const path = '#root/registry/output/' + 'next/static-sidebar-data.json';
         return await import(path).then((m) => m.default as StaticSidebarData);
       }
       throw new Error(`Invalid APP_DATA_MODE: ${APP_DATA_MODE}`);
@@ -62,7 +62,7 @@ export type NextData = {
  */
 export const getRegistryItemNames = cache(
   async () => {
-    const registry = await getData.registryForNext();
+    const registry = await getInputData.registryForNext();
     return registry.items.map((item) => item.name);
   }
 );
@@ -73,7 +73,7 @@ export const getRegistryItemNames = cache(
  */
 export const getRegistryItemByName = cache(
   async (itemName: string) => {
-    const registry = await getData.registryForNext();
+    const registry = await getInputData.registryForNext();
     const item = registry.items.find((item) => item.name === itemName);
     if (!item) return null;
     return item;
@@ -82,7 +82,7 @@ export const getRegistryItemByName = cache(
 
 export const getSidebarData = cache(
   async () => {
-    const data = await getData.sidebarData();
+    const data = await getInputData.sidebarData();
     return data;
   }
 );

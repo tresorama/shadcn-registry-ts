@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "acme",
-  "homepage": "https://acme.com",
+  "name": "shadcn-registry-ts",
+  "homepage": "https://shadcn-registry-ts.vercel.app",
   "items": [
     {
       "name": "util-array",

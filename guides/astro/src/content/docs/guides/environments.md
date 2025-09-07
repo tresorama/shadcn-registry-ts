@@ -3,41 +3,41 @@ title: Environments
 description: Which envs we used and which Environment Variables are used in this project?
 ---
 
-<!-- # Env Vars -->
-
-> Need somethig else? Go to [Getting Started](./01-getting-started.md)
-
 
 ## Environments
 
-**`dev` - Development**
+### Development
 
-Development is done on local.  
-You must copy `.env.example` to `.env`, then set env vars.
+Alias: `development`  
+This env is used to code the app.  
+This env run on your local developer machine.  
+To have Environment Variables for this env, you must copy `.env.development.local.example` to `.env.development.local`, then set env vars.  
 
-**`simulate-prod` - Simulate Production**
+### Simulate Production
 
-Simulate production is done on local.  
-You must copy `.env.example` to `.env`, then set env vars.
+Alias: `prod-simulate`  
+This env is used to simulate production on your machine before deploy.  
+This env run on your local developer machine.  
+To have Environment Variables for this env, you must copy `.env.prod-simulate.local.example` to `.env.prod-simulate.local`, then set env vars.
 
-**`prod` - Production**
+### Production
 
-Production is done on Vercel.  
-You must set env var on Vercel.  
+:::danger[Important]
+This is the app that the world will see.
+:::
 
-## ENV Files
+:::tip[What we use as PaaS provider]
+Now we use [Vercel](https://vercel.com) to deploy the app.
+:::
 
-- `next-app/.env.example`
-  - this file is version controlled
-  - It's the guide that explain what each env var is used for
-- `netx-app/.env`
-  - this file is not version controlled, and you should create it by copying `.env.example`
-  - this file is used in these envs:
-      - `dev` development on local (next.js automatcially reads this file)
-      - `simulate-prod`, production build on local (next.js automatcially reads this file)
+Alias: `prod`  
+This env is the real app deployed on a PaaS provider (Vercel, Netlify, etc).  
+This env run on a PaaS provider.  
+To have Environment Variables for this env, you must set them in the PaaS provider. Use the same env vars as `prod-simulate` as a guide.
 
-## What each env vars does?
+## Environment Variables
 
-Read `next-app/.env.example`
+To know what each env var does, you must read `.env.*.example` files
+
 
 

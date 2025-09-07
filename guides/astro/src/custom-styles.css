@@ -1,0 +1,13 @@
+:not(li) > :where(ol,ul) {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+:where(li > :where(ol,ul)) {
+  list-style-position: inside;
+  padding-left: 1.4rem;
+}
+
+:where(ol,ul) li > p {
+  display: inline;
+}

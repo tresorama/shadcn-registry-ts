@@ -9,20 +9,31 @@ export default defineConfig({
     starlight({
       title: 'My Docs',
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+      tableOfContents: {
+        maxHeadingLevel: 4
+      },
       sidebar: [
         {
           label: 'Guides',
           items: [
             { label: 'Getting Started', slug: 'guides/01-getting-started' },
             { label: 'Overview', slug: 'guides/overview' },
-            { label: 'Environments', slug: 'guides/environments' },
+            { label: 'Architecture', slug: 'guides/architecture' },
+            { label: 'Folder Structure', slug: 'guides/folder-structure' },
             { label: 'Git and Github Workflow', slug: 'guides/git-and-github--workflow' },
+            { label: 'Environments', slug: 'guides/environments' },
             { label: 'Development - Common Workflow', slug: 'guides/dev--common-workflow' },
             { label: 'Production - Deploy', slug: 'guides/prod--launch' },
-            { label: 'LLM Guide', slug: 'guides/llm-guide' },
           ],
         },
+        {
+          label: 'Other',
+          items: [
+            { label: 'LLM Guide', slug: 'guides/llm-guide' },
+          ],
+        }
       ],
+      customCss: ['./src/custom-styles.css'],
     }),
   ],
   markdown: {

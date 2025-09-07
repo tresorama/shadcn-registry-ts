@@ -19,24 +19,24 @@ import { getGithubPrData } from "./lib/github/get-github-pr-data";
 // NOTE: ensure you are in the branch that you want to merge
 const branchName = runCli('git rev-parse --abbrev-ref HEAD');
 
-// get github issue id that this PR resolve from branch name
-//  - branch name: tresorama/I#8/bla-bla-bla
+// get the main github issue id that this PR resolve from branch name
+//  - branch name: I#8/bla-bla-bla
 //  - issueId: 8
-const issueId = branchName.match(/I#(\d+)/)?.[1] ?? null;
-if (!issueId) {
+const mainIssueId = branchName.match(/I#(\d+)/)?.[1] ?? null;
+if (!mainIssueId) {
   console.error('❌  Imposible to get issue number from branch name, branch name format not valid for parsing. Must be "<username>/I#<issue_number>/<title>"');
   process.exit(1);
 }
 
-// get github issue data from github
-const issueData = getGithubIssueData(Number(issueId));
-if (issueData.status === 'error') {
-  console.error(`❌ ${issueData.errorMessage}`, issueData.errorOriginal);
+// get main github issue data from github
+const mainIssueData = getGithubIssueData(Number(mainIssueId));
+if (mainIssueData.status === 'error') {
+  console.error(`❌ ${mainIssueData.errorMessage}`, mainIssueData.errorOriginal);
   process.exit(1);
 }
 
 // get github pr data from github
-const prId = issueData.data.closedByPullRequestsReferences?.[0]?.number ?? null;
+const prId = mainIssueData.data.closedByPullRequestsReferences?.[0]?.number ?? null;
 if (!prId) {
   console.error('❌  Imposible to get pull request number from issue. The PR exists? Or the issue is not closable/linked by a PR?');
   process.exit(1);
@@ -47,123 +47,231 @@ if (prData.status === 'error') {
   process.exit(1);
 }
 
+// get all other secondary github issues closed by this PR
+const secondaryIssueIds = prData.data.closingIssuesReferences
+  .map(issue => issue.number)
+  .filter(issueId => issueId !== Number(mainIssueId));
+
+// get secondary github issue data from github
+const secondaryIssueDataResult = secondaryIssueIds.map(issueId => getGithubIssueData(issueId));
+const secondaryIssueData = secondaryIssueDataResult.filter(issueData => issueData.status === 'success');
+const secondaryIssueDataErrorIds = secondaryIssueIds.filter(issueId => !secondaryIssueData.find(issueData => issueData.data.number === issueId));
+if (secondaryIssueDataErrorIds.length > 0) {
+  console.error(`❌  Impossible to get issue data from github for these issues: \n${secondaryIssueDataErrorIds.join(', ')}`);
+  process.exit(1);
+}
+
+
 
 // ===========================================
 // 2. compose output
 // ===========================================
 
+const sanitizeString = (
+  purpose: 'branch-name' | 'issue' | 'pr' | 'commit-message',
+  str: string,
+) => {
+  if (purpose === 'issue' || purpose === 'pr' || purpose === 'branch-name') {
+    return str
+      // replace all backticks with nothing
+      .replace(/\n/g, ' ');
+  }
+  // if commit...
+  return str
+    // replace <TAGNAME> with `<TAGNAME>` (wrap in backticks)
+    .replace(/<([A-Za-z]+)>/g, (_, word) => `\`<${word}>\``);
+};
+const indentEveryLines = (str: string, padNumber: number) => str.split('\n').map(line => " ".repeat(padNumber) + line).join('\n');
+
 const output = `
 Merge branch '${branchName}' (PR#${prData.data.number})
 
-This branch/PR #${prData.data.number} closes Issue #${issueData.data.number}
+---------------------------------------------
+# 📦 MERGE SUMMARY
+---------------------------------------------
 
-------------------------------------------------------------------------------
-# ISSUE 
-------------------------------------------------------------------------------
 
-Number: #${issueData.data.number}  
-Title: \`${issueData.data.title}\`  
-Author:  
-- Username: ${issueData.data.author.login}  
-- Name: ${issueData.data.author.name}  
-URL: ${issueData.data.url}  
-URL Link: [${issueData.data.url}](${issueData.data.url})  
+**🔀 PR** [#${prData.data.number} - ${sanitizeString('pr', prData.data.title)}](${prData.data.url})  
+
+**🌱 Branch**  \`${sanitizeString('branch-name', branchName)}\`  
+
+**🔗 Closed Issues**  
+- **Main** [#${mainIssueData.data.number} — ${sanitizeString('issue', mainIssueData.data.title)}](${mainIssueData.data.url})
+${secondaryIssueData.length === 0 ? (
+    '- *No secondary issues*'
+  ) : secondaryIssueData
+    .map(issueData => `- **Secondary:** [#${issueData.data.number} — ${sanitizeString('issue', issueData.data.title)}](${issueData.data.url})  `)
+    .join('\n')
+  }
+
+
+## Changes Overview
+
+
+<br>
+<br>
+<br>
+<br>
+
+---------------------------------------------
+# 📌 MAIN ISSUE \#${mainIssueData.data.number}
+---------------------------------------------
+
+**Title**  
+\`${sanitizeString('issue', mainIssueData.data.title)}\`  
+
+**URL**  
+${mainIssueData.data.url}  
+
+**Author**  
+${mainIssueData.data.author.login} - ${mainIssueData.data.author.name}  
+
+## 💡 BODY
+
+${mainIssueData.data.body}
+
+<br>
+<br>
+
+## 💬 COMMENTS
+
+${mainIssueData.data.comments.length === 0 ? (
+    '*No comments*'
+  ) : (
+    mainIssueData.data.comments
+      .map(comment => `
+[${comment.author.login} @ ${comment.createdAt}](${comment.url})  
+${comment.body}
+      `.trim())
+      .join('\n\n')
+  )
+  }
+
+<br>
+<br>
+<br>
+<br>
+
+${secondaryIssueData.map(issueData => `
+---------------------------------------------
+# 📌 SECONDARY ISSUE \#${issueData.data.number}
+---------------------------------------------
+  
+**Title**: \`${sanitizeString('issue', issueData.data.title)}\`  
+**URL**: ${issueData.data.url}  
+**Author**: ${issueData.data.author.login} - ${issueData.data.author.name}  
+
+## 💡 BODY
 
 ${issueData.data.body}
 
+<br>
+<br>
 
+## 💬 COMMENTS
 
+${issueData.data.comments.length === 0 ? (
+      '*No comments*'
+    ) : (
+      issueData.data.comments
+        .map(comment => `
+[${comment.author.login} @ ${comment.createdAt}](${comment.url})  
+${comment.body}
+  `.trim())
+        .join('\n\n')
+    )
+    }
+  
+  <br>
+  <br>
+  <br>
+  <br>
+`).join('\n\n')}
 
-------------------------------------------------------------------------------
-# PR 
-------------------------------------------------------------------------------
+---------------------------------------------
+# ✨ PR \#${prData.data.number}
+---------------------------------------------
 
-Number: #${prData.data.number}  
-Title: ${prData.data.title}  
-Author:  
-- Username: ${prData.data.author.login}  
-- Name: ${prData.data.author.name}  
-Committers:  
+**Title**: \`${sanitizeString('pr', prData.data.title)}\`  
+**URL**: ${prData.data.url}  
+**Author**: ${prData.data.author.login} (${prData.data.author.name})  
+**Committers**:  
 ${prData.data.allCommitters.map((commit) => `- ${commit.login} (${commit.name}) ${commit.email}  `).join('\n')}
-URL: ${prData.data.url}
-URL Link: [${prData.data.url}](${prData.data.url})
 
 <!--# FILL THIS PART MANUALLY -->
 
+<br>
+<br>
+<br>
+<br>
 
+---------------------------------------------
+# PR CONVERSATION: COMMITS + COMMENTS  
 
+> Merged into one string.  
+> From oldest to most recent
+---------------------------------------------
+${prData.data.conversation.map(
+      commitOrComment => {
 
+        if (commitOrComment.type === 'COMMENT') {
+          const comment = commitOrComment;
+          return [
+            `\n- 💬 ${comment.author.login}  `,
+            `\n${indentEveryLines(comment.body, 3)}  `,
+          ].join("\n");
+        }
 
+        if (commitOrComment.type === 'COMMIT') {
+          const commit = commitOrComment;
+          let commitMessage = commit.formatted.fullBody;
+          commitMessage = sanitizeString('commit-message', commitMessage);
+          commitMessage = indentEveryLines(commitMessage, 3);
+          return [
+            `\n- 🧑‍💻 ${commit.oid.slice(0, 7)} by ${commit.authors[0].login}  `,
+            `\n${commitMessage}  `,
+          ].join("\n");
+        }
 
-------------------------------------------------------------------------------
-# GIT BRANCH COMMITS - Merged into one string (from oldest to most recent)
-------------------------------------------------------------------------------
-${prData.data.commits.map(commit => {
-  const commitRawTitle = commit.messageHeadline;
-  const commitRawBody = commit.messageBody;
+        return '';
 
-  const commitFullBody = (
-    // if the commit title is truncated...
-    commitRawTitle.endsWith('…') && commitRawBody.startsWith('…')
-  )
-    ? `${commitRawTitle.split('…')[0]}${commitRawBody.split('…')[1]}`
-    : commitRawTitle + "\n\n" + commitRawBody;
+      }
+    ).join("\n<br><br>\n")}
 
-  return [
-    `\n----- commit ${commit.oid} on ${commit.authoredDate} by ${commit.authors[0].name} --------------`,
-    `\n${commitFullBody}  `,
-  ].join("\n");
+<br>
+<br>
+<br>
+<br>
 
-}).join("\n\n")}
+---------------------------------------------
+# GIT BRANCH COMMITS  
 
-
-
-
-
-------------------------------------------------------------------------------
-# GIT BRANCH COMMITS - separated (in Git Format) (from oldest to most recent)
-------------------------------------------------------------------------------
+> Separated -- in Git Format --  
+> From oldest to most recent
+---------------------------------------------
 
 Squashed commit of the following:
 
-${prData.data.commits.map(commit => {
-  const commitRawTitle = commit.messageHeadline;
-  const commitRawBody = commit.messageBody;
-
-  const commitFullBody = (
-    // if the commit title is truncated...
-    commitRawTitle.endsWith('…') && commitRawBody.startsWith('…')
-  )
-    ? `${commitRawTitle.split('…')[0]}${commitRawBody.split('…')[1]}`
-    : commitRawTitle + "\n\n" + commitRawBody;
-
-  // console.log({
-  //   commitRawTitle,
-  //   commitRawBody,
-  //   commitCleanedTitle,
-  //   commitCleanedBody,
-  //   commitFullBody,
-  // });
-
-  return [
-    "---------------------------------------------",
-    `\nTitle: ${commitRawTitle}  `,
-    `\ncommit ${commit.oid}  `,
-    `\nAuthor: ${commit.authors.map(author => `${author.name} <${author.email}>`).join(' | ')}  `,
-    `\nDate: ${commit.committedDate}  `,
-    "\n---------------------------------------------",
-    `\n\n    ${commitFullBody}  `,
-  ].join("");
-
-}).join("\n\n")}
+${prData.data.commits.map(
+      commit => {
+        return [
+          "---------------------------------------------",
+          `\n**Title**: ${commit.formatted.rawTitle}  `,
+          `\n**Commit**: ${commit.oid}  `,
+          `\n**Author**: ${commit.authors.map(author => `${author.name} <${author.email}>`).join(' | ')}  `,
+          `\n**Date**: ${commit.committedDate}  `,
+          `\n\n    ${commit.formatted.fullBody}  `,
+        ].join("");
+      }
+    ).join("\n\n")
+  }
 
 `.trimStart();
-
 
 // ===========================================
 // 3. print output
 // ===========================================
 // log output
-console.log(output);
+// console.log(output);
 // copy into clipboard
 clipboard.copy(output);
