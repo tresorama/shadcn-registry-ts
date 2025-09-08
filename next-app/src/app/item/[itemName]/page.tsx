@@ -3,14 +3,14 @@ import { notFound } from "next/navigation";
 import z from "zod";
 
 import { getRegistryItemNames, getRegistryItemByName } from "@/lib/registry/get-next-data";
-import { MarkdownRendererServer } from "@/components/mine/markdown-renderer/server-component/markdown-renderer";
-
 import { InstallCommand } from "./_components/client.install-command";
 import { TOC } from "./_components/client.toc";
+import { CodeNotCollapsibleServer } from "./_components/server.code-not-collapsible";
 import { CodeCollapsibleServer } from "./_components/server.code-collapsible";
 
 import { cn } from "@/lib/shadcn/utils";
 import { Badge } from "@/components/shadcn/ui/badge";
+import { MarkdownRendererServer } from "@/components/mine/markdown-renderer/server-component/markdown-renderer";
 
 // 1. Use the registry to generate static paths
 
@@ -95,7 +95,7 @@ export default async function Page(
             <h2 className={cn(typo.sectionHeading)}>Example Usage</h2>
             <MarkdownRendererServer
               markdownString={item.fileExample.fileContent}
-              className="prose dark:prose-invert max-w-full [&_pre]:p-4 [&_pre]:rounded-xl"
+              className="prose dark:prose-invert max-w-full prose-pre:p-4 prose-pre:rounded-xl"
             />
           </section>
 
@@ -141,9 +141,9 @@ export default async function Page(
             {!item.fileTest ? (
               <p className="text-sm text-muted-foreground">No test</p>
             ) : (
-              <MarkdownRendererServer
-                markdownString={`\`\`\`ts\n${item.fileTest.fileContent}\n\`\`\``}
-                className="prose dark:prose-invert max-w-full [&_pre]:p-4 [&_pre]:rounded-xl"
+              <CodeNotCollapsibleServer
+                fileTitle={item.fileTest.fileName}
+                codeString={`\`\`\`ts\n${item.fileTest.fileContent}\n\`\`\``}
               />
             )}
           </section>
