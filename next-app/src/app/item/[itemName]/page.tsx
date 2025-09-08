@@ -7,6 +7,7 @@ import { MarkdownRendererServer } from "@/components/mine/markdown-renderer/serv
 
 import { InstallCommand } from "./_components/client.install-command";
 import { TOC } from "./_components/client.toc";
+import { CodeCollapsibleServer } from "./_components/server.code-collapsible";
 
 import { cn } from "@/lib/shadcn/utils";
 import { Badge } from "@/components/shadcn/ui/badge";
@@ -126,11 +127,9 @@ export default async function Page(
             <h2 className={cn(typo.sectionHeading)}>Manual Install</h2>
             {item.filesWithContent.map((fileData) => (
               <div key={fileData.fileName} className="flex flex-col gap-0">
-                <h2 className="text-muted-foreground">{fileData.fileName}</h2>
-                {/* <CodeEditor code={fileData.content} /> */}
-                <MarkdownRendererServer
-                  markdownString={`\`\`\`ts\n${fileData.fileContent}\n\`\`\``}
-                  className="prose dark:prose-invert max-w-full [&_pre]:p-4 [&_pre]:rounded-xl"
+                <CodeCollapsibleServer
+                  fileTitle={fileData.fileName}
+                  codeString={`\`\`\`ts\n${fileData.fileContent}\n\`\`\``}
                 />
               </div>
             ))}
