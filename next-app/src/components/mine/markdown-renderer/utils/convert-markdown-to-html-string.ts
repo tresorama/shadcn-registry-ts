@@ -63,6 +63,21 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
       themes: {
         light: 'github-light',
         dark: 'github-dark'
+      },
+      // override the CSS color code used by shiki for each theme.  
+      // open the Dev Tools to see the `defaultColorCode'
+      // theme: {
+      //   defaultColorCode: 'new value'
+      // }
+      colorReplacements: {
+        "github-dark": {
+          // shiki-dark-bg
+          "#24292e": 'var(--muted)'
+        },
+        "github-light": {
+          // background-color
+          "#fff": 'var(--muted)'
+        }
       }
     } satisfies RehypeShikiOptions)
 
