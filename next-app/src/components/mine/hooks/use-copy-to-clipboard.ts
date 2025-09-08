@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useCopyToClipboard as useHooksUseCopyToClipboard } from 'usehooks-ts';
 
 
@@ -19,10 +19,12 @@ const useCountdown = () => {
     []
   );
 
-  return {
+  return useMemo(() => ({
     isActive,
     startTimer,
-  };
+  }),
+    [isActive, startTimer]
+  );
 
 };
 
@@ -41,9 +43,11 @@ export const useCopyToClipboard = () => {
     [copyToClipboard, countdown]
   );
 
-  return {
+  return useMemo(() => ({
     status,
     copyText: handleCopy,
-  };
+  }),
+    [status, handleCopy]
+  );
 }
 
