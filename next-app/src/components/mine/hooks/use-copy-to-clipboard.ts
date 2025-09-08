@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useCopyToClipboard as useHooksUseCopyToClipboard } from 'usehooks-ts';
 
 
@@ -19,13 +19,20 @@ const useCountdown = () => {
     []
   );
 
-  return {
+  return useMemo(() => ({
     isActive,
     startTimer,
-  };
+  }),
+    [isActive, startTimer]
+  );
 
 };
 
+/**
+ * React Hook that allows to copy text to clipboard.  
+ * When you copy to clipboard, the status is set to 'success'   
+ * and a timer of 4 seconds will set the status to 'idle'.
+ */
 export const useCopyToClipboard = () => {
   const [_, copyToClipboard] = useHooksUseCopyToClipboard();
   const countdown = useCountdown();
@@ -41,9 +48,11 @@ export const useCopyToClipboard = () => {
     [copyToClipboard, countdown]
   );
 
-  return {
+  return useMemo(() => ({
     status,
     copyText: handleCopy,
-  };
+  }),
+    [status, handleCopy]
+  );
 }
 
