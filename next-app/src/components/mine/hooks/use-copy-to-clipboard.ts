@@ -28,6 +28,11 @@ const useCountdown = () => {
 
 };
 
+/**
+ * React Hook that allows to copy text to clipboard.  
+ * When you copy to clipboard, the status is set to 'success'   
+ * and a timer of 4 seconds will set the status to 'idle'.
+ */
 export const useCopyToClipboard = () => {
   const [_, copyToClipboard] = useHooksUseCopyToClipboard();
   const countdown = useCountdown();
