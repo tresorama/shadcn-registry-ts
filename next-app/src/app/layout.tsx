@@ -10,7 +10,10 @@ import { CommandPalette } from "@/components/views/command-palette/client-compon
 // seo metadata
 
 export const metadata: Metadata = {
-  title: { default: "Home · tresorama/shadcn-registry", template: "%s · tresorama/shadcn-registry" },
+  title: {
+    template: "%s · tresorama/shadcn-registry-ts",
+    default: "Typescript Utilities · tresorama/shadcn-registry-ts",
+  },
   description: "Typescript utilities served as a shadcn registry!",
 };
 

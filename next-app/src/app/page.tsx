@@ -1,10 +1,4 @@
-import type { Metadata } from "next";
-
 import { LinkWithIconExternal } from '@/components/mine/link-with-icon-external';
-
-export const metadata: Metadata = {
-  title: 'Home',
-};
 
 export default function Page() {
   return (
