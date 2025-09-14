@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
+import { Analytics } from "@vercel/analytics/next";
 import "./tailwind.css";
 
 import { ds } from "@/lib/ds";
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body
         className={`${ds.bodyClassName} antialiased`}
       >
+        <Analytics />
         <GlobalNextServerDataProvider>
           <ThemeProvider attribute="class">
             <RootWithSidebar>
