@@ -29,10 +29,12 @@ export function getInferredDeployUrl(processEnv: NodeJS.ProcessEnv) {
 
 type InferDeployUrl = (processEnv: NodeJS.ProcessEnv) => string | null;
 
-/** Get deploy vercel url (`string`) if this app is built on vercel, or `null` otherwise */
+/** Get Vercel deploy url (`string`) if this app is built on Vercel, or `null` otherwise */
 const inferDeployUrlVercel: InferDeployUrl = (processEnv) => {
-  // NOTE:
-  // - VERCEL=1 if deployed on vercel
+
+  // @see https://vercel.com/docs/environment-variables/system-environment-variables
+  //
+  // - VERCEL=1 if deployed on Vercel
   // - VERCEL_GIT_COMMIT_REF:
   //     - i.e. `main`
   //     - is the git branch of the deployment
@@ -41,13 +43,13 @@ const inferDeployUrlVercel: InferDeployUrl = (processEnv) => {
   //     - is the fixed production url of the project on Vercel
   //     - does not change across deployments
   //     - if custom domain is used, this is the custom domain
-  //     - if no custom domain is used, this is the auto-assigned by vercel production url
+  //     - if no custom domain is used, this is the production url auto-assigned by Vercel
   // - VERCEL_URL:
   //     - i.e. `my-project-4535c432342x4234.vercel.app`
   //     - is the immutable deplyment url.
   //     - changes on each deployment
 
-  // if we are on vercel...
+  // if we are on Vercel...
   if (processEnv.VERCEL === '1') {
 
     // ...and this git branch is PRODUCTION and we have a Vercel Production Url -> return it
@@ -61,16 +63,15 @@ const inferDeployUrlVercel: InferDeployUrl = (processEnv) => {
     }
   }
 
-  // if not deployed on vercel -> return null
+  // if not deployed on Vercel -> return null
   return null;
 };
 
-/** Get deploy netlify url if this app is built on vercel, or null otherwise */
+/** Get Netlify deploy url (`string`) if this app is built on Netlify, or `null` otherwise */
 const inferDeployUrlNetlify: InferDeployUrl = (processEnv) => {
 
-  // NOTE: https://docs.netlify.com/build/configure-builds/environment-variables/
-
-  // NOTE:
+  // @see https://docs.netlify.com/build/configure-builds/environment-variables/
+  //
   // - NETLIFY=true if deployed on netlify
   // - BRANCH:
   //     - i.e. `main`
@@ -98,7 +99,7 @@ const inferDeployUrlNetlify: InferDeployUrl = (processEnv) => {
       return processEnv.URL;
     }
 
-    // ...and this git branch is not main and we have a Netlify Deploy Preview or Branch Deploy Url -> return it
+    // ...and this git branch is not PRODUCTION and we have a Netlify Deploy Preview or Branch Deploy Url -> return it
     if (processEnv.BRANCH !== 'main' && processEnv.DEPLOY_PRIME_URL) {
       return processEnv.DEPLOY_PRIME_URL;
     }
