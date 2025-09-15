@@ -11,6 +11,9 @@ describe('getInferredDeployUrl', () => {
     expect(getInferredDeployUrl({
       NODE_ENV: 'production',
     })).toBe("");
+    expect(getInferredDeployUrl({
+      NODE_ENV: 'development',
+    })).toBe("");
 
     // @ts-ignore
     delete global.window;
@@ -19,10 +22,10 @@ describe('getInferredDeployUrl', () => {
   it('do it - server + no recognized deploy service', () => {
     // dev localhost
     expect(getInferredDeployUrl({
-      NODE_ENV: 'development',
+      NODE_ENV: 'production',
     })).toBe("http://localhost:3000");
     expect(getInferredDeployUrl({
-      NODE_ENV: 'production',
+      NODE_ENV: 'development',
     })).toBe("http://localhost:3000");
   });
 
