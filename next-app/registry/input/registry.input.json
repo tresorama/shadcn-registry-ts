@@ -302,6 +302,22 @@
       "dependencies": [
         "vitest"
       ]
+    },
+    {
+      "name": "util-infer-deploy-url",
+      "categories": [
+        "utility-service"
+      ],
+      "type": "registry:file",
+      "title": "Infer Deploy Url",
+      "description": "Utilities for inferring deploy url from auto-injected env vars on platform like Vercel or Netlify.",
+      "files": [
+        {
+          "path": "registry/input/items/utility-service/infer-deploy-url.ts",
+          "type": "registry:file",
+          "target": "utils/infer-deploy-url.ts"
+        }
+      ]
     }
   ]
 }
