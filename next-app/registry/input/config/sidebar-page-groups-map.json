@@ -3,6 +3,7 @@
   "map": {
     "utility": "Utility",
     "utility-type": "Utility Type",
-    "utility-framework": "Utility Framework"
+    "utility-framework": "Utility Framework",
+    "utility-service": "Utility Service"
   }
 }
