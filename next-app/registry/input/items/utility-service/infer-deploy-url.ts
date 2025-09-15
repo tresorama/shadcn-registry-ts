@@ -22,7 +22,7 @@ export function getInferredDeployUrl(processEnv: NodeJS.ProcessEnv) {
   return (
     inferDeployUrlVercel(processEnv)
     || inferDeployUrlNetlify(processEnv)
-    || `http://localhost:${process.env.PORT ?? 3000}`
+    || `http://localhost:${processEnv.PORT ?? 3000}`
   );
 }
 
