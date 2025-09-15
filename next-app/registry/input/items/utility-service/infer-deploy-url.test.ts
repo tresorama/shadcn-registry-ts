@@ -20,7 +20,6 @@ describe('getInferredDeployUrl', () => {
   });
 
   it('do it - server + no recognized deploy service', () => {
-    // dev localhost
     expect(getInferredDeployUrl({
       NODE_ENV: 'production',
     })).toBe("http://localhost:3000");
