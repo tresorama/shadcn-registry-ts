@@ -1,5 +1,5 @@
 import Link from "next/link";
-// import { BoxIcon } from "lucide-react";
+import { SiGithub as GithubIcon } from '@icons-pack/react-simple-icons';
 
 import { SearchHint } from "@/components/views/command-palette/client-component/search-hint";
 
@@ -9,7 +9,13 @@ import {
   SidebarMenuButton,
   SidebarTrigger,
 } from "@/components/shadcn/ui/sidebar";
+import { Button } from "@/components/shadcn/ui/button";
 import { ModeToggle } from "@/components/shadcn/mode-toggle";
+
+const LINKS = {
+  githubRepo: "https://github.com/tresorama/shadcn-registry-ts",
+};
+
 
 export const SidebarHeaderContent = () => {
   return (
@@ -28,6 +34,8 @@ export const SidebarHeaderContent = () => {
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
+        {/* Github Link Button */}
+        <GithubLink />
         {/* Color Mode Toggler Button */}
         <ModeToggle />
         {/* Sidebar Toggler Button */}
@@ -39,3 +47,20 @@ export const SidebarHeaderContent = () => {
     </>
   );
 };
+
+const GithubLink = () => (
+  <Button
+    variant="ghost"
+    size="icon"
+    asChild
+  >
+    <Link
+      href={LINKS.githubRepo}
+      target="_blank"
+    >
+      <GithubIcon />
+      <span className="sr-only">Github</span>
+    </Link>
+  </Button>
+);
+
