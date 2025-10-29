@@ -15,6 +15,7 @@ export const SidebarHeaderContent = () => {
   return (
     <>
       <SidebarMenu className="flex flex-row justify-between items-center">
+        {/* Go To Home button */}
         <SidebarMenuItem className="flex-1">
           <SidebarMenuButton size="lg" asChild>
             <Link href="/">
@@ -27,7 +28,9 @@ export const SidebarHeaderContent = () => {
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
+        {/* Color Mode Toggler Button */}
         <ModeToggle />
+        {/* Sidebar Toggler Button */}
         <SidebarTrigger />
       </SidebarMenu>
       <div className="px-1 pb-2">
