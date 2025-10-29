@@ -12,13 +12,12 @@ export function ModeToggle() {
 
   return (
     <Button
-      className="h-7 w-7"
       onClick={() => {
         startTransition(() => {
           setTheme(resolvedTheme === "dark" ? "light" : "dark");
         });
       }}
-      size="icon"
+      size="icon-sm"
       variant="ghost"
     >
       <Moon className="dark:hidden" />
