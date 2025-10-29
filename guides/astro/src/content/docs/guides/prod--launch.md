@@ -18,3 +18,8 @@ Follow the guide of the PaaS provider (Vercel, Netlify, etc), and when you need 
 - **Environment Variables**: read [Envirnoment Variables for Prod](./environments.md#production)
 - **Build script**: `cd next-app && pnpm run prod:build`
 - **Start script** `cd next-app && pnpm run prod:start`
+
+
+## How to work with Branch and Pull Requests?
+
+Refer to [Git and Github Workflow](./git-and-github--workflow.md)
