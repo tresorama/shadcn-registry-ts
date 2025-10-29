@@ -51,7 +51,7 @@ export const SidebarHeaderContent = () => {
 const GithubLink = () => (
   <Button
     variant="ghost"
-    size="icon"
+    size="icon-sm"
     asChild
   >
     <Link
