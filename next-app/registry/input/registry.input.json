@@ -183,6 +183,22 @@
       ]
     },
     {
+      "name": "util-retry",
+      "categories": [
+        "utility"
+      ],
+      "type": "registry:file",
+      "title": "Retry",
+      "description": "Utilities for retrying code execution.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/retry.ts",
+          "type": "registry:file",
+          "target": "utils/retry.ts"
+        }
+      ]
+    },
+    {
       "name": "util-sleep",
       "categories": [
         "utility"
