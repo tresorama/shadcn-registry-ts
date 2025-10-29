@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCopyToClipboard as useHooksUseCopyToClipboard } from 'usehooks-ts';
 
 
@@ -15,6 +15,16 @@ const useCountdown = () => {
         setIsActive(false);
         cb?.();
       }, timeInMs);
+    },
+    []
+  );
+
+  // on unmount -> clear timeout if present
+  useEffect(
+    () => {
+      if (null !== timeoutId.current) {
+        clearTimeout(timeoutId.current);
+      }
     },
     []
   );
