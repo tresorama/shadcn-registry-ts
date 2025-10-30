@@ -30,7 +30,7 @@ export const CodeCollapsibleClient = ({
         {/* HEADER */}
         <div
           data-name="CODE-COLLAPSIBLE--HEADER"
-          className="pl-3 pr-1 py-1 flex justify-start items-center gap-2 border-b"
+          className="pl-3 pr-2 py-2 flex justify-start items-center gap-2 border-b"
         >
           {/* FILE TITLE */}
           <span className="text-sm text-muted-foreground">

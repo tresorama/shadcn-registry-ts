@@ -23,7 +23,7 @@ export const CodeNotCollapsibleServer = ({
       {hasHeader ? (
         <div
           data-name="CODE-NOT-COLLAPSIBLE--HEADER"
-          className="pl-3 pr-1 py-1 flex justify-between items-center gap-2 border-b"
+          className="pl-3 pr-2 py-2 flex justify-between items-center gap-2 border-b"
         >
           {/* FILE TITLE */}
           <span className="text-sm text-muted-foreground">
