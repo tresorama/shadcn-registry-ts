@@ -10,7 +10,7 @@
     "lint:next": "dotenvx run -f .env.development.local -- next lint",
     "lint:ts": "dotenvx run -f .env.development.local -- tsc --noEmit",
     "prod-simulate:next:react-scan": "rm -rf .next & dotenvx run -f .env.prod-simulate.local -- next build & next start & npx react-scan@latest localhost:3000",
-    "prod-simulate:build": "dotenvx run -f .env.prod-simulate.local -- npm run registry:generate && next build",
+    "prod-simulate:build": "dotenvx run -f .env.prod-simulate.local --overload -- bash -c 'npm run registry:generate && next build'",
     "prod-simulate:start": "dotenvx run -f .env.prod-simulate.local -- next start",
     "prod:build": "npm run registry:generate && next build",
     "prod:start": "next start",
