@@ -43,7 +43,7 @@ export const InstallCommand = ({
         ))}
         <ButtonCopyToClipboard
           text={activeOption.command}
-          className="ml-auto"
+          className="ml-auto text-muted-foreground"
         />
       </div>
       <p className="mt-4 px-3 pb-4 text-sm text-muted-foreground">
