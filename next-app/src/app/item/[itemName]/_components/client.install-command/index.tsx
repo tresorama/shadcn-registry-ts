@@ -1,13 +1,10 @@
 'use client';
 
-import { CopyIcon, CheckIcon, XIcon } from "lucide-react";
-
-import { useCopyToClipboard } from "@/components/mine/hooks/use-copy-to-clipboard";
-
 import { usePackageManager, type PackageManagerKey } from "./use-package-manager";
 
 import { cn } from "@/lib/shadcn/utils";
 import { Button } from "@/components/shadcn/ui/button";
+import { ButtonCopyToClipboard } from "@/components/mine/button-copy-to-clipboard";
 
 
 export const InstallCommand = ({
@@ -21,9 +18,6 @@ export const InstallCommand = ({
 
   // global state
   const { packageManager, setPackageManager } = usePackageManager();
-
-  // util - copy
-  const copyToClipboard = useCopyToClipboard();
 
   // local state
   const activeOption = options.find((option) => option.packageManager === packageManager);
@@ -47,22 +41,10 @@ export const InstallCommand = ({
             {option.packageManager}
           </Button>
         ))}
-
-        <Button
-          onClick={() => copyToClipboard.copyText(activeOption.command)}
-          variant="outline"
-          size="icon"
-          className={cn(
-            "ml-auto",
-            copyToClipboard.status === 'success' && "pointer-events-none"
-          )}
-        >
-          {
-            copyToClipboard.status === 'success' ? <CheckIcon className="text-green-400" />
-              : copyToClipboard.status === 'error' ? <XIcon className="text-red-400" />
-                : <CopyIcon />
-          }
-        </Button>
+        <ButtonCopyToClipboard
+          text={activeOption.command}
+          className="ml-auto"
+        />
       </div>
       <p className="mt-4 px-3 pb-4 text-sm text-muted-foreground">
         <code>{activeOption.command}</code>
