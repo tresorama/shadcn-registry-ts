@@ -1,0 +1,338 @@
+{
+  "name": "shadcn-registry-ts",
+  "homepage": "https://shadcn-registry-ts.vercel.app",
+  "items": [
+    {
+      "name": "util-array",
+      "type": "registry:file",
+      "title": "Array",
+      "description": "Utilities for working with arrays.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/array.ts",
+          "type": "registry:file",
+          "target": "utils/array.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-array-sort",
+      "type": "registry:file",
+      "title": "Array Sort",
+      "description": "Utilities for sorting arrays.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/array-sort.ts",
+          "type": "registry:file",
+          "target": "utils/array-sort.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-date-time",
+      "type": "registry:file",
+      "title": "Date Time",
+      "description": "Utilities for working with Date and time.",
+      "dependencies": [
+        "pretty-ms",
+        "date-fns"
+      ],
+      "registryDependencies": [
+        "http://localhost:3000/r/util-array.json"
+      ],
+      "files": [
+        {
+          "path": "registry/input/items/utility/date-time.ts",
+          "type": "registry:file",
+          "target": "utils/date-time.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-db-mock",
+      "type": "registry:file",
+      "title": "DB Mock",
+      "description": "Simple in memory sync db, for mock or playground only. Do not use in production.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/db-mock.ts",
+          "type": "registry:file",
+          "target": "utils/db-mock.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-emojy-generator",
+      "type": "registry:file",
+      "title": "Emoji Generator",
+      "description": "Simple generator of random emoji, that do not generator emoji previously used.",
+      "dependencies": [
+        "@sefinek/random-emoji"
+      ],
+      "files": [
+        {
+          "path": "registry/input/items/utility/emoji-generator.ts",
+          "type": "registry:file",
+          "target": "utils/emoji-generator.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-execution-timer",
+      "type": "registry:file",
+      "title": "Execution Timer",
+      "description": "Utility for calculating the time taken to execute a piece of code.",
+      "registryDependencies": [
+        "http://localhost:3000/r/util-date-time.json"
+      ],
+      "files": [
+        {
+          "path": "registry/input/items/utility/execution-timer.ts",
+          "type": "registry:file",
+          "target": "utils/execution-timer.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-math",
+      "type": "registry:file",
+      "title": "Math",
+      "description": "Math utilities like lerp, clamp, etc.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/math.ts",
+          "type": "registry:file",
+          "target": "utils/math.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-object",
+      "type": "registry:file",
+      "title": "Object",
+      "description": "Utilities for working with objects, like pick and omit.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/object.ts",
+          "type": "registry:file",
+          "target": "utils/object.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-promise",
+      "type": "registry:file",
+      "title": "Promise",
+      "description": "Utilities for working with promises.",
+      "registryDependencies": [
+        "http://localhost:3000/r/util-sleep.json"
+      ],
+      "files": [
+        {
+          "path": "registry/input/items/utility/promise.ts",
+          "type": "registry:file",
+          "target": "utils/promise.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-random",
+      "type": "registry:file",
+      "title": "Random",
+      "description": "Random utilities like getRandomString, etc.",
+      "registryDependencies": [
+        "http://localhost:3000/r/util-math.json"
+      ],
+      "files": [
+        {
+          "path": "registry/input/items/utility/random.ts",
+          "type": "registry:file",
+          "target": "utils/random.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-retry",
+      "type": "registry:file",
+      "title": "Retry",
+      "description": "Utilities for retrying code execution.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/retry.ts",
+          "type": "registry:file",
+          "target": "utils/retry.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-sleep",
+      "type": "registry:file",
+      "title": "Sleep",
+      "description": "Utilities for delaying code execution.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/sleep.ts",
+          "type": "registry:file",
+          "target": "utils/sleep.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-stream",
+      "type": "registry:file",
+      "title": "Stream",
+      "description": "Utilities for working with Stream.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/stream.ts",
+          "type": "registry:file",
+          "target": "utils/stream.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-try-catch-async",
+      "type": "registry:file",
+      "title": "Try Catch Async",
+      "description": "Utility for handling async functions, and forcing you to handle error cases.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/try-catch-async.ts",
+          "type": "registry:file",
+          "target": "utils/try-catch-async.ts"
+        }
+      ],
+      "categories": [
+        "utility"
+      ]
+    },
+    {
+      "name": "util-ts-result",
+      "type": "registry:file",
+      "title": "Ts Result",
+      "description": "Result pattern.",
+      "files": [
+        {
+          "path": "registry/input/items/utility-type/ts-result.ts",
+          "type": "registry:file",
+          "target": "utils/ts-result.ts"
+        }
+      ],
+      "categories": [
+        "utility-type"
+      ]
+    },
+    {
+      "name": "util-ts-result-zod",
+      "type": "registry:file",
+      "title": "Ts Result Zod",
+      "description": "Result pattern with Zod instead of Typescript Types a source.",
+      "dependencies": [
+        "zod"
+      ],
+      "files": [
+        {
+          "path": "registry/input/items/utility-type/ts-result-zod.ts",
+          "type": "registry:file",
+          "target": "utils/ts-result-zod.ts"
+        }
+      ],
+      "categories": [
+        "utility-type"
+      ]
+    },
+    {
+      "name": "util-express-utils",
+      "type": "registry:file",
+      "title": "Express Utils",
+      "description": "Utilities for working with express.js.",
+      "dependencies": [
+        "express"
+      ],
+      "files": [
+        {
+          "path": "registry/input/items/utility-framework/express.utils.ts",
+          "type": "registry:file",
+          "target": "utils/express.utils.ts"
+        }
+      ],
+      "categories": [
+        "utility-framework"
+      ]
+    },
+    {
+      "name": "util-vitest-utils",
+      "type": "registry:file",
+      "title": "Vitest Utils",
+      "description": "Utilities for working with vitest.",
+      "dependencies": [
+        "vitest"
+      ],
+      "files": [
+        {
+          "path": "registry/input/items/utility-framework/vitest.utils.ts",
+          "type": "registry:file",
+          "target": "utils/vitest.utils.ts"
+        }
+      ],
+      "categories": [
+        "utility-framework"
+      ]
+    },
+    {
+      "name": "util-infer-deploy-url",
+      "type": "registry:file",
+      "title": "Infer Deploy Url",
+      "description": "Utilities for inferring deploy url from auto-injected env vars on platform like Vercel or Netlify.",
+      "files": [
+        {
+          "path": "registry/input/items/utility-service/infer-deploy-url.ts",
+          "type": "registry:file",
+          "target": "utils/infer-deploy-url.ts"
+        }
+      ],
+      "categories": [
+        "utility-service"
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { getRegistryInput } from '../../utils/get-registry-input';
+import { getRegistryInput } from '../../get-registry-input';
 
 import { APP_BASE_URL } from '@/constants/server';
 
@@ -21,3 +21,6 @@ export async function calculateRegistryForShadcnCli() {
     })
   };
 }
+
+
+export type RegistryForShadcnCli = Awaited<ReturnType<typeof calculateRegistryForShadcnCli>>;

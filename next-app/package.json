@@ -14,9 +14,9 @@
     "prod-simulate:start": "dotenvx run -f .env.prod-simulate.local -- next start",
     "prod:build": "npm run registry:generate && next build",
     "prod:start": "next start",
-    "registry:generate": "npm run registry:generate:static-data && npm run registry:generate:public-files",
-    "registry:generate:static-data": "vite-node registry/output-generator/main-static.ts",
-    "registry:generate:public-files": "shadcn build registry/output/shadcn-cli/static-registry.json",
+    "registry:generate": "npm run registry:generate:static-data && npm run registry:generate:shadcn-public-files",
+    "registry:generate:static-data": "vite-node registry/output-static-generator/scripts/generate-all-static-files.ts",
+    "registry:generate:shadcn-public-files": "shadcn build registry/output-static-artifacts/shadcn-cli/registry.json",
     "registry:test": "vitest --watch --root registry/input/items"
   },
   "dependencies": {

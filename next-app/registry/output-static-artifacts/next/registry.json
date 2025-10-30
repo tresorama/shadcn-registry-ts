@@ -1,0 +1,811 @@
+{
+  "items": [
+    {
+      "name": "util-array",
+      "description": "Utilities for working with arrays.",
+      "title": "Array",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/array.ts",
+          "type": "registry:file",
+          "target": "utils/array.ts",
+          "fileName": "array.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\nexport const getLastArrayItem = <T>(array: T[]) => array[array.length - 1];\n\n\n/** Create an array with length, that you can `.map` on */\nexport const createArrayWithLength = (length: number) => Array(length).fill('_');\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "array.example.md",
+        "fileContent": "```ts\nimport { getLastArrayItem } from \"./array\"\n\n// getLastArrayItem(any[]) => any\ngetLastArrayItem([0, 100, 50]);\n// ⏬\n50\n\n// createArrayWithLength\ncreateArrayWithLength(2);\n// ⏬\n['_', '_']\n\n```\n\n"
+      },
+      "fileTest": {
+        "fileName": "array.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\n\nimport { getLastArrayItem, createArrayWithLength } from './array';\n\ndescribe('array - getLastArrayItem', () => {\n\n  it('do it', () => {\n    expect(getLastArrayItem([])).toBeUndefined();\n    expect(getLastArrayItem([1, 2, 3])).toBe(3);\n  });\n\n});\n\ndescribe('array - createArrayWithLength', () => {\n\n  it('do it', () => {\n    expect(createArrayWithLength(3).length).toBe(3);\n    expect(createArrayWithLength(2).map((_, i) => i)).toEqual([0, 1]);\n  });\n\n});"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-array.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-array.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-array.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-array.json"
+        }
+      ]
+    },
+    {
+      "name": "util-array-sort",
+      "description": "Utilities for sorting arrays.",
+      "title": "Array Sort",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/array-sort.ts",
+          "type": "registry:file",
+          "target": "utils/array-sort.ts",
+          "fileName": "array-sort.ts",
+          "fileContent": "/** Array.sort() function - used to sort array by date */\nexport const sortArrayByDate = (a: Date, b: Date, direction: 'asc' | 'desc') => {\n  // util\n  const normalizeDate = (d: Date) => new Date(new Date(d).setHours(0, 0, 0, 0)).valueOf();\n  // logic\n  if (direction === 'asc') {\n    return normalizeDate(a) - normalizeDate(b);\n  }\n  return normalizeDate(b) - normalizeDate(a);\n};\n\n/** Array.sort() function - used to sort array by number */\nexport const sortArrayByNumber = (a: number, b: number, direction: 'asc' | 'desc') => {\n  if (direction === 'asc') {\n    return a - b;\n  }\n  return b - a;\n};\n\n/** Array.sort() function - used to sort array by string */\nexport const sortArrayByString = (a: string, b: string, direction: 'asc' | 'desc') => {\n  if (direction === 'asc') {\n    return a.localeCompare(b);\n  }\n  return b.localeCompare(a);\n};"
+        }
+      ],
+      "fileExample": {
+        "fileName": "array-sort.example.md",
+        "fileContent": "```ts\nimport {\n  sortArrayByDate,\n  sortArrayByNumber,\n  sortArrayByString,\n} from './array-sort';\n\n// sortArrayByDate - asc\nconst input = [\n  { name: 'B', date: new Date('2022-02-01') },\n  { name: 'A', date: new Date('2022-01-01') },\n  { name: 'C', date: new Date('2022-03-01') },\n];\nconst sortedAsc = input\n  .toSorted((a, b) => sortArrayByDate(a.date, b.date, 'asc'))\n  .map(item => item.name);\n// ⏬\n['A', 'C', 'B']\n\n// sortArrayByDate - desc\nconst input = [\n  { name: 'B', date: new Date('2022-02-01') },\n  { name: 'A', date: new Date('2022-01-01') },\n  { name: 'C', date: new Date('2022-03-01') },\n];\nconst sortedDesc = input\n  .toSorted((a, b) => sortArrayByDate(a.date, b.date, 'desc'))\n  .map(item => item.name);\n// ⏬\n['C', 'B', 'A']\n\n// sortArrayByNumber - asc\nconst input = [3, 1, 2];\nconst sortedAsc = input.toSorted((a, b) => sortArrayByNumber(a, b, 'asc'));\n// ⏬\n[1, 2, 3]\n\n// sortArrayByNumber - desc\nconst input = [3, 1, 2];\nconst sortedDesc = input.toSorted((a, b) => sortArrayByNumber(a, b, 'desc'));\n// ⏬\n[3, 2, 1]\n\n// sortArrayByString - asc\nconst input = ['B', 'A', 'C'];\nconst sortedAsc = input.toSorted((a, b) => sortArrayByString(a, b, 'asc'));\n// ⏬\n['A', 'B', 'C']\n\n// sortArrayByString - desc\nconst input = ['B', 'A', 'C'];\nconst sortedDesc = input.toSorted((a, b) => sortArrayByString(a, b, 'desc'));\n// ⏬\n['C', 'B', 'A']\n\n```"
+      },
+      "fileTest": {
+        "fileName": "array-sort.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\n\nimport {\n  sortArrayByDate,\n  sortArrayByNumber,\n  sortArrayByString,\n} from './array-sort';\n\ndescribe('array - sortArrayByDate', () => {\n\n  it('do it - asc', () => {\n    const input = [\n      { name: 'B', date: new Date('2022-02-01') },\n      { name: 'A', date: new Date('2022-01-01') },\n      { name: 'C', date: new Date('2022-03-01') },\n    ];\n    const sortedAsc = input.toSorted((a, b) => sortArrayByDate(a.date, b.date, 'asc'));\n    expect(sortedAsc.map(item => item.name)).toEqual(['A', 'B', 'C']);\n  });\n  it('do it - desc', () => {\n    const input = [\n      { name: 'B', date: new Date('2022-02-01') },\n      { name: 'A', date: new Date('2022-01-01') },\n      { name: 'C', date: new Date('2022-03-01') },\n    ];\n    const sortedAsc = input.toSorted((a, b) => sortArrayByDate(a.date, b.date, 'desc'));\n    expect(sortedAsc.map(item => item.name)).toEqual(['C', 'B', 'A']);\n  });\n\n});\n\ndescribe('array - sortArrayByNumber', () => {\n\n  it('do it - asc', () => {\n    const input = [3, 1, 2];\n    const sortedAsc = input.toSorted((a, b) => sortArrayByNumber(a, b, 'asc'));\n    expect(sortedAsc).toEqual([1, 2, 3]);\n  });\n  it('do it - desc', () => {\n    const input = [3, 1, 2];\n    const sortedAsc = input.toSorted((a, b) => sortArrayByNumber(a, b, 'desc'));\n    expect(sortedAsc).toEqual([3, 2, 1]);\n  });\n\n});\n\ndescribe('array - sortArrayByString', () => {\n\n  it('do it - asc', () => {\n    const input = ['B', 'A', 'C'];\n    const sortedAsc = input.toSorted((a, b) => sortArrayByString(a, b, 'asc'));\n    expect(sortedAsc).toEqual(['A', 'B', 'C']);\n  });\n  it('do it - desc', () => {\n    const input = ['B', 'A', 'C'];\n    const sortedAsc = input.toSorted((a, b) => sortArrayByString(a, b, 'desc'));\n    expect(sortedAsc).toEqual(['C', 'B', 'A']);\n  });\n\n});"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-array-sort.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-array-sort.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-array-sort.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-array-sort.json"
+        }
+      ]
+    },
+    {
+      "name": "util-date-time",
+      "description": "Utilities for working with Date and time.",
+      "title": "Date Time",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/date-time.ts",
+          "type": "registry:file",
+          "target": "utils/date-time.ts",
+          "fileName": "date-time.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\nimport prettyMs from 'pretty-ms';\nimport { addDays, addMonths, formatDate } from \"date-fns\";\n\nimport { createArrayWithLength } from \"./array\";\n\n/**\n * Convert milliseconds to human readable format (string)\n */\nexport const formatMillisecondsToHumanReadable = (milliseconds: number) => {\n  return prettyMs(milliseconds, { compact: false });\n};\n\n\n/**\n * Create an array of time ranges of months, given a start date and the range size (in months).  \n * Useful for creating chart data.\n * @example\n * const ranges = createTimeRanges({\n *   firstDay: new Date(2024, 0, 1),\n *   rangeSizeInMonths: 1,\n *   formatName: (options) => {\n *     return `${options.format(options.from, \"MMM\")} ${options.format(options.to, \"MMM\")}`\n *   }\n * });\n * // ⏬\n * [\n *   {\n *     name: \"Jan\",\n *     matchRange: (testDate: Date) => boolean,\n *   },\n *   {\n *     name: \"Feb\",\n *     matchRange: (testDate: Date) => boolean,\n *   },\n *   // ...\n *   {\n *     name: \"Dec\",\n *     matchRange: (testDate: Date) => boolean,\n *   },\n * ]\n */\nexport const createTimeRanges = ({\n  firstDay,\n  rangeSizeInMonths,\n  formatName,\n}: {\n  /** First day of first range */\n  firstDay: Date,\n  /** How many month each range span? */\n  rangeSizeInMonths: number,\n  /** Format name of the range. */\n  formatName: (options: {\n    from: Date,\n    to: Date,\n    format: typeof formatDate,\n    rangeSizeInMonths: number,\n  }) => string;\n}) => {\n\n  // utils\n\n  /**\n   * Return a new Date object with time part equal to 00:00:00.000 (h:m:s.ms).\n   * Used to compare two date only by Day, Month, Year, excluding time from comparision.\n   */\n  const setTimeToMidnight = (d: Date) => new Date(new Date(d).setHours(0, 0, 0, 0));\n\n  /** Normalize date to a common type , used for comparision purpose */\n  const normalizeDate = (date: Date) => setTimeToMidnight(date);\n\n  // logic\n\n  const rangeCount = Math.ceil(12 / rangeSizeInMonths);\n\n  type Range = {\n    name: string,\n    matchRange: (testDate: Date) => boolean,\n  };\n  const ranges: Range[] = createArrayWithLength(rangeCount).map((_, i) => {\n    const from = addMonths(firstDay, i * rangeSizeInMonths);\n    const to = addMonths(addDays(from, -1), rangeSizeInMonths);\n    const matchRange = (testDate: Date) => {\n      return (\n        normalizeDate(testDate).valueOf() >= normalizeDate(from).valueOf()\n        &&\n        normalizeDate(testDate).valueOf() <= normalizeDate(to).valueOf()\n      );\n    };\n    const name = formatName({\n      from,\n      to,\n      format: formatDate,\n      rangeSizeInMonths,\n    });\n\n    return {\n      name,\n      matchRange,\n    };\n  });\n\n  return ranges;\n};\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "date-time.example.md",
+        "fileContent": "```ts\nimport { \n  formatMillisecondsToHumanReadable,\n  createTimeRanges,\n} from './date-time';\n\n// formatMillisecondsToHumanReadable\nformatMillisecondsToHumanReadable(2000);\n// ⏬\n '2s'\n\n\n// createTimeRanges\nconst data = [\n  {\n    price: 90,\n    date: new Date(2022, 2, 10), // 10 march\n  },\n  {\n    price: 100,\n    date: new Date(2022, 3, 20), // 20 april\n  }\n];\n\nconst ranges = createTimeRanges({\n  firstDay: new Date(2022, 0, 1),\n  rangeSizeInMonths: 1,\n  formatName: ({ from, format }) => format(from, \"MMM\"),\n});\n\nconst groupedByMonths = ranges.map(range => {\n  const itemsOfThisRange = data.filter(item => range.matchRange(item.date));\n  return {\n    rangeName: range.name,\n    items: itemsOfThisRange,\n  };\n});\n// ⏬\n[\n  { rangeName: 'Jan', items: [] },\n  { rangeName: 'Feb', items: [] },\n  { rangeName: 'Mar', items: [{ price: 90, date: new Date(2022, 2, 10) }] },\n  { rangeName: 'Apr', items: [{ price: 100, date: new Date(2022, 3, 20) }] },\n  // ...\n  { rangeName: 'Dec', items: [] },\n]\n\n```"
+      },
+      "fileTest": {
+        "fileName": "date-time.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\n\nimport { formatMillisecondsToHumanReadable, createTimeRanges } from './date-time';\n\ndescribe('date-time - formatMillisecondsToHumanReadable', () => {\n\n  it('do it', () => {\n    // under 1s it should be in ms\n    expect(formatMillisecondsToHumanReadable(0)).toBe('0ms');\n    expect(formatMillisecondsToHumanReadable(100)).toBe('100ms');\n    expect(formatMillisecondsToHumanReadable(200)).toBe('200ms');\n    expect(formatMillisecondsToHumanReadable(300)).toBe('300ms');\n    expect(formatMillisecondsToHumanReadable(400)).toBe('400ms');\n    expect(formatMillisecondsToHumanReadable(500)).toBe('500ms');\n    expect(formatMillisecondsToHumanReadable(600)).toBe('600ms');\n    expect(formatMillisecondsToHumanReadable(700)).toBe('700ms');\n    expect(formatMillisecondsToHumanReadable(800)).toBe('800ms');\n    expect(formatMillisecondsToHumanReadable(900)).toBe('900ms');\n    // from 1 to 59s should be in seconds\n    expect(formatMillisecondsToHumanReadable(1_000)).toBe('1s');\n    expect(formatMillisecondsToHumanReadable(1_100)).toBe('1.1s');\n    expect(formatMillisecondsToHumanReadable(1_500)).toBe('1.5s');\n    expect(formatMillisecondsToHumanReadable(2_000)).toBe('2s');\n    expect(formatMillisecondsToHumanReadable(10_000)).toBe('10s');\n    expect(formatMillisecondsToHumanReadable(20_000)).toBe('20s');\n    expect(formatMillisecondsToHumanReadable(30_000)).toBe('30s');\n    expect(formatMillisecondsToHumanReadable(40_000)).toBe('40s');\n    expect(formatMillisecondsToHumanReadable(50_000)).toBe('50s');\n    expect(formatMillisecondsToHumanReadable(59_000)).toBe('59s');\n\n    // from 1m to 1h should be in minutes (and seconds if not zero)\n    expect(formatMillisecondsToHumanReadable(60_000)).toBe('1m');\n    expect(formatMillisecondsToHumanReadable(65_000)).toBe('1m 5s');\n    expect(formatMillisecondsToHumanReadable(90_000)).toBe('1m 30s');\n    expect(formatMillisecondsToHumanReadable(120_000)).toBe('2m');\n    expect(formatMillisecondsToHumanReadable(600_000)).toBe('10m');\n    expect(formatMillisecondsToHumanReadable(1_800_000)).toBe('30m');\n    expect(formatMillisecondsToHumanReadable(3_600_000 - 1_000)).toBe('59m 59s');\n    // from 1h to 24h should be in hours\n    expect(formatMillisecondsToHumanReadable(3_600_000)).toBe('1h');\n\n  });\n\n  it(\"strange input\", () => {\n    expect(formatMillisecondsToHumanReadable(-50)).toBe('-50ms');\n  });\n\n});\n\ndescribe('date-time - createTimeRanges', () => {\n\n  it('do it', () => {\n    const ranges = createTimeRanges({\n      firstDay: new Date(2022, 0, 1),\n      rangeSizeInMonths: 1,\n      formatName: ({ from, to, rangeSizeInMonths, format }) => rangeSizeInMonths === 1\n        ? format(from, \"MMM\")\n        : `${format(from, \"MMM\")} ${format(to, \"MMM\")}`\n    });\n    expect(ranges.length).toBe(12);\n    expect(ranges).toMatchObject([\n      { name: 'Jan' },\n      { name: 'Feb' },\n      { name: 'Mar' },\n      { name: 'Apr' },\n      { name: 'May' },\n      { name: 'Jun' },\n      { name: 'Jul' },\n      { name: 'Aug' },\n      { name: 'Sep' },\n      { name: 'Oct' },\n      { name: 'Nov' },\n      { name: 'Dec' },\n    ]);\n    expect(ranges[0].matchRange(new Date(2022, 0, 1))).toBe(true);\n    expect(ranges[0].matchRange(new Date(2022, 1, 1))).toBe(false);\n\n  });\n\n  it('do it', () => {\n    const ranges = createTimeRanges({\n      firstDay: new Date(2022, 0, 1),\n      rangeSizeInMonths: 4,\n      formatName: ({ from, to, rangeSizeInMonths, format }) => rangeSizeInMonths === 1\n        ? format(from, \"MMM\")\n        : `${format(from, \"MMM\")} ${format(to, \"MMM\")}`\n    });\n    expect(ranges.length).toBe(3);\n    expect(ranges).toMatchObject([\n      { name: 'Jan Apr' },\n      { name: 'May Aug' },\n      { name: 'Sep Dec' },\n    ]);\n\n    expect(ranges[0].matchRange(new Date(2022, 0, 1))).toBe(true);\n    expect(ranges[0].matchRange(new Date(2022, 10, 1))).toBe(false);\n  });\n\n  it('do it', () => {\n    const data = [\n      {\n        price: 90,\n        date: new Date(2022, 2, 10), // 10 march\n      },\n      {\n        price: 100,\n        date: new Date(2022, 3, 20), // 20 april\n      }\n    ];\n    const ranges = createTimeRanges({\n      firstDay: new Date(2022, 0, 1),\n      rangeSizeInMonths: 1,\n      formatName: ({ from, format }) => format(from, \"MMM\"),\n    });\n\n    const groupedByMonths = ranges.map(range => {\n      const itemsOfThisRange = data.filter(item => range.matchRange(item.date));\n      return {\n        rangeName: range.name,\n        items: itemsOfThisRange,\n      };\n    });\n\n    groupedByMonths.forEach(group => {\n      if (group.rangeName === 'Mar') {\n        expect(group.items.length).toBe(1);\n        expect(group.items[0].price).toBe(90);\n        return;\n      }\n      if (group.rangeName === 'Apr') {\n        expect(group.items.length).toBe(1);\n        expect(group.items[0].price).toBe(100);\n        return;\n      }\n    });\n  });\n\n});"
+      },
+      "allDependencies": [
+        {
+          "label": "http://localhost:3000/r/util-array.json",
+          "type": "registry"
+        },
+        {
+          "label": "pretty-ms",
+          "type": "npm"
+        },
+        {
+          "label": "date-fns",
+          "type": "npm"
+        }
+      ],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-date-time.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-date-time.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-date-time.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-date-time.json"
+        }
+      ]
+    },
+    {
+      "name": "util-db-mock",
+      "description": "Simple in memory sync db, for mock or playground only. Do not use in production.",
+      "title": "DB Mock",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/db-mock.ts",
+          "type": "registry:file",
+          "target": "utils/db-mock.ts",
+          "fileName": "db-mock.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\n// export const repeat = (times: number) => new Array(times).fill('');\n\ntype BaseDbRecord = {\n  id: number;\n};\n\nexport type DbRecord<Extended extends { [key: string]: unknown; }> = BaseDbRecord & Extended;\n\n/**\n * DB Table creator, for a in memory DB.\n * NOTE: USE THIS ONLY FOR PLAYGROUND DB, NOT IN REAL APP\n */\nexport const createDbTable = <\n  SelectItem extends BaseDbRecord,\n  InsertItem = Omit<SelectItem, 'id'>,\n  UpdateItem = Partial<Omit<SelectItem, 'id'>>\n>(initialRecords: SelectItem[]) => {\n\n  let items: SelectItem[] = [...initialRecords];\n\n  const generateId = () => items.length + 1;\n\n  return {\n    getAll: () => items,\n    getById: (id: number) => items.find(item => item.id === id) ?? null,\n    create: (item: InsertItem) => {\n      const id = generateId();\n      // @ts-expect-error ts don't allow unknown properties\n      const newItem: SelectItem = {\n        id,\n        ...item\n      };\n\n      const newItems = [...items, newItem];\n      items = newItems;\n\n      return newItem;\n    },\n    update: (id: number, item: UpdateItem) => {\n      const index = items.findIndex(item => item.id === id);\n      if (index === -1) {\n        // 'Item not found'\n        return null;\n      }\n\n      const newItems = [...items];\n      newItems[index] = { ...newItems[index], ...item };\n      items = newItems;\n\n      return newItems[index];\n    },\n    delete: (id: number) => {\n      const index = items.findIndex(item => item.id === id);\n      if (index === -1) {\n        // 'Item not found'\n        return null;\n      }\n\n      const newItems = [...items];\n      const deletedItems = newItems.splice(index, 1);\n      items = newItems;\n\n      return deletedItems[0];\n    }\n  };\n};\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "db-mock.example.md",
+        "fileContent": "```ts\nimport { createDbTable } from './db.mock.utils';\n\n// inferred\n\nconst table = createDbTable([\n  {\n    id: 1,\n    name: 'Luke'\n  },\n  {\n    id: 2,\n    name: 'Leia'\n  }\n]);\n\nconst items = table.getAll();\nconst item = table.getById(1);\nconst createdItem = table.create({name: 'Yoda'});\nconst updatedItem = table.update(1, {name: 'Obi-Wan'});\nconst deletedItem = table.delete(2);\n\n\n// with explicit type\n\nconst table = createDbTable<{id: number, name: string}>([\n  {\n    id: 1,\n    name: 'Luke'\n  }\n])\n\nconst items = table.getAll();\nconst item = table.getById(1);\nconst createdItem = table.create({name: 'Yoda'});\nconst updatedItem = table.update(1, {name: 'Obi-Wan'});\nconst deletedItem = table.delete(2);\n\n```"
+      },
+      "fileTest": {
+        "fileName": "db-mock.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\n\nimport { createDbTable } from './db-mock';\n\ndescribe('db-mock', () => {\n\n  it('do it', () => {\n\n    const NON_EXISTING_ID = 999_999;\n\n    const initialRecords = [\n      { id: 1, name: 'Luke' },\n      { id: 2, name: 'Leia' }\n    ];\n\n    const table = createDbTable(initialRecords);\n\n    // getAll\n    expect(table.getAll()).toMatchObject(initialRecords);\n\n    // getById\n    expect(table.getById(1)).toMatchObject(initialRecords[0]);\n    expect(table.getById(NON_EXISTING_ID)).toBeNull();\n\n    // create\n    expect(table.create({ name: 'Yoda' })).toMatchObject({ id: 3, name: 'Yoda' });\n\n    // update\n    expect(table.update(1, { name: 'Obi-Wan' })).toMatchObject({ id: 1, name: 'Obi-Wan' });\n    expect(table.update(NON_EXISTING_ID, { name: 'Obi-Wan' })).toBeNull();\n\n    // delete\n    expect(table.delete(2)).toMatchObject({ id: 2, name: 'Leia' });\n    expect(table.delete(NON_EXISTING_ID)).toBeNull();\n\n    // getAll\n    expect(table.getAll()).toMatchObject([\n      { id: 1, name: 'Obi-Wan' },\n      { id: 3, name: 'Yoda' }\n    ]);\n\n  });\n\n\n});"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-db-mock.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-db-mock.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-db-mock.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-db-mock.json"
+        }
+      ]
+    },
+    {
+      "name": "util-emojy-generator",
+      "description": "Simple generator of random emoji, that do not generator emoji previously used.",
+      "title": "Emoji Generator",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/emoji-generator.ts",
+          "type": "registry:file",
+          "target": "utils/emoji-generator.ts",
+          "fileName": "emoji-generator.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\nimport getRandomEmoji from '@sefinek/random-emoji';\n\ntype EmojyItem = ReturnType<typeof getRandomEmoji.emojis>['content'];\nconst MAX_ATTEMPT = 100;\n\nexport const randomEmojiCreator = {\n  /** in memory state that track every emojy already used */\n  emojiCreatedNames: new Set<EmojyItem>(),\n  /** Generate a random emoji, that is not already used */\n  generateOne: () => {\n    let attempt = 0;\n    while (true) {\n      attempt++;\n      const outputEmoji = getRandomEmoji.emojis().content;\n\n      // check if emoji is already used\n      const isAlreadyUsed = randomEmojiCreator.emojiCreatedNames.has(outputEmoji);\n\n      if (!isAlreadyUsed) {\n        randomEmojiCreator.emojiCreatedNames.add(outputEmoji);\n        return outputEmoji;\n      }\n\n      if (isAlreadyUsed && attempt === MAX_ATTEMPT) {\n        randomEmojiCreator.emojiCreatedNames.add(outputEmoji);\n        return outputEmoji;\n      }\n\n      // othrwise, try again\n    }\n  }\n};"
+        }
+      ],
+      "fileExample": {
+        "fileName": "emoji-generator.example.md",
+        "fileContent": "```ts\nimport { randomEmojiCreator } from './emoji-generator'\n\n// NOTE: \n// Every time you call generateOne, it will return a different emoji.\n// Internally, it stores previously used emoji in memory, in order to not return them again.\nrandomEmojiCreator.generateOne(); //  '👨‍👩‍👧‍👦'\nrandomEmojiCreator.generateOne(); //  '😏\nrandomEmojiCreator.generateOne(); //  '👨'\nrandomEmojiCreator.generateOne(); //  '😎'\n// ...\n```"
+      },
+      "fileTest": {
+        "fileName": "emoji-generator.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\nimport { repeatSyncFn } from '../utility-framework/vitest.utils';\n\nimport { randomEmojiCreator } from './emoji-generator';\n\ndescribe('emoji-generator - randomEmojiCreator', () => {\n\n  it('do it', () => {\n    repeatSyncFn(10_000, () => {\n      const emoji = randomEmojiCreator.generateOne();\n      expect(emoji).toBeTypeOf('string');\n    });\n  });\n\n});"
+      },
+      "allDependencies": [
+        {
+          "label": "@sefinek/random-emoji",
+          "type": "npm"
+        }
+      ],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-emojy-generator.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-emojy-generator.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-emojy-generator.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-emojy-generator.json"
+        }
+      ]
+    },
+    {
+      "name": "util-execution-timer",
+      "description": "Utility for calculating the time taken to execute a piece of code.",
+      "title": "Execution Timer",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/execution-timer.ts",
+          "type": "registry:file",
+          "target": "utils/execution-timer.ts",
+          "fileName": "execution-timer.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\nimport { formatMillisecondsToHumanReadable } from \"./date-time\";\n\n/**\n * Simple time execution tracker for meaasuring the time taken to execute a function.\n * \n * @example\n * const executionTimer = createExecutionTimeMeter();\n * // ... run your code\n * const elapsedTimeInMs = executionTimer.getResult(); \n * // output \n * {\n *   inMs: 2000,\n *   humanReadable: TODO\n * }\n */\nexport const createExecutionTimeMeter = () => {\n  const start = performance.now();\n\n  const getResult = () => {\n    const end = performance.now();\n    const elapsedTimeInMs = end - start;\n    const elapsedTimeHumanReadable = formatMillisecondsToHumanReadable(elapsedTimeInMs);\n    return {\n      inMs: elapsedTimeInMs,\n      humanReadable: elapsedTimeHumanReadable,\n    };\n  };\n\n  return {\n    getResult\n  };\n};\n\nexport type ExecutionTimeMeter = ReturnType<typeof createExecutionTimeMeter>;\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "execution-timer.example.md",
+        "fileContent": "```ts\nimport { createExecutionTimeMeter } from \"./execution-timer\";\n\n// 1. init the timer\nconst executionTimer = createExecutionTimeMeter();\n\n// 2. run your code ...\n\n// 3. get elapsed time\nconst elapsedTime = executionTimer.getResult();\n// ⏬\n{\n  inMs: 2000,\n  humanReadable: '2s,\n}\n```"
+      },
+      "fileTest": {
+        "fileName": "execution-timer.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\nimport { repeatAsyncFnInParallel } from '../utility-framework/vitest.utils';\nimport { sleep } from './sleep';\n\nimport { createExecutionTimeMeter } from './execution-timer';\n\ndescribe('execution-timer', { timeout: 60_000 }, () => {\n\n  it('do it', async () => {\n\n    await repeatAsyncFnInParallel(1_000, async () => {\n      const timer = createExecutionTimeMeter();\n      await sleep(2000);\n      const result = timer.getResult();\n\n      expect(result).toBeTypeOf('object');\n      expect(result.inMs).toBeTypeOf('number');\n      expect(result.humanReadable).toBeTypeOf('string');\n      expect(result.humanReadable).oneOf(['2s', \"2.1s\"]);\n    });\n\n  });\n\n});"
+      },
+      "allDependencies": [
+        {
+          "label": "http://localhost:3000/r/util-date-time.json",
+          "type": "registry"
+        }
+      ],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-execution-timer.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-execution-timer.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-execution-timer.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-execution-timer.json"
+        }
+      ]
+    },
+    {
+      "name": "util-math",
+      "description": "Math utilities like lerp, clamp, etc.",
+      "title": "Math",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/math.ts",
+          "type": "registry:file",
+          "target": "utils/math.ts",
+          "fileName": "math.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\n/**\n * Clamp function, constraints a value to be in a range.\n * Outliers will be clamped to the relevant extreme of the range.\n */\nexport function clamp({ min, max, value }: {\n  /** Minimin possibile value. */\n  min: number,\n  /** Maximinum possible value. */\n  max: number,\n  /** Value you want to clamp */\n  value: number;\n}) {\n  if (value < min) return min;\n  if (value > max) return max;\n  return value;\n}\n\n/**\n * Lerp function, used to get a value in range based on a percentage.\n * Outliers will be clamped.\n */\nexport function lerp({ min, max, t }: {\n  /** Lower part of the a-b range. Minumum value passibile. */\n  min: number,\n  /** Upper part of the a-b range. Maximum value possible. */\n  max: number,\n  /** Number, decimal, from 0.0 to 1.0, which rapresent where value lives between a-b range. */\n  t: number;\n}) {\n  const value = (max - min) * t + min;\n  return clamp({ min, max, value });\n}\n/**\n * Lerp Inversed function, used to get the percentage of a value in a range.\n * Outliers will be clamped.\n */\nexport function lerpInverse({ min, max, value }: {\n  /** Lower part of the a-b range. Minumum value passibile. */\n  min: number,\n  /** Upper part of the a-b range. Maximum value possible. */\n  max: number,\n  /** Number that must be in range a-b, rapresent the value that you want to know where it sits in a-b range. */\n  value: number;\n}): number {\n  const t = (value - min) / (max - min);\n  return clamp({ min: 0, max: 1, value: t });\n}\n\n\n/**\n * Sum function. Accept array of numbers and return the sum.\n */\nexport const sum = (\n  /** Array of numbers */\n  nums: number[]\n): number => {\n  return nums.reduce((acc, num) => acc + num, 0);\n};\n\n/**\n * Mean function. Accept array of numbers and return the mean.\n */\nexport function mean(\n  /** Array of numbers */\n  nums: number[]\n): number {\n  if (nums.length === 0) return 0;\n  return sum(nums) / nums.length;\n}\n\n\n/**\n * Wrap value in range [min, max].\n * If value is greater than max, min is returned.  \n * If value is lower than min, max is returned.\n * If value is in between min and max, value is returned.\n */\nexport function wrap({ min, max, value }: {\n  /** Lower part of the range. */\n  min: number,\n  /** Upper part of the range. */\n  max: number,\n  /** Value to wrap. */\n  value: number;\n}) {\n  if (value < min) return max;\n  if (value > max) return min;\n  return value;\n}\n\n\n/**\n * Check if a number is between a range.\n */\nexport const numIsBetween = ({\n  min,\n  max,\n  num,\n  isInclusive = true,\n}: {\n  /** Lower part of the range. */\n  min: number,\n  /** Upper part of the range. */\n  max: number,\n  /** Number to check. */\n  num: number,\n  /** If `true` min and max are allowed values, if `false` min and max are not allowed values. Deafult: `true` */\n  isInclusive?: boolean,\n}) => {\n  if (isInclusive) {\n    return num >= min && num <= max;\n  }\n  return num > min && num < max;\n};\n\n\n/**\n * Calculate percentages of an object that represents frequencies.\n * @example\n * ```ts\n * const frequencies = calculateFrequenciesStats({ A: 4, B: 6 });\n * console.log(frequencies);\n * // output\n * { \n *   total: 10, \n *   groups: { \n *     A: { count: 4, percentageOnTotal: 0.4 }, \n *     B: { count: 6, percentageOnTotal: 0.6 },\n *   }\n * }\n * ```\n */\nexport const calculateFrequenciesStats = (calculations: { [k: string]: number; }) => {\n\n  type Data = {\n    /** total executions of all groups */\n    total: number,\n    /** stats for each group */\n    groups: Record<string, {\n      /** times this group was calculated */\n      count: number;\n      /** percentage of times this group was calculated against total executions of all groups. 0-1 range. */\n      percentageOnTotal: number;\n    }>;\n  };\n\n  const total = sum(Object.values(calculations));\n  const data: Data = {\n    total,\n    groups: Object.fromEntries(\n      Object.entries(calculations).map(([calcKey, calcCount]) => {\n        const percentage = (calcCount / total);\n        const data = {\n          count: calcCount,\n          percentageOnTotal: percentage,\n        };\n        return [calcKey, data];\n      }))\n  };\n\n  return data;\n};"
+        }
+      ],
+      "fileExample": {
+        "fileName": "math.example.md",
+        "fileContent": "```ts\nimport { \n  clamp, \n  lerp, \n  lerpInverse, \n  sum, \n  mean, \n  wrap,\n  numIsBetween,\n  calculateFrequenciesStats,\n} from \"./math\"\n\n// clamp\nclamp({ min: 0, max: 100, value: 50 })  // 50\nclamp({ min: 0, max: 100, value: 25 })  // 25\nclamp({ min: 0, max: 100, value: 75 })  // 75\nclamp({ min: 0, max: 100, value: 150 }) // 100\nclamp({ min: 0, max: 100, value: -50 }) // 0\n\n// lerp\n// it automatically clamp value\nlerp({ min: 0, max: 100, t: 0.5 })  // 50\nlerp({ min: 0, max: 100, t: 0.25 }) // 25\nlerp({ min: 0, max: 100, t: 0.75 }) // 75\nlerp({ min: 0, max: 100, t: 1.5 })  // 100\nlerp({ min: 0, max: 100, t: -0.5 }) // 0\n\n// lerpInverse\n// it automatically clamp value\nlerpInverse({ min: 0, max: 100, value: 50 })  // 0.5\nlerpInverse({ min: 0, max: 100, value: 25 })  // 0.25\nlerpInverse({ min: 0, max: 100, value: 75 })  // 0.75\nlerpInverse({ min: 0, max: 100, value: 150 }) // 1\nlerpInverse({ min: 0, max: 100, value: -50 }) // 0\n\n// sum\nsum([]); // 0\nsum([1, 2, 3]); // 6\n\n// mean\nmean([]); // 0\nmean([1, 2, 3]); // 6 / 3 = 2\nmean([1, 2, 3, 4]); // 10 / 4 = 2.5\nmean([0, 0, 10]); // 3.3333333333333335\n\n// wrap\nwrap({ min: 0, max: 100, value: 200 }); // 0\nwrap({ min: 0, max: 100, value: -10 }); // 100\nwrap({ min: 0, max: 100, value: 34 }); // 34\n\n// numIsBetween\nnumIsBetween({ min: 1, max: 10, num: 8, }); // true\nnumIsBetween({ min: 1, max: 10, num: 1, isInclusive: true }); // true\nnumIsBetween({ min: 1, max: 10, num: 1, }); // true (isInclusive defaults to true)\nnumIsBetween({ min: 1, max: 10, num: 1, isInclusive: false }); // false\n\n// calculateFrequenciesStats\ncalculateFrequenciesStats({ A: 4, B: 6 }));\n// ⏬\n{\n  total: 10,\n  groups: {\n    A: { count: 4, percentageOnTotal: 0.4 },\n    B: { count: 6, percentageOnTotal: 0.6 },\n  }\n}\n\ncalculateFrequenciesStats({ A: 1, B: 2 }));\n// ⏬\n{\n  total: 3,\n  groups: {\n    A: { count: 1, percentageOnTotal: 0.3333333333333333 },\n    B: { count: 2, percentageOnTotal: 0.6666666666666666 },\n  }\n};\n\n```\n\n"
+      },
+      "fileTest": {
+        "fileName": "math.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\nimport {\n  clamp,\n  lerp,\n  lerpInverse,\n  sum,\n  mean,\n  wrap,\n  numIsBetween,\n  calculateFrequenciesStats,\n} from './math';\n\ndescribe('math - clamp', () => {\n\n  it('do it', () => {\n\n    // with value inside range\n    expect(clamp({ min: 0, max: 100, value: 50 })).toBe(50);\n    expect(clamp({ min: 0, max: 100, value: 25 })).toBe(25);\n    expect(clamp({ min: 0, max: 100, value: 75 })).toBe(75);\n\n    // with value outside range\n    expect(clamp({ min: 0, max: 100, value: -50 })).toBe(0);\n    expect(clamp({ min: 0, max: 100, value: 150 })).toBe(100);\n  });\n\n});\n\ndescribe('math - lerp', () => {\n\n  it('do it', () => {\n\n    // with t inside 0-1 range\n    expect(lerp({ min: 0, max: 100, t: 0.5 })).toBe(50);\n    expect(lerp({ min: 0, max: 100, t: 0.25 })).toBe(25);\n    expect(lerp({ min: 0, max: 100, t: 0.75 })).toBe(75);\n\n    // with t outise 0-1 range\n    expect(lerp({ min: 0, max: 100, t: -0.5 })).toBe(0);\n    expect(lerp({ min: 0, max: 100, t: 1.5 })).toBe(100);\n  });\n\n});\n\ndescribe('math - lerpInverse', () => {\n\n  it('do it', () => {\n\n    // with value inside range\n    expect(lerpInverse({ min: 0, max: 100, value: 50 })).toBe(0.5);\n    expect(lerpInverse({ min: 0, max: 100, value: 25 })).toBe(0.25);\n    expect(lerpInverse({ min: 0, max: 100, value: 75 })).toBe(0.75);\n\n    // with value outside range\n    expect(lerpInverse({ min: 0, max: 100, value: -50 })).toBe(0);\n    expect(lerpInverse({ min: 0, max: 100, value: 150 })).toBe(1);\n  });\n\n});\n\n\ndescribe('math - sum', () => {\n\n  it('do it', () => {\n    expect(sum([])).toBe(0);\n    expect(sum([1, 2, 3])).toBe(6);\n  });\n\n});\n\ndescribe('math - mean', () => {\n\n  it('do it', () => {\n    expect(mean([])).toBe(0);\n    expect(mean([1, 2, 3])).toBe(2);\n    expect(mean([1, 2, 3, 4])).toBe(2.5);\n    expect(mean([0, 0, 10])).toBe(3.3333333333333335);\n  });\n\n});\n\ndescribe('math - wrap', () => {\n\n  it('do it', () => {\n    // with value inside range\n    expect(wrap({ min: 0, max: 100, value: 34 })).toBe(34);\n\n    // with value outside range\n    expect(wrap({ min: 0, max: 100, value: -10 })).toBe(100);\n    expect(wrap({ min: 0, max: 100, value: 200 })).toBe(0);\n  });\n\n});\n\ndescribe('math - numIsBetween', () => {\n\n  it('do it', () => {\n    // with value inside range\n    expect(numIsBetween({ min: 0, max: 100, num: 0 })).toBe(true);\n    expect(numIsBetween({ min: 0, max: 100, num: 50 })).toBe(true);\n    expect(numIsBetween({ min: 0, max: 100, num: 100 })).toBe(true);\n    expect(numIsBetween({ min: 0, max: 100, num: 0, isInclusive: true })).toBe(true);\n    expect(numIsBetween({ min: 0, max: 100, num: 50, isInclusive: true })).toBe(true);\n    expect(numIsBetween({ min: 0, max: 100, num: 100, isInclusive: true })).toBe(true);\n    expect(numIsBetween({ min: 0, max: 100, num: 0, isInclusive: false })).toBe(false);\n    expect(numIsBetween({ min: 0, max: 100, num: 50, isInclusive: false })).toBe(true);\n    expect(numIsBetween({ min: 0, max: 100, num: 100, isInclusive: false })).toBe(false);\n\n    // with value outside range\n    expect(numIsBetween({ min: 0, max: 100, num: -1 })).toBe(false);\n    expect(numIsBetween({ min: 0, max: 100, num: 101 })).toBe(false);\n  });\n\n});\n\ndescribe('math - calculateFrequenciesStats', () => {\n\n  it('do it', () => {\n    expect(calculateFrequenciesStats({ A: 4, B: 6 })).toMatchObject({\n      total: 10,\n      groups: {\n        A: { count: 4, percentageOnTotal: 0.4 },\n        B: { count: 6, percentageOnTotal: 0.6 },\n      }\n    });\n    expect(calculateFrequenciesStats({ A: 1, B: 2 })).toMatchObject({\n      total: 3,\n      groups: {\n        A: { count: 1, percentageOnTotal: 0.3333333333333333 },\n        B: { count: 2, percentageOnTotal: 0.6666666666666666 },\n      }\n    });\n  });\n\n});\n"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-math.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-math.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-math.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-math.json"
+        }
+      ]
+    },
+    {
+      "name": "util-object",
+      "description": "Utilities for working with objects, like pick and omit.",
+      "title": "Object",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/object.ts",
+          "type": "registry:file",
+          "target": "utils/object.ts",
+          "fileName": "object.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\n/**\n * Omit keys from an object\n * \n * @example\n * ```ts\n * const item = {\n *   id: 56,\n *   name: 'Luke',\n * }\n * const output = omit(item, ['id'])\n * // { name: 'Luke' }\n * ```\n */\nexport const omit = <\n  Obj extends Record<string, any>,\n  KeysToOmit extends Array<keyof Obj>,\n  Output extends Omit<Obj, KeysToOmit[number]>\n>(\n  obj: Obj,\n  keysToOmit: KeysToOmit,\n) => {\n  const output = { ...obj };\n  keysToOmit.forEach(key => {\n    delete output[key];\n  });\n  return output as unknown as Output;\n};\n\n\n/**\n * Pick keys of an object\n * \n * @example\n * ```ts\n * const item = {\n *   id: 56,\n *   name: 'Luke',\n * }\n * const output = pick(item, ['id'])\n * // { id: 56 }\n * ```\n */\nexport const pick = <\n  Obj extends Record<string, any>,\n  KeysToPick extends Array<keyof Obj>,\n  Output extends Pick<Obj, KeysToPick[number]>\n>(\n  obj: Obj,\n  keysToPick: KeysToPick,\n) => {\n  const output = {};\n  keysToPick.forEach(key => {\n    // @ts-expect-error key is not in obj\n    output[key] = obj[key];\n  });\n  return output as Output;\n};\n\n\n/**\n * Group an array by a key\n * \n * @example\n * ```ts\n * const items = [\n *   { group: 'one', name: 'Luke' },\n *   { group: 'one', name: 'Leia' },\n *   { group: 'two', name: 'Han' },\n * ]\n * const grouped = groupBy(items, (item) => item.group);\n * // ⏬\n * {\n *   one: [\n *     { group: 'one', name: 'Luke' },\n *     { group: 'one', name: 'Leia' },\n *   ],\n *   two: [\n *     { group: 'two', name: 'Han' },\n *   ],\n * }\n * ```\n */\nexport const groupBy = <T>(\n  array: T[],\n  getGroupKey: (item: T) => string\n): { [key: string]: T[]; } => {\n  return array.reduce((acc, item) => {\n    const key = getGroupKey(item);\n    if (!acc[key]) {\n      acc[key] = [];\n    }\n    acc[key].push(item);\n    return acc;\n  }, {} as { [key: string]: T[]; });\n};"
+        }
+      ],
+      "fileExample": {
+        "fileName": "object.example.md",
+        "fileContent": "```ts\nimport { omit, pick, groupBy } from './object';\n\n// omit\nconst item = {\n  id: 56,\n  name: 'Luke',\n}\nomit(item, ['id'])\n// ⏬\n{ \n  name: 'Luke' \n}\n\n// pick\nconst item = {\n  id: 56,\n  name: 'Luke',\n}\npick(item, ['id'])\n{ \n  id: 56 \n}\n\n// groupBy\nconst items = [\n  { group: 'one', name: 'Luke' },\n  { group: 'one', name: 'Leia' },\n  { group: 'two', name: 'Han' },\n];\ngroupBy(items, (item) => item.group);\n// ⏬\n{\n  one: [\n    { group: 'one', name: 'Luke' },\n    { group: 'one', name: 'Leia' },\n  ],\n  two: [\n    { group: 'two', name: 'Han' },\n  ],\n}\n```"
+      },
+      "fileTest": {
+        "fileName": "object.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\n\nimport { pick, omit, groupBy } from './object';\n\ndescribe('object - pick', () => {\n\n  it('do it', () => {\n    expect(pick({ id: 56, name: 'Luke' }, ['id'])).toMatchObject({ id: 56 });\n    // @ts-expect-error NON_EXISTING is not in obj\n    expect(pick({ id: 56, name: 'Luke' }, ['NON_EXISTING'])).toMatchObject({ NON_EXISTING: undefined });\n  });\n\n});\n\ndescribe('object - omit', () => {\n\n  it('do it', () => {\n    expect(omit({ id: 56, name: 'Luke' }, ['id'])).toMatchObject({ name: 'Luke' });\n    // @ts-expect-error NON_EXISTING is not in obj\n    expect(omit({ id: 56, name: 'Luke' }, ['NON_EXISTING'])).toMatchObject({ id: 56, name: 'Luke' });\n  });\n\n});\n\ndescribe('object - groupBy', () => {\n\n  it('do it', () => {\n    const items = [\n      { group: 'one', name: 'Luke' },\n      { group: 'one', name: 'Leia' },\n      { group: 'two', name: 'Han' },\n    ];\n    const grouped = groupBy(items, (item) => item.group);\n    expect(grouped).toMatchObject({\n      one: [\n        { group: 'one', name: 'Luke' },\n        { group: 'one', name: 'Leia' },\n      ],\n      two: [\n        { group: 'two', name: 'Han' },\n      ],\n    });\n  });\n\n});\n"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-object.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-object.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-object.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-object.json"
+        }
+      ]
+    },
+    {
+      "name": "util-promise",
+      "description": "Utilities for working with promises.",
+      "title": "Promise",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/promise.ts",
+          "type": "registry:file",
+          "target": "utils/promise.ts",
+          "fileName": "promise.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\nimport { sleep } from \"./sleep\";\n\n/**\n * A promise that can randomly:\n * - return `true` (simulate success)\n * - throw an error (simulate failure)\n * Use this to test code that must handle promise success/failure reliably.\n */\nexport const fakePromiseThatCanRandomlyThrow = () => {\n  return new Promise<true>(async (resolve, reject) => {\n    await sleep(1000);\n    const mustThrow = Math.random() > 0.5;\n    if (!mustThrow) return resolve(true);\n    reject(new Error('Fake error'));\n  });\n};\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "promise.example.md",
+        "fileContent": "```ts\nimport { fakePromiseThatCanRandomlyThrow } from './promise';\n\n// NOTE:\n// This utility is meant to be used for testing code that must handle promise success/failure reliably.\n// After testing remove the call and replace it with the code of your app.\n\n// with then/catch\nfakePromiseThatCanRandomlyThrow()\n  .then(() => console.log('1 seconds passed and success'))\n  .catch(() => console.log('1 seconds passed and failure'));\n\n// with async/await\ntry {\n  await fakePromiseThatCanRandomlyThrow();\n  console.log('1 seconds passed and success');\n} catch (error) {\n  console.log('1 seconds passed and failure');\n}\n```"
+      },
+      "fileTest": {
+        "fileName": "promise.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\nimport { repeatAsyncFnInParallel } from '../utility-framework/vitest.utils';\n// import { calculateFrequenciesStats } from './math';\n\nimport { fakePromiseThatCanRandomlyThrow } from './promise';\n\ndescribe('promise - fakePromiseThatCanRandomlyThrow', () => {\n\n  it('do it', async () => {\n\n    const FREQUENCIES = {\n      success: 0,\n      error: 0\n    };\n\n    await repeatAsyncFnInParallel(1_000, async () => {\n      try {\n        const result = await fakePromiseThatCanRandomlyThrow();\n        expect(result).toBe(true);\n        FREQUENCIES.success++;\n      } catch (error) {\n        expect(error).toBeInstanceOf(Error);\n        FREQUENCIES.error++;\n      }\n    });\n\n    // check frequencies\n    // console.log(calculateFrequenciesStats(FREQUENCIES));\n    expect(FREQUENCIES.success).toBeGreaterThan(0);\n    expect(FREQUENCIES.error).toBeGreaterThan(0);\n\n  });\n\n});\n"
+      },
+      "allDependencies": [
+        {
+          "label": "http://localhost:3000/r/util-sleep.json",
+          "type": "registry"
+        }
+      ],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-promise.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-promise.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-promise.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-promise.json"
+        }
+      ]
+    },
+    {
+      "name": "util-random",
+      "description": "Random utilities like getRandomString, etc.",
+      "title": "Random",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/random.ts",
+          "type": "registry:file",
+          "target": "utils/random.ts",
+          "fileName": "random.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\nimport { lerp, clamp } from './math';\n\n/** Get a random string in format `1642345678-12345`. Always 19 characters. */\nexport const getRandomString = () => `${new Date().valueOf()}-${Math.random().toString(36).substring(3, 8)}`;\n\n/** Get a random string in format `12345`. Always 5 characters. */\nexport const getRandomString2 = () => Math.random().toString(36).substring(3, 8);\n\n\n/**\n * Get a random integer between min and max. Min andmax are included.  \n * Result is also clamped.\n */\nexport const getRandomInteger = (\n  /** Minumum value passibile. */\n  min: number,\n  /** Maximum value possible. */\n  max: number\n) => {\n  const value = lerp({ min, max, t: Math.random() });\n  return clamp({ min, max, value: Math.round(value) });\n};\n\n/**\n * Get a random item from an array\n */\nexport const getRandomArrayItem = <T>(\n  /** Array from which you want to get a random item. */\n  array: T[]\n): T => {\n  const index = getRandomInteger(0, array.length - 1);\n  return array[index];\n};\n\n/**\n * Get a random color in HSL format.  \n * If you provide:\n * - nothing, it will generate a random color.\n * - `{ h: 20 }`, it will generate a random color with always 20 as hue.\n * - `{ s: 60 }`, it will generate a random color with always 60 as saturation.\n * - `{ l: 80 }`, it will generate a random color with always 80 as lightness.\n * - `{ h: 10, s: 20 }` or `{ h: 10, l: 20 }` or `{ s: 10, l: 20 }`, it will generate a random color with the fixed part you provided. What you don't provide will be random.\n */\nexport const getRandomColor = ({\n  h,\n  s,\n  l,\n}: {\n  /** Hue. 0-360*/\n  h?: number,\n  /** Saturation. 0-100. */\n  s?: number,\n  /** Lightness. 0-100. */\n  l?: number,\n} = {}) => {\n  const _h = h ?? getRandomInteger(0, 360);\n  const _s = s ?? getRandomInteger(0, 100);\n  const _l = l ?? getRandomInteger(0, 100);\n  return {\n    h: _h,\n    s: _s,\n    l: _l,\n    hsl: `hsl(${_h} ${_s}% ${_l}%)`,\n  };\n};\n\n/**\n * Get a random image (for placeholder).\n * Internally it builds an URL for Picsum.  \n * i.e. `https://picsum.photos/200/300?random=234`\n */\nexport const getRandomImage = ({\n  w = 900,\n  h = 700,\n}: {\n  /** Width. Default to 900. */\n  w?: number,\n  /** Height. Default to 700. */\n  h?: number,\n} = {}) => {\n\n  // https://picsum.photos/200/300?random=234\n  const url = new URL(`https://picsum.photos/${w}/${h}`);\n  url.searchParams.append('random', getRandomInteger(0, 1000).toString());\n\n  return url.toString();\n};\n\n/**\n * Get a random `Date` between start and end `Date`.  \n * Start and end could be included.\n */\nexport const getRandomDateInRange = (start: Date, end: Date) => {\n  const DAY_IN_MS = 1000 * 60 * 60 * 24;\n  const differenceBetweenStartAndEnd_inMs = end.getTime() - start.getTime();\n  const differenceBetweenStartAndEnd_inDays = differenceBetweenStartAndEnd_inMs / DAY_IN_MS;\n  const randomNumberOfDays = getRandomInteger(0, differenceBetweenStartAndEnd_inDays);\n  const randomNumberOfDays_inMs = randomNumberOfDays * DAY_IN_MS;\n  const randomDate = new Date(start.getTime() + randomNumberOfDays_inMs);\n  return randomDate;\n};\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "random.example.md",
+        "fileContent": "```ts\nimport { \n  getRandomString,\n  getRandomString2, \n  getRandomInteger, \n  getRandomArrayItem, \n  getRandomColor, \n  getRandomImage,\n  getRandomDateInRange,\n} from './random';\n\n// getRandomString\ngetRandomString(); // 1642345678-12345\n\n// getRandomString2\ngetRandomString2() // 12345\n\n// getRandomInteger(min, max)\ngetRandomInteger(1, 10); // 1\ngetRandomInteger(1, 10); // 2\ngetRandomInteger(1, 10); // 10\n\n// getRandomArrayItem(any[])\ngetRandomArrayItem([1, 2, 3]); // 2\ngetRandomArrayItem([1, 2, 3]); // 3\n\n// getRandomColor\ngetRandomColor(); // total random { h: 120, s: 100, l: 50, hsl: 'hsl(120 100% 50% )' }\ngetRandomColor({h: 50}); // fixed h { h: 50, s: 100, l: 50, hsl: 'hsl(50 100% 50% )' }\ngetRandomColor({h: 50, s: 50}); // fixed h and s { h: 50, s: 50, l: 50, hsl: 'hsl(50 50% 50% )' }\ngetRandomColor({h: 50, l: 50}); // fixed h and l { h: 50, s: 50, l: 50, hsl: 'hsl(50 50% 50% )' }\n\n// getRandomImage\ngetRandomImage(); // https://picsum.photos/900/700?random=1\ngetRandomImage({ w: 600, h: 400 }); // https://picsum.photos/600/400?random=2\n\n// getRandomDateInRange\ngetRandomDateInRange(new Date('2022-01-01'), new Date('2022-12-31')); // Date 2022-08-01\n\n```\n"
+      },
+      "fileTest": {
+        "fileName": "random.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\nimport { repeatSyncFn } from '../utility-framework/vitest.utils';\n\nimport {\n  getRandomString,\n  getRandomString2,\n  getRandomInteger,\n  getRandomArrayItem,\n  getRandomColor,\n  getRandomImage,\n  getRandomDateInRange,\n} from './random';\n\ndescribe('random - getRandomString', () => {\n\n  it('do it', async () => {\n    repeatSyncFn(10_000, () => {\n      const value = getRandomString();\n      expect(value).toBeTypeOf('string');\n      expect(value.length).toBe(19);\n    });\n  });\n});\n\ndescribe('random - getRandomString2', () => {\n\n  it('do it', async () => {\n    repeatSyncFn(10_000, () => {\n      const value = getRandomString2();\n      expect(value).toBeTypeOf('string');\n      expect(value.length).toBe(5);\n    });\n  });\n});\n\ndescribe('random - getRandomInteger', () => {\n\n  it('do it', async () => {\n    repeatSyncFn(10_000, () => {\n      const value = getRandomInteger(0, 100);\n      expect(value).toBeGreaterThanOrEqual(0);\n      expect(value).toBeLessThanOrEqual(100);\n    });\n  });\n\n});\n\n\ndescribe('random - getRandomArrayItem', () => {\n\n  it('do it', async () => {\n    repeatSyncFn(10_000, () => {\n      const value = getRandomArrayItem([1, 2, 3]);\n      expect(value).oneOf([1, 2, 3]);\n    });\n  });\n\n});\n\n\ndescribe('random - getRandomColor', () => {\n\n  it('do it', async () => {\n    // total random\n    repeatSyncFn(1_000, () => {\n      const value = getRandomColor();\n      expect(value.h).toBeGreaterThanOrEqual(0);\n      expect(value.h).toBeLessThanOrEqual(360);\n      expect(value.s).toBeGreaterThanOrEqual(0);\n      expect(value.s).toBeLessThanOrEqual(100);\n      expect(value.l).toBeGreaterThanOrEqual(0);\n      expect(value.l).toBeLessThanOrEqual(100);\n    });\n\n    // fixed h\n    repeatSyncFn(1_000, () => {\n      const value = getRandomColor({ h: 100 });\n      expect(value.h).toBe(100);\n      expect(value.s).toBeGreaterThanOrEqual(0);\n      expect(value.s).toBeLessThanOrEqual(100);\n      expect(value.l).toBeGreaterThanOrEqual(0);\n      expect(value.l).toBeLessThanOrEqual(100);\n    });\n\n    // fixed s\n    repeatSyncFn(1_000, () => {\n      const value = getRandomColor({ s: 100 });\n      expect(value.h).toBeGreaterThanOrEqual(0);\n      expect(value.h).toBeLessThanOrEqual(360);\n      expect(value.s).toBe(100);\n      expect(value.l).toBeGreaterThanOrEqual(0);\n      expect(value.l).toBeLessThanOrEqual(100);\n    });\n\n    // fixed l\n    repeatSyncFn(1_000, () => {\n      const value = getRandomColor({ l: 100 });\n      expect(value.h).toBeGreaterThanOrEqual(0);\n      expect(value.h).toBeLessThanOrEqual(360);\n      expect(value.s).toBeGreaterThanOrEqual(0);\n      expect(value.s).toBeLessThanOrEqual(100);\n      expect(value.l).toBe(100);\n    });\n\n    // fixed h, s\n    repeatSyncFn(1_000, () => {\n      const value = getRandomColor({ h: 100, s: 100 });\n      expect(value.h).toBe(100);\n      expect(value.s).toBe(100);\n      expect(value.l).toBeGreaterThanOrEqual(0);\n      expect(value.l).toBeLessThanOrEqual(100);\n    });\n\n    // fixed h, l\n    repeatSyncFn(1_000, () => {\n      const value = getRandomColor({ h: 100, l: 100 });\n      expect(value.h).toBe(100);\n      expect(value.s).toBeGreaterThanOrEqual(0);\n      expect(value.s).toBeLessThanOrEqual(100);\n      expect(value.l).toBe(100);\n    });\n\n    // fixed s, l\n    repeatSyncFn(1_000, () => {\n      const value = getRandomColor({ s: 100, l: 100 });\n      expect(value.h).toBeGreaterThanOrEqual(0);\n      expect(value.h).toBeLessThanOrEqual(360);\n      expect(value.s).toBe(100);\n      expect(value.l).toBe(100);\n    });\n  });\n\n});\n\n\ndescribe('random - getRandomImage', () => {\n\n  it('do it', async () => {\n    repeatSyncFn(10_000, () => {\n      const value = getRandomImage();\n      expect(value).toBeTypeOf('string');\n      expect(value.startsWith('https://picsum.photos/')).toBe(true);\n    });\n  });\n\n});\n\ndescribe('random - getRandomDateInRange', () => {\n\n  it('do it', async () => {\n    repeatSyncFn(10_000, () => {\n      const start = new Date('2022-01-01');\n      const end = new Date('2022-12-31');\n      const value = getRandomDateInRange(start, end);\n      expect(value).toBeInstanceOf(Date);\n      expect(value.getTime()).toBeGreaterThanOrEqual(start.getTime());\n      expect(value.getTime()).toBeLessThanOrEqual(end.getTime());\n    });\n  });\n\n});\n"
+      },
+      "allDependencies": [
+        {
+          "label": "http://localhost:3000/r/util-math.json",
+          "type": "registry"
+        }
+      ],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-random.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-random.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-random.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-random.json"
+        }
+      ]
+    },
+    {
+      "name": "util-retry",
+      "description": "Utilities for retrying code execution.",
+      "title": "Retry",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/retry.ts",
+          "type": "registry:file",
+          "target": "utils/retry.ts",
+          "fileName": "retry.ts",
+          "fileContent": "import { sleep } from \"./sleep\";\n\n\n/**\n * Wrap an async function and add retry feature.  \n * IMPORTANT: `fn`  must return a Promise, and must never throw.\n */\nexport const retry = <\n  TFn extends ((...args: any[]) => Promise<any>),\n  TFnResult = Awaited<ReturnType<TFn>>\n>(options: {\n  /** \n   * The main function, that will retried.  \n   * **IMPORTANT** Must be an async fn, and must never throw. \n   * */\n  fn: TFn,\n  /** How many times to retry while the `getStatus` returns 'error'. */\n  times: number,\n  /** How long to sleep between attempts. In ms. */\n  delayBetweenAttempts: number,\n  /** This function is called after each attempt to know if the attempt was successful or not.  \n   * This fn must return `success` or `error`.  \n   * If `success` is returned, the loop will exit.  \n   * If `error` is returned, the loop will continue if `times` is not reached. \n   * */\n  getStatus: (result: TFnResult) => 'success' | 'error';\n}) => {\n\n  return async (...args: Parameters<TFn>): Promise<TFnResult> => {\n    let attemptsDone = 0;\n\n    while (attemptsDone < options.times) {\n\n      // increment\n      attemptsDone += 1;\n\n      // run fn\n      const result = (await options.fn(...args)) as TFnResult;\n      const status = options.getStatus(result);\n\n      // if success -> return\n      if (status === 'success') {\n        return result;\n      }\n\n      // if error and last attempt -> exit with error\n      if (status === 'error' && (attemptsDone >= options.times)) {\n        return result;\n      }\n\n      // if error and not last attempt -> sleep then try again\n      await sleep(options.delayBetweenAttempts);\n    }\n\n    throw new Error('Should be unreachable');\n\n  };\n\n};\n\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "retry.example.md",
+        "fileContent": "```ts\nimport { retry } from './retry';\n\n// NOTE: this function must be async, and never throw\nasync function myOperation(a:number, b:number) {\n  const data = (a+b) * Math.random();\n  const isSuccess = data > 0.5;\n  if (!isSuccess) return { ok: false }\n  return { ok: true }\n} \n\n// Usage 1: run inline\n// NOTE: don't forget the extra `()` at the end\nconst result = await retry({\n  fn: myOperation,\n  times: 10,\n  delayBetweenAttempts: 100,\n  getStatus: (result) => {\n    if (result.ok) return 'success';\n    return 'error';\n  }\n})(10,50);\n\n\n// Usage 2: create then run\nconst myOperationWithRetry = retry({\n  fn: myOperation,\n  times: 10,\n  delayBetweenAttempts: 100,\n  getStatus: (result) => {\n    if (result.ok) return 'success';\n    return 'error';\n  }\n});\nawait myOperationWithRetry(10,50);\n\n```"
+      },
+      "fileTest": {
+        "fileName": "retry.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\nimport { repeatAsyncFnInParallel } from '../utility-framework/vitest.utils';\n\nimport { retry } from './retry';\n\n// utils\n\nconst fnThatAlwaysFails = async () => ({ ok: false } as const);\nconst fnThatAlwaysSucceeds = async () => ({ ok: true } as const);\nconst fnThatRandomlyFails = async () => Math.random() > 0.5 ? fnThatAlwaysSucceeds() : fnThatAlwaysFails();\nconst fnThatRandomlyFailsWithArguments = async (a: number, b: number) => Math.random() > 0.5 ? ({ ok: true, data: a + b } as const) : fnThatAlwaysFails();\n// tests\n\ndescribe('retry', () => {\n\n  it('do it - always success', async () => {\n\n    const ITERATIONS = 10_000;\n    const FREQUENCIES = {\n      success: 0,\n      error: 0,\n    };\n\n    await repeatAsyncFnInParallel(ITERATIONS, async () => {\n      const result = await retry({\n        fn: fnThatAlwaysSucceeds,\n        times: 10,\n        delayBetweenAttempts: 100,\n        getStatus: (result) => result.ok ? 'success' : 'error'\n      })();\n\n      expect(result).toMatchObject({ ok: true });\n\n      if (result.ok) FREQUENCIES.success++;\n      else FREQUENCIES.error++;\n    });\n\n    expect(FREQUENCIES.success).toBe(ITERATIONS);\n    expect(FREQUENCIES.error).toBe(0);\n  });\n\n  it('do it - always fails', async () => {\n\n    const ITERATIONS = 10_000;\n    const FREQUENCIES = {\n      success: 0,\n      error: 0,\n    };\n\n    await repeatAsyncFnInParallel(ITERATIONS, async () => {\n      const result = await retry({\n        fn: fnThatAlwaysFails,\n        times: 10,\n        delayBetweenAttempts: 100,\n        getStatus: (result) => result.ok ? 'success' : 'error'\n      })();\n\n      expect(result).toMatchObject({ ok: false });\n\n      if (result.ok) FREQUENCIES.success++;\n      else FREQUENCIES.error++;\n    });\n\n    expect(FREQUENCIES.success).toBe(0);\n    expect(FREQUENCIES.error).toBe(ITERATIONS);\n  });\n\n  it('do it - randomly fails', async () => {\n\n    const ITERATIONS = 10_000;\n    const FREQUENCIES = {\n      success: 0,\n      error: 0,\n    };\n\n    await repeatAsyncFnInParallel(ITERATIONS, async () => {\n      const result = await retry({\n        fn: fnThatRandomlyFails,\n        times: 10,\n        delayBetweenAttempts: 100,\n        getStatus: (result) => result.ok ? 'success' : 'error'\n      })();\n\n      expect(result).toHaveProperty('ok');\n      expect(result.ok).toBeOneOf([true, false]);\n\n      if (result.ok) FREQUENCIES.success++;\n      else FREQUENCIES.error++;\n    });\n\n    expect(FREQUENCIES.success).toBeGreaterThan(0);\n    expect(FREQUENCIES.error).toBeGreaterThan(0);\n  });\n\n  it('do it - with arguments', async () => {\n\n    const ITERATIONS = 10_000;\n    const FREQUENCIES = {\n      success: 0,\n      error: 0,\n    };\n\n    await repeatAsyncFnInParallel(ITERATIONS, async () => {\n      const result = await retry({\n        fn: fnThatRandomlyFailsWithArguments,\n        times: 10,\n        delayBetweenAttempts: 100,\n        getStatus: (result) => result.ok ? 'success' : 'error'\n      })(3, 4);\n\n      if (result.ok === false) {\n        expect(result).toMatchObject({ ok: false });\n        FREQUENCIES.error++;\n        return;\n      }\n      else {\n        expect(result).toMatchObject({ ok: true, data: 7 });\n        FREQUENCIES.success++;\n      }\n    });\n\n    expect(FREQUENCIES.success).toBeGreaterThan(0);\n    expect(FREQUENCIES.error).toBeGreaterThan(0);\n\n  });\n\n});\n"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-retry.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-retry.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-retry.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-retry.json"
+        }
+      ]
+    },
+    {
+      "name": "util-sleep",
+      "description": "Utilities for delaying code execution.",
+      "title": "Sleep",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/sleep.ts",
+          "type": "registry:file",
+          "target": "utils/sleep.ts",
+          "fileName": "sleep.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\n/**\n * Delays code execution for a given amount of time.. Never throws.\n */\nexport const sleep = (timeInMs: number) => new Promise(res => setTimeout(res, timeInMs));"
+        }
+      ],
+      "fileExample": {
+        "fileName": "sleep.example.md",
+        "fileContent": "```ts\nimport { sleep } from './sleep';\n\n// NOTE:\n// This utility is meant to be used for simulate async code resolution time, or to delay code execution.\n// This never throws an error.\n\nawait sleep(1000); // wait 1 second\n```"
+      },
+      "fileTest": {
+        "fileName": "sleep.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\nimport { repeatAsyncFnInParallel } from '../utility-framework/vitest.utils';\n\nimport { sleep } from './sleep';\n\ndescribe('sleep', () => {\n\n  it('do it', async () => {\n\n    const ITERATIONS = 10_000;\n    const FREQUENCIES = {\n      success: 0,\n      error: 0,\n    };\n\n    await repeatAsyncFnInParallel(ITERATIONS, async () => {\n      try {\n        await sleep(100);\n        FREQUENCIES.success++;\n      } catch (error) {\n        FREQUENCIES.error++;\n      }\n    });\n\n    expect(FREQUENCIES.success).toBe(ITERATIONS);\n    expect(FREQUENCIES.error).toBe(0);\n  });\n});\n"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-sleep.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-sleep.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-sleep.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-sleep.json"
+        }
+      ]
+    },
+    {
+      "name": "util-stream",
+      "description": "Utilities for working with Stream.",
+      "title": "Stream",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/stream.ts",
+          "type": "registry:file",
+          "target": "utils/stream.ts",
+          "fileName": "stream.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\nimport { Readable } from 'stream';\n\n/**\n * Convert a `Web ReadableSream` to a `Node ReadableStream`\n */\nexport const convertWebStreamToNodeStream = async (webStream: ReadableStream<Uint8Array>) => {\n  const reader = webStream.getReader();\n  return new Readable({\n    async read() {\n      const { done, value } = await reader.read();\n      if (done) {\n        this.push(null); // Chiude lo stream\n      } else {\n        this.push(value); // Passa il chunk\n      }\n    },\n  });\n};\n\n/**\n * Read a `Web ReadableSream` into a string\n */\nexport const readWebStreamIntoString = async (webStream: ReadableStream) => {\n  let output = \"\";\n  const nodeRs = await convertWebStreamToNodeStream(webStream);\n  for await (const chunk of nodeRs) {\n    output += chunk;\n  }\n  return output;\n};"
+        }
+      ],
+      "fileExample": {
+        "fileName": "stream.example.md",
+        "fileContent": "```ts\n// express handler example\n\nimport express from 'express';\nimport { openai } from 'ai/openai';\n\nimport { convertWebStreamToNodeStream } from './stream';\n\n\nconst app = express();\napp.get('/stream', async (req, res) => {\n\n  // ai sdk stream\n  const aiStream = openai.createChatCompletion({ mode: 'XXX', stream: true });\n\n  // convert WebStream to Node ReadableStream\n  const nodeRs = await convertWebStreamToNodeStream(aiStream.body);\n\n  // ...\n\n})\n```\n\n```ts\n// vitest example\n\nimport { it, expect } from 'vitest';\n\nimport { readWebStreamIntoString } from './stream';\n\nit('should convert WebStream to string', async () => {\n\n  // ai sdk stream\n  const aiStream = openai.createChatCompletion({ mode: 'XXX', stream: true });\n\n  // convert the stream to a single string\n  const resultString = await readWebStreamIntoString(aiStream.body);\n\n// check the result\n  expect(resultString).toBe('hello');\n})\n```"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-stream.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-stream.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-stream.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-stream.json"
+        }
+      ]
+    },
+    {
+      "name": "util-try-catch-async",
+      "description": "Utility for handling async functions, and forcing you to handle error cases.",
+      "title": "Try Catch Async",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility/try-catch-async.ts",
+          "type": "registry:file",
+          "target": "utils/try-catch-async.ts",
+          "fileName": "try-catch-async.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\ntype ResultError = {\n  status: 'error';\n  error: unknown;\n};\ntype ResultSuccess<T> = {\n  status: 'success';\n  data: T;\n};\n\ntype Result<T> = ResultError | ResultSuccess<T>;\n\nexport const tryCatchAsync = async <T>(fn: () => Promise<T>): Promise<Result<T>> => {\n  try {\n    const data = await fn();\n    return { status: 'success', data } as const;\n  } catch (error) {\n    return { status: 'error', error } as const;\n  }\n};\n\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "try-catch-async.example.md",
+        "fileContent": "```ts\nimport { tryCatchAsync } from './try-catch-async';\n\n// NOTE: \n// - \"tryCatchAsync\" requires an async function to be passed as argument \"cb\"\n// - \"tryCatchAsync\" never throws\n// - in case \"cb\" throws, \"tryCatchAsync\" returns a discriminated union with \"status === 'error'\" and \"error\"\n// - in case \"cb\" doesn't throw, \"tryCatchAsync\" returns a discriminated union with \"status === 'success'\" and \"data\" \n\nconst result = await tryCatchAsync(async () => {\n  return {\n    message: 'hello',\n  };\n})\n\n// you must check the discriminated union on \"status\"\nif (result.status === 'error') {\n  console.log(result.error);\n  return;\n}\n\n// so here we know that \"status\" === 'success' and \"data\" is defined\nconst data = result.data;\n// data\n{\n  message: string\n}\n\n```"
+      },
+      "fileTest": {
+        "fileName": "try-catch-async.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\nimport { repeatAsyncFnInParallel } from '../utility-framework/vitest.utils';\n// import { calculateFrequenciesStats } from './math';\n\nimport { tryCatchAsync } from './try-catch-async';\n\n\ndescribe('tryCatchAsync', () => {\n\n  it('do it', async () => {\n\n    const FREQUENCIES = {\n      success: 0,\n      error: 0\n    };\n\n    await repeatAsyncFnInParallel(1_000, async () => {\n\n      const result = await tryCatchAsync(async () => {\n        const isSuccess = Math.random() > 0.5;\n        if (isSuccess) return { ok: true };\n        throw new Error('Fake error');\n      });\n\n      expect(result).toBeTypeOf('object');\n      expect(result).toHaveProperty('status');\n      expect(result.status).oneOf(['success', 'error']);\n\n      if (result.status === 'success') {\n        expect(result.data).toBeTypeOf('object');\n        expect(result.data).toHaveProperty('ok');\n        expect(result.data.ok).toBe(true);\n\n        FREQUENCIES.success++;\n      }\n\n      if (result.status === 'error') {\n        expect(result.error).toBeInstanceOf(Error);\n\n        FREQUENCIES.error++;\n      }\n    });\n\n    // check frequencies\n    // console.log(calculateFrequenciesStats(FREQUENCIES));\n    expect(FREQUENCIES.success).toBeGreaterThan(0);\n    expect(FREQUENCIES.error).toBeGreaterThan(0);\n\n  });\n\n});\n"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-try-catch-async.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-try-catch-async.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-try-catch-async.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-try-catch-async.json"
+        }
+      ]
+    },
+    {
+      "name": "util-ts-result",
+      "description": "Result pattern.",
+      "title": "Ts Result",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility-type/ts-result.ts",
+          "type": "registry:file",
+          "target": "utils/ts-result.ts",
+          "fileName": "ts-result.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\n\n/** Create a Result Success type */\ntype ResultSuccess<S> = {\n  status: 'success';\n  data: S;\n};\n/** Create a Result Error type */\ntype ResultError<Code extends string> = {\n  status: 'error';\n  code: Code | 'UNKNOWN_ERROR',\n  message: string;\n};\n\n/** \n * Create a Result type.  \n * You must pass two generics:\n * - the first will be the `data` prop of `success` path.\n * - the second will be the `code` prop of `error` path.\n * */\nexport type Result<S, E extends string> = ResultSuccess<S> | ResultError<E>;\n\n/** \n * Create a Result type that cannot have `error` path.\n * You must pass one generic:\n * - will be the `data` prop of `success` path.\n * */\nexport type ResultAlwaysSuccess<S> = ResultSuccess<S>;\n\n\n/** Utility used to infer the `success` discriminated union of a Result type */\nexport type InferResultSuccess<R> = Extract<R, { status: 'success'; }>;\n\n/** Utility used to infer the `error` discriminated union of a Result type */\nexport type InferResultError<R> = Extract<R, { status: 'error'; }>;\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "ts-result.example.md",
+        "fileContent": "```ts\nimport type {\n  Result,\n  ResultAlwaysSuccess,\n  InferResultSuccess,\n  InferResultError\n} from './ts-result';\n\n// ========================\n// Result\n// ========================\n\ntype Fn1Result = Result<{ name: string; }, 'FETCH_FAILED'>;\n\nconst fn1 = async (): Promise<Fn1Result> => {\n\n  // ts force you to return a discriminated union\n\n  try {\n    const result = await fetch('https://api.example.com');\n\n    // for error not unexpected\n    if (!result.ok) {\n      return {\n        status: 'error',\n        code: 'FETCH_FAILED',\n        message: 'Fetch status is not ok: ' + result.status,\n      };\n    }\n\n    // for success\n    return {\n      status: 'success',\n      data: await result.json(),\n    };\n  }\n  catch (error) {\n    // for error unexpected\n    return {\n      status: 'error',\n      code: 'UNKNOWN_ERROR',\n      message: 'Something went wrong with fetch',\n    };\n\n  }\n\n};\n\n// ========================\n// ResultAlwaysSuccess\n// ========================\n\ntype Fn2Result = ResultAlwaysSuccess<{ name: string; }>;\nconst fn2 = async (): Promise<Fn2Result> => {\n\n  // ts force you to return a value with status === 'success'\n  // use this if you know that error is not possible, or if you want to treat error as success\n\n  // ... do your work\n\n  return {\n    status: 'success',\n    data: { name: 'John Doe' },\n  };\n};\n\n\n// ========================\n// Infer Types\n// ========================\n\ntype Fn1ResultSuccess = InferResultSuccess<Fn1Result>;\ntype Fn1ResultError = InferResultError<Fn1Result>;\n\ntype Fn3Result = Result<\n  Fn1ResultSuccess['data'],\n  \"INVALID_INPUT\" | Fn1ResultError['code']\n>;\n\nconst fn3 = async (text: string): Promise<Fn3Result> => {\n\n  try {\n\n    // if invalid input -> return `INVALID_INPUT` error code\n    if (text.length < 3) {\n      return {\n        status: 'error',\n        code: 'INVALID_INPUT',\n        message: 'Invalid input',\n      };\n    }\n\n    // if error in sub fn -> return sub fn error\n    const fn1Result = await fn1();\n    if (fn1Result.status === 'error') {\n      return fn1Result;\n    }\n\n    // if success in sub fn -> return sub fn success\n    return {\n      status: 'success',\n      data: fn1Result.data,\n    };\n\n  }\n  catch (error) {\n    // if error unexpected -> return `UNKNOWN_ERROR` error code\n    return {\n      status: 'error',\n      code: 'UNKNOWN_ERROR',\n      message: 'Something went wrong',\n    };\n\n  }\n};\n\n```"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-ts-result.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-ts-result.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-ts-result.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-ts-result.json"
+        }
+      ]
+    },
+    {
+      "name": "util-ts-result-zod",
+      "description": "Result pattern with Zod instead of Typescript Types a source.",
+      "title": "Ts Result Zod",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility-type/ts-result-zod.ts",
+          "type": "registry:file",
+          "target": "utils/ts-result-zod.ts",
+          "fileName": "ts-result-zod.ts",
+          "fileContent": "import z from \"zod\";\n\n\ntype Base = {\n  SuccessData: z.ZodSchema;\n  ErrorCodes: readonly [string, ...string[]],\n};\n\n/** \n * Create a Result Success Zod Schema.  \n * See {@link schemaResult}\n * */\nexport const schemaResultSuccess = <DataSchema extends Base['SuccessData']>(dataSchema: DataSchema) => z.object({\n  status: z.literal('success'),\n  data: dataSchema,\n});\n\n/** \n * Create a Result Error Zod Schema.  \n * See {@link schemaResult}\n * */\nexport const schemaResultError = <ErrorCodes extends Base['ErrorCodes']>(errorCodes: ErrorCodes) => z.object({\n  status: z.literal('error'),\n  code: z.enum(errorCodes),\n  message: z.string(),\n});\n\n/** Create a Result Zod Schema \n * @example\n * const result = schemaResult(\n *   schemaResultSuccess(z.object({ name: z.string() })),\n *   schemaResultError(['FETCH_FAILED'] as const)\n * );\n * \n * type Result = InferResult<typeof result>;\n * // ⏬\n * type Result = { \n *   status: 'success'; \n *   data: { \n *     name: string \n *   } \n * } | { \n *   status: 'error'; \n *   code: 'FETCH_FAILED'; \n *   message: string \n * }\n * \n * const fn = async (): Promise<Result> => {\n *   // ...\n * }\n * */\nexport const schemaResult = <\n  S extends Base['SuccessData'],\n  E extends Base['ErrorCodes'],\n>(\n  schemaSuccess: ReturnType<typeof schemaResultSuccess<S>>,\n  schemaError: ReturnType<typeof schemaResultError<E>>,\n) => z.discriminatedUnion('status', [\n  schemaSuccess,\n  schemaError,\n]);\n\n/** Infer Types of a Result. Contains both `success` and `error`.\n * @example\n * const result = schemaResult(\n *   schemaResultSuccess(z.object({ name: z.string() })),\n *   schemaResultError(['FETCH_FAILED'] as const)\n * );\n * \n * type Result = InferResult<typeof result>;\n * // ⏬\n * { \n *   status: 'success'; \n *   data: { \n *     name: string \n *   } \n * } | { \n *   status: 'error'; \n *   code: 'FETCH_FAILED'; \n *   message: string \n * }\n * */\nexport type InferResult<R extends ReturnType<typeof schemaResult>> = z.infer<R>;\n\n/** Infer Types of a Result Success\n * @example\n * const result = schemaResult(\n *   schemaResultSuccess(z.object({ name: z.string() })),\n *   schemaResultError(['FETCH_FAILED'] as const)\n * );\n * \n * type ResultSuccess = InferResultSuccess<typeof result>;\n * // ⏬\n * { \n *   status: 'success'; \n *   data: { \n *     name: string \n *   } \n * }\n * */\nexport type InferResultSuccess<R extends ReturnType<typeof schemaResult>> = Extract<InferResult<R>, { status: 'success'; }>;\n\n/** Infer Types of a Result Error\n * @example\n * const result = schemaResult(\n *   schemaResultSuccess(z.object({ name: z.string() })),\n *   schemaResultError(['FETCH_FAILED'] as const)\n * );\n * \n * type ResultError = InferResultError<typeof result>;\n * // ⏬\n * { \n *   status: 'error'; \n *   code: 'FETCH_FAILED'; \n *   message: string \n * }\n * */\nexport type InferResultError<R extends ReturnType<typeof schemaResult>> = Extract<InferResult<R>, { status: 'error'; }>;\n\n\nconst getResultSuccess = <\n  S extends Base['SuccessData'],\n  E extends Base['ErrorCodes'],\n>(\n  result: ReturnType<typeof schemaResult<S, E>>\n) => result.options[0];\n\nconst getResultError = <\n  S extends Base['SuccessData'],\n  E extends Base['ErrorCodes'],\n>(\n  result: ReturnType<typeof schemaResult<S, E>>\n) => result.options[1];\n\n\n/**\n * Extract Data from a Result Zod Schema\n * @example\n * const result = schemaResult(\n *   schemaResultSuccess(z.object({ name: z.string() })),\n *   schemaResultError(['FETCH_FAILED'] as const)\n * );\n * \n * const resultData = getResultData(result);\n * // ⏬\n * {\n *   success: schemaResultSuccess(z.object({ name: z.string() })),\n *   successData: z.object({ name: z.string() }),\n *   error: schemaResultError(['FETCH_FAILED'] as const),\n *   errorCodes: ['FETCH_FAILED'] as const,\n * }\n * \n * const wrappedResult = schemaResult(\n *   schemaResultSuccess(\n *     z.object({ \n *       extraData: z.string(),\n *       otherResultData: getResultData(result).successData,\n *     })\n *   ),\n *   schemaResultError([\n *     'NEW_ERROR_CODE',\n *      ...getResultData(result).errorCodes\n *   ] as const)\n * );\n * \n */\nexport const getResultData = <\n  S extends Base['SuccessData'],\n  E extends Base['ErrorCodes'],\n>(\n  result: ReturnType<typeof schemaResult<S, E>>\n) => {\n  return {\n    success: getResultSuccess(result),\n    successData: getResultSuccess(result).shape.data,\n    error: getResultError(result),\n    errorCodes: getResultError(result).shape.code.options,\n  };\n};\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "ts-result-zod.example.md",
+        "fileContent": "\n**Basic Usage**  \n\n```ts\n\nimport z from 'zod';\n\nimport {\n  schemaResult,\n  schemaResultSuccess,\n  schemaResultError,\n  type InferResult,\n  type InferResultSuccess,\n  type InferResultError,\n} from './ts-result-zod';\n\nconst schemaFn1Result = schemaResult(\n    schemaResultSuccess(z.object({ name: z.string() })),\n    schemaResultError(['FETCH_FAILED', 'UNKNOWN_ERROR'] as const),\n  );\n\ntype Fn1Result = InferResult<typeof schemaFn1Result>;\n\nconst fn1 = async (): Promise<Fn1Result> => {\n\n  // ts force you to return a discriminated union\n\n  try {\n    const result = await fetch('https://api.example.com');\n\n    // for error not unexpected\n    if (!result.ok) {\n      return {\n        status: 'error',\n        code: 'FETCH_FAILED',\n        message: 'Fetch status is not ok: ' + result.status,\n      };\n    }\n\n    // for success\n    return {\n      status: 'success',\n      data: await result.json(),\n    };\n  }\n  catch (error) {\n    // for error unexpected\n    return {\n      status: 'error',\n      code: 'UNKNOWN_ERROR',\n      message: 'Something went wrong with fetch',\n    };\n\n  }\n\n};\n\n```\n\n**Infer Types**  \n\n```ts\nimport z from 'zod';\n\nimport {\n  schemaResult,\n  schemaResultSuccess,\n  schemaResultError,\n  type InferResult,\n  type InferResultSuccess,\n  type InferResultError,\n} from './ts-result-zod';\n\nconst simpleResult = schemaResult(\n  schemaResultSuccess(z.object({ name: z.string(), age: z.number() })),\n  schemaResultError(['MY_ERROR_CODE', 'UNKNOWN_ERROR'] as const),\n);\n\ntype SimpleResult = InferResult<typeof simpleResult>;\n// ⏬\n{\n  status: \"success\";\n  data: {\n      name: string;\n      age: number;\n  };\n} | {\n  status: \"error\";\n  code: \"UNKNOWN_ERROR\" | \"MY_ERROR_CODE\";\n  message: string;\n}\n\ntype SimpleResultSuccess = InferResultSuccess<typeof simpleResult>;\n// ⏬\n{\n  status: \"success\";\n  data: {\n      name: string;\n      age: number;\n  };\n}\n\n\ntype SimpleResultError = InferResultError<typeof simpleResult>;\n// ⏬\n{\n  status: \"error\";\n  code: \"UNKNOWN_ERROR\" | \"MY_ERROR_CODE\";\n  message: string;\n}\n\n\n```\n\n**Wrap Result in an other Result**  \n\n```ts\nimport z from 'zod';\n\nimport {\n  schemaResult,\n  schemaResultSuccess,\n  schemaResultError,\n  type InferResult,\n  getResultData,\n} from './ts-result-zod';\n\n// define first result\nconst simpleResult = schemaResult(\n  schemaResultSuccess(z.object({ name: z.string(), age: z.number() })),\n  schemaResultError(['MY_ERROR_CODE', 'UNKNOWN_ERROR'] as const),\n);\n\n// define second result that wrap the first\nconst wrappedResult = schemaResult(\n  schemaResultSuccess(\n    z.object({\n      simpleData: getResultData(simpleResult).successData,\n      extraInfo: z.string(),\n    }),\n  ),\n  schemaResultError([\n    'INVALID_INPUT',\n    ...getResultData(simpleResult).errorCodes\n  ] as const),\n);\n\n// infer types of the wrapped result\ntype WrappedResult = InferResult<typeof wrappedResult>;\n// ⏬\n{\n  status: \"success\";\n  data: {\n      simpleData: {\n          name: string;\n          age: number;\n      };\n      extraInfo: string;\n  };\n} | {\n  status: \"error\";\n  code: \"UNKNOWN_ERROR\" | \"MY_ERROR_CODE\" | \"INVALID_INPUT\";\n  message: string;\n}\n\n\n// use it\n\nconst fnWrapped = async (): Promise<WrappedResult> => {\n  // ...\n}\n\n```"
+      },
+      "allDependencies": [
+        {
+          "label": "zod",
+          "type": "npm"
+        }
+      ],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-ts-result-zod.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-ts-result-zod.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-ts-result-zod.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-ts-result-zod.json"
+        }
+      ]
+    },
+    {
+      "name": "util-express-utils",
+      "description": "Utilities for working with express.js.",
+      "title": "Express Utils",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility-framework/express.utils.ts",
+          "type": "registry:file",
+          "target": "utils/express.utils.ts",
+          "fileName": "express.utils.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\nimport type {\n  Request as ExpressRequest,\n  Response as ExpressResponse,\n} from 'express';\n\nexport const getExpressRequestInfo = (\n  req: ExpressRequest,\n  res: ExpressResponse,\n  reqId: string,\n) => {\n\n  // get request data\n  const isHostLocalhost = req.hostname === 'localhost' || req.hostname.startsWith('192.168.');\n  const reqData = {\n    id: reqId,\n    origin: req.headers.origin,\n    method: req.method,\n    hostname: req.hostname,\n    path: req.path,\n    query: req.query,\n    full_url: [\n      req.protocol,\n      \"://\",\n      req.hostname,\n      isHostLocalhost ? `:${req.socket.localPort}` : '',\n      req.originalUrl,\n    ].join(''),\n    headers: req.headers,\n  };\n\n  // get response data\n  const resData = {\n    statusCode: res.statusCode,\n    statusMessage: res.statusMessage,\n    responseTime: 'responseTime' in res ? res.responseTime : 'unknown',\n    headers: ('_header' in res && typeof res._header === 'string') ? res._header.split('\\n') : 'unknown',\n  };\n\n  return {\n    reqData,\n    resData,\n  };\n};\n\n"
+        }
+      ],
+      "fileExample": {
+        "fileName": "express.utils.example.md",
+        "fileContent": "```ts\nimport { getExpressRequestInfo } from './express.utils';\n\nconst reqInfo = getExpressRequestInfo(\n  req,\n  res,\n  'an-id-for-this-request-used-only-by-you-to-identify-it',\n);\n// ⏬\n{\n  reqData: {\n    id: 'an-id-for-this-request-used-only-by-you-to-identify-it',\n    origin: 'http://localhost:3000',\n    method: 'GET',\n    hostname: 'localhost',\n    path: '/api',\n    query: {},\n    full_url: 'http://localhost:3000/api',\n    headers: {},\n  },\n  resData: {\n    statusCode: 200,\n    statusMessage: 'OK',\n    responseTime: 'responseTime' in res ? res.responseTime : 'unknown',\n    headers: ('_header' in res && typeof res._header === 'string') ? res._header.split('\\n') : 'unknown',\n  },\n}\n```"
+      },
+      "allDependencies": [
+        {
+          "label": "express",
+          "type": "npm"
+        }
+      ],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-express-utils.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-express-utils.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-express-utils.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-express-utils.json"
+        }
+      ]
+    },
+    {
+      "name": "util-vitest-utils",
+      "description": "Utilities for working with vitest.",
+      "title": "Vitest Utils",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility-framework/vitest.utils.ts",
+          "type": "registry:file",
+          "target": "utils/vitest.utils.ts",
+          "fileName": "vitest.utils.ts",
+          "fileContent": "/**\n * Source: http://localhost:3000\n */\n\n/**\n * Repaet a function a number of times. Sync version, that accept only a sync function.\n */\nexport function repeatSyncFn(\n  /** how many times to repeat */\n  times: number,\n  /** what function to repeat */\n  fn: () => void,\n) {\n  for (let i = 0; i < times; i++) {\n    fn();\n  }\n};\n\n/**\n * Repeat a function a number of times. Async version, that accept only a async function.\n */\nexport async function repeatAsyncFnInParallel<T>(\n  /** how many times to repeat */\n  times: number,\n  /** what function to repeat. */\n  fn: () => Promise<T>\n) {\n  return Promise.all(\n    Array.from({ length: times }, fn)\n  );\n}"
+        }
+      ],
+      "fileExample": {
+        "fileName": "vitest.utils.example.md",
+        "fileContent": "```ts\nimport { it, expect } from 'vitest';\nimport { repeatSyncFn, repeatAsyncFn } from './vitest.utils';\n\n// repeatSyncFn\nit('use repeatSyncFn', () => {\n  repeatSyncFn(10_000, () => {\n    expect(true).toBe(true);\n  });\n}))\n\n\n// repeatAsyncFn - Internally this uses Promise.all\nit('use repeatAsyncFn', async () => {\n  // when you don't care about the return value\n  await repeatAsyncFn(10_000, async () => {\n    expect(true).toBe(true);\n  })\n\n  // when you care about the return value\n  const result = await repeatAsyncFn(10_000, async () => {\n    if (Math.random() > 0.5) return true;\n    return false;\n  });\n  expect(Array.isArray(result)).toBe(true);\n  result.forEach((item) => expect(item).oneOf([true, false]))\n})\n\n```"
+      },
+      "allDependencies": [
+        {
+          "label": "vitest",
+          "type": "npm"
+        }
+      ],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-vitest-utils.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-vitest-utils.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-vitest-utils.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-vitest-utils.json"
+        }
+      ]
+    },
+    {
+      "name": "util-infer-deploy-url",
+      "description": "Utilities for inferring deploy url from auto-injected env vars on platform like Vercel or Netlify.",
+      "title": "Infer Deploy Url",
+      "filesWithContent": [
+        {
+          "path": "registry/input/items/utility-service/infer-deploy-url.ts",
+          "type": "registry:file",
+          "target": "utils/infer-deploy-url.ts",
+          "fileName": "infer-deploy-url.ts",
+          "fileContent": "\n/** Which git branch must be considered `production` */\nconst GIT_BRANCH_PRODUCTION = 'main';\n\n\n/**\n * Get the server base URL by inferring the environment.  \n * \n * If called from `browser` -> returns empty string (relative path usage).  \n * If called from `server` -> try to recognize the URL from env vars injected by the deploy service, if nothing found ->  fallback to `localhost:3000`.  \n * \n * NOTE: recognized deploy services: `netlify.com`, `vercel.com`\n */\nexport function getInferredDeployUrl(processEnv: NodeJS.ProcessEnv) {\n  // if browser...\n  if (isBrowser()) {\n    // browser should use relative path\n    return '';\n  }\n\n  // if is server..\n  return (\n    inferDeployUrlVercel(processEnv)\n    || inferDeployUrlNetlify(processEnv)\n    || `http://localhost:${processEnv.PORT ?? 3000}`\n  );\n}\n\n\ntype InferDeployUrl = (processEnv: NodeJS.ProcessEnv) => string | null;\n\n/** Get Vercel deploy url (`string`) if this app is built on Vercel, or `null` otherwise */\nconst inferDeployUrlVercel: InferDeployUrl = (processEnv) => {\n\n  // @see https://vercel.com/docs/environment-variables/system-environment-variables\n  //\n  // - VERCEL=1 if deployed on Vercel\n  // - VERCEL_GIT_COMMIT_REF:\n  //     - i.e. `main`\n  //     - is the git branch of the deployment\n  // - VERCEL_PROJECT_PRODUCTION_URL:\n  //     - i.e. `my-project.vercel.app`\n  //     - is the fixed production url of the project on Vercel\n  //     - does not change across deployments\n  //     - if custom domain is used, this is the custom domain\n  //     - if no custom domain is used, this is the production url auto-assigned by Vercel\n  // - VERCEL_URL:\n  //     - i.e. `my-project-4535c432342x4234.vercel.app`\n  //     - is the immutable deplyment url.\n  //     - changes on each deployment\n\n  // if we are on Vercel...\n  if (processEnv.VERCEL === '1') {\n\n    // ...and this git branch is PRODUCTION and we have a Vercel Production Url -> return it\n    if (processEnv.VERCEL_GIT_COMMIT_REF === GIT_BRANCH_PRODUCTION && processEnv.VERCEL_PROJECT_PRODUCTION_URL) {\n      return `https://${processEnv.VERCEL_PROJECT_PRODUCTION_URL}`;\n    }\n\n    // ...and this git branch is not PRODUCTION and we have a Vercel Deploy Preview Url or Branch Deploy Url -> return it\n    if (processEnv.VERCEL_GIT_COMMIT_REF !== GIT_BRANCH_PRODUCTION && processEnv.VERCEL_URL) {\n      return `https://${processEnv.VERCEL_URL}`;\n    }\n  }\n\n  // if not deployed on Vercel -> return null\n  return null;\n};\n\n/** Get Netlify deploy url (`string`) if this app is built on Netlify, or `null` otherwise */\nconst inferDeployUrlNetlify: InferDeployUrl = (processEnv) => {\n\n  // @see https://docs.netlify.com/build/configure-builds/environment-variables/\n  //\n  // - NETLIFY=true if deployed on netlify\n  // - BRANCH:\n  //     - i.e. `main`\n  //     - is the git branch of the deployment\n  // - URL:\n  //     - i.e. `https://my-project.netlify.app`\n  //     - is the fixed production url of the project on Vercel\n  //     - does not change across deployments\n  //     - if custom domain is used, this is the custom domain\n  //     - if no custom domain is used, this is the auto-assigned by netlify production url\n  // - DEPLOY_URL:\n  //     - i.e. `https://5b243e66dd6a547b4fee73ae--petsof.netlify.app`\n  //     - is the immutable deplyment url.\n  //     - changes on each deployment\n  // - DEPLOY_PRIME_URL:\n  //     - i.e. `https://deploy-preview-1--petsof.netlify.app`\n  //     - is the deplyment url of the gruoup (deploy preview for the same PR keep the same url on new commits re-deploy, ...).\n  //     - changes when the group changees\n\n  // if we are on Netlify...\n  if (processEnv.NETLIFY === 'true') {\n\n    // ...and this git branch is PRODUCTION and we have a Netlify Production Url -> return it\n    if (processEnv.BRANCH === 'main' && processEnv.URL) {\n      return processEnv.URL;\n    }\n\n    // ...and this git branch is not PRODUCTION and we have a Netlify Deploy Preview or Branch Deploy Url -> return it\n    if (processEnv.BRANCH !== 'main' && processEnv.DEPLOY_PRIME_URL) {\n      return processEnv.DEPLOY_PRIME_URL;\n    }\n    if (processEnv.BRANCH !== 'main' && processEnv.DEPLOY_URL) {\n      return processEnv.DEPLOY_URL;\n    }\n  }\n\n  // if not deployed on Netlify -> return null\n  return null;\n\n};\n\n\n\n// utils\n\nfunction isBrowser() {\n  return typeof window !== 'undefined';\n}"
+        }
+      ],
+      "fileExample": {
+        "fileName": "infer-deploy-url.example.md",
+        "fileContent": "```ts\n// constants.ts\n\nimport { getInferredDeployUrl } from './infer-deploy-url';\n\nexport const APP_BASE_URL = getInferredDeployUrl(process.env);\n// ⏬ when browser\n// \"\"\n\n// ⏬ when server + no recognized deploy service\n// http://localhost:3000\n\n// ⏬ when server + production deploy on vercel\n// https://my-project.vercel.app\n\n// ⏬ when server + deploy preview on vercel\n// https://my-project-4567g34536d.vercel.app\n\n// ⏬ when server + production deploy on netlify\n// https://my-project.netlify.app\n\n// ⏬ when server + deploy preview on netlify\n// https://deploy-preview-1--petsof.netlify.app\n\n```"
+      },
+      "fileTest": {
+        "fileName": "infer-deploy-url.test.ts",
+        "fileContent": "import { describe, it, expect } from 'vitest';\n\nimport { getInferredDeployUrl } from './infer-deploy-url';\n\ndescribe('getInferredDeployUrl', () => {\n\n  it('do it - browser', () => {\n    // @ts-ignore\n    global.window = {};\n\n    expect(getInferredDeployUrl({\n      NODE_ENV: 'production',\n    })).toBe(\"\");\n    expect(getInferredDeployUrl({\n      NODE_ENV: 'development',\n    })).toBe(\"\");\n\n    // @ts-ignore\n    delete global.window;\n  });\n\n  it('do it - server + no recognized deploy service', () => {\n    expect(getInferredDeployUrl({\n      NODE_ENV: 'production',\n    })).toBe(\"http://localhost:3000\");\n    expect(getInferredDeployUrl({\n      NODE_ENV: 'development',\n    })).toBe(\"http://localhost:3000\");\n  });\n\n  it('do it - server + vercel', () => {\n    // production\n    expect(getInferredDeployUrl({\n      NODE_ENV: 'production',\n      VERCEL: '1',\n      VERCEL_GIT_COMMIT_REF: 'main',\n      VERCEL_PROJECT_PRODUCTION_URL: 'my-project.vercel.app',\n      VERCEL_URL: 'my-project-4535c432342x4234.vercel.app',\n    })).toBe('https://my-project.vercel.app');\n\n    // deploy preview\n    expect(getInferredDeployUrl({\n      NODE_ENV: 'production',\n      VERCEL: '1',\n      VERCEL_GIT_COMMIT_REF: 'feature-1',\n      VERCEL_PROJECT_PRODUCTION_URL: 'my-project.vercel.app',\n      VERCEL_URL: 'my-project-4567g34536d.vercel.app',\n    })).toBe('https://my-project-4567g34536d.vercel.app');\n\n  });\n\n  it('do it - server + netlify', () => {\n    // production\n    expect(getInferredDeployUrl({\n      NODE_ENV: 'production',\n      NETLIFY: 'true',\n      BRANCH: 'main',\n      URL: 'https://my-project.netlify.app',\n      DEPLOY_URL: 'https://5b243e66dd6a547b4fee73ae--petsof.netlify.app',\n      DEPLOY_PRIME_URL: 'https://deploy-preview-1--petsof.netlify.app',\n    })).toBe('https://my-project.netlify.app');\n\n    // deploy preview\n    expect(getInferredDeployUrl({\n      NODE_ENV: 'production',\n      NETLIFY: 'true',\n      BRANCH: 'feature-1',\n      URL: 'https://my-project.netlify.app',\n      DEPLOY_URL: 'https://5b243e66dd6a547b4fee73ae--petsof.netlify.app',\n      DEPLOY_PRIME_URL: 'https://deploy-preview-1--petsof.netlify.app',\n    })).toBe('https://deploy-preview-1--petsof.netlify.app');\n\n  });\n\n});\n"
+      },
+      "allDependencies": [],
+      "installCommands": [
+        {
+          "packageManager": "npm",
+          "command": "npx shadcn@latest add http://localhost:3000/r/util-infer-deploy-url.json"
+        },
+        {
+          "packageManager": "yarn",
+          "command": "yarn shadcn@latest add http://localhost:3000/r/util-infer-deploy-url.json"
+        },
+        {
+          "packageManager": "pnpm",
+          "command": "pnpm dlx shadcn@latest add http://localhost:3000/r/util-infer-deploy-url.json"
+        },
+        {
+          "packageManager": "bun",
+          "command": "bunx --bun shadcn@latest add http://localhost:3000/r/util-infer-deploy-url.json"
+        }
+      ]
+    }
+  ]
+}
