@@ -113,6 +113,15 @@
   --sidebar: hsl(240 10% 3.9%);
 }
 
+/* New Tokens */
+
+:root {
+  --code: hsl(240 4.8% 94%);
+}
+.dark {
+  --code: hsl(240 5% 9%);
+}
+
 /* Shadcn Tailwind Config */
 
 @custom-variant dark (&:is(.dark *));
@@ -163,6 +172,8 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+
+  --color-code: var(--code);
 }
 
 /* Tailwind v4 base */
