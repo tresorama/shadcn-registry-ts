@@ -3,6 +3,7 @@ import { cache } from 'react';
 import { APP_DATA_MODE } from '@/constants/server';
 
 import { nextData } from '#root/registry/output-reader/next';
+import type { PackageManagerKey } from '#root/registry/output-deriver/next/registry/types.package-manager';
 
 //  input
 
@@ -18,6 +19,10 @@ export type NextData = {
   registryItemNames: Awaited<ReturnType<typeof getRegistryItemNames>>,
   registryItem: Awaited<ReturnType<typeof getRegistryItemByName>>,
   sidebarData: Awaited<ReturnType<typeof getSidebarData>>,
+};
+
+export {
+  type PackageManagerKey,
 };
 
 
