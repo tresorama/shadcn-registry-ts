@@ -43,7 +43,7 @@ next-env.d.ts
 
 
 # shadcn regitry outputs
-registry/output
+registry/output-static-artifacts
 
 # shadcn registry generated public files
 public/r

@@ -2,7 +2,7 @@ import MAP_CATEGORY_TO_LABEL from "#root/registry/input/config/sidebar-page-grou
 
 import type { StaticSidebarData, StaticSidebarPageGroup } from "./types";
 
-import { getRegistryInput } from "../../utils/get-registry-input";
+import { getRegistryInput } from "../../get-registry-input";
 
 export const calculateStaticSidebarData = async (): Promise<StaticSidebarData> => {
   const regitryInput = await getRegistryInput();

@@ -4,7 +4,7 @@ import {
 } from 'shadcn/registry';
 
 import type { RegistryForNext, RegistryForNextItem } from './types.registry';
-import { getRegistryInput } from '../../utils/get-registry-input';
+import { getRegistryInput } from '../../get-registry-input';
 
 import { APP_BASE_URL } from '@/constants/server';
 import { getFileData, getFilePathFromRoot } from "@/lib/utils/file";

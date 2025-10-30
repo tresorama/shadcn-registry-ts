@@ -22,7 +22,10 @@ description: Folder structure of the project
     - ℹ️ *next.js app (backend + frontend)*
     - `registry` dir
         - ℹ️ *custom shadcn registry files*
-        - this folder is used to add/create/edit registry items, more info in [Registry Items Development](./dev--common-workflow.md#registry-items)
+        - this folder is used to:
+          - define input files of the registry (add/create/edit items), more info in [Registry Items Development](./dev--common-workflow.md#registry-items)
+          - generating derived version of these input files
+          - read generated derived version of these input files in nextjs and shadcn cli
     - `public` dir:
         - ℹ️ *static files served by next.js*
         - This folder is used to serve static files like icons, maniafest...
