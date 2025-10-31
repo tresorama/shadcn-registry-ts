@@ -2,14 +2,14 @@ type ResultError = {
   status: 'error';
   error: unknown;
 };
-type ResultSuccess<T> = {
+type ResultSuccess<TData> = {
   status: 'success';
-  data: T;
+  data: TData;
 };
 
-type Result<T> = ResultError | ResultSuccess<T>;
+type Result<TSuccessData> = ResultError | ResultSuccess<TSuccessData>;
 
-export const tryCatchAsync = async <T>(fn: () => Promise<T>): Promise<Result<T>> => {
+export const tryCatchAsync = async <TReturn>(fn: () => Promise<TReturn>): Promise<Result<TReturn>> => {
   try {
     const data = await fn();
     return { status: 'success', data } as const;

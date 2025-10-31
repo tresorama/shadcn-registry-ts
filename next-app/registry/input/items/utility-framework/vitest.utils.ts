@@ -15,11 +15,11 @@ export function repeatSyncFn(
 /**
  * Repeat a function a number of times. Async version, that accept only a async function.
  */
-export async function repeatAsyncFnInParallel<T>(
+export async function repeatAsyncFnInParallel<TReturn>(
   /** how many times to repeat */
   times: number,
   /** what function to repeat. */
-  fn: () => Promise<T>
+  fn: () => Promise<TReturn>
 ) {
   return Promise.all(
     Array.from({ length: times }, fn)

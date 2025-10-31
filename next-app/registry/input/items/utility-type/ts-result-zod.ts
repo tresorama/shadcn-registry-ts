@@ -2,7 +2,7 @@ import z from "zod";
 
 
 type Base = {
-  SuccessData: z.ZodSchema;
+  SuccessDataSchema: z.ZodSchema;
   ErrorCodes: readonly [string, ...string[]],
 };
 
@@ -10,7 +10,7 @@ type Base = {
  * Create a Result Success Zod Schema.  
  * See {@link schemaResult}
  * */
-export const schemaResultSuccess = <DataSchema extends Base['SuccessData']>(dataSchema: DataSchema) => z.object({
+export const schemaResultSuccess = <TSuccessDataSchema extends Base['SuccessDataSchema']>(dataSchema: TSuccessDataSchema) => z.object({
   status: z.literal('success'),
   data: dataSchema,
 });
@@ -19,7 +19,7 @@ export const schemaResultSuccess = <DataSchema extends Base['SuccessData']>(data
  * Create a Result Error Zod Schema.  
  * See {@link schemaResult}
  * */
-export const schemaResultError = <ErrorCodes extends Base['ErrorCodes']>(errorCodes: ErrorCodes) => z.object({
+export const schemaResultError = <TErrorCode extends Base['ErrorCodes']>(errorCodes: TErrorCode) => z.object({
   status: z.literal('error'),
   code: z.enum(errorCodes),
   message: z.string(),
@@ -50,11 +50,11 @@ export const schemaResultError = <ErrorCodes extends Base['ErrorCodes']>(errorCo
  * }
  * */
 export const schemaResult = <
-  S extends Base['SuccessData'],
-  E extends Base['ErrorCodes'],
+  TSuccessDataSchema extends Base['SuccessDataSchema'],
+  TErrorCode extends Base['ErrorCodes'],
 >(
-  schemaSuccess: ReturnType<typeof schemaResultSuccess<S>>,
-  schemaError: ReturnType<typeof schemaResultError<E>>,
+  schemaSuccess: ReturnType<typeof schemaResultSuccess<TSuccessDataSchema>>,
+  schemaError: ReturnType<typeof schemaResultError<TErrorCode>>,
 ) => z.discriminatedUnion('status', [
   schemaSuccess,
   schemaError,
@@ -80,7 +80,7 @@ export const schemaResult = <
  *   message: string 
  * }
  * */
-export type InferResult<R extends ReturnType<typeof schemaResult>> = z.infer<R>;
+export type InferResult<TResult extends ReturnType<typeof schemaResult>> = z.infer<TResult>;
 
 /** Infer Types of a Result Success
  * @example
@@ -98,7 +98,7 @@ export type InferResult<R extends ReturnType<typeof schemaResult>> = z.infer<R>;
  *   } 
  * }
  * */
-export type InferResultSuccess<R extends ReturnType<typeof schemaResult>> = Extract<InferResult<R>, { status: 'success'; }>;
+export type InferResultSuccess<TResult extends ReturnType<typeof schemaResult>> = Extract<InferResult<TResult>, { status: 'success'; }>;
 
 /** Infer Types of a Result Error
  * @example
@@ -115,21 +115,21 @@ export type InferResultSuccess<R extends ReturnType<typeof schemaResult>> = Extr
  *   message: string 
  * }
  * */
-export type InferResultError<R extends ReturnType<typeof schemaResult>> = Extract<InferResult<R>, { status: 'error'; }>;
+export type InferResultError<TResult extends ReturnType<typeof schemaResult>> = Extract<InferResult<TResult>, { status: 'error'; }>;
 
 
 const getResultSuccess = <
-  S extends Base['SuccessData'],
-  E extends Base['ErrorCodes'],
+  TSuccessDataSchema extends Base['SuccessDataSchema'],
+  TErrorCode extends Base['ErrorCodes'],
 >(
-  result: ReturnType<typeof schemaResult<S, E>>
+  result: ReturnType<typeof schemaResult<TSuccessDataSchema, TErrorCode>>
 ) => result.options[0];
 
 const getResultError = <
-  S extends Base['SuccessData'],
-  E extends Base['ErrorCodes'],
+  TSuccessDataSchema extends Base['SuccessDataSchema'],
+  TErrorCode extends Base['ErrorCodes'],
 >(
-  result: ReturnType<typeof schemaResult<S, E>>
+  result: ReturnType<typeof schemaResult<TSuccessDataSchema, TErrorCode>>
 ) => result.options[1];
 
 
@@ -165,10 +165,10 @@ const getResultError = <
  * 
  */
 export const getResultData = <
-  S extends Base['SuccessData'],
-  E extends Base['ErrorCodes'],
+  TSuccessDataSchema extends Base['SuccessDataSchema'],
+  TErrorCode extends Base['ErrorCodes'],
 >(
-  result: ReturnType<typeof schemaResult<S, E>>
+  result: ReturnType<typeof schemaResult<TSuccessDataSchema, TErrorCode>>
 ) => {
   return {
     success: getResultSuccess(result),

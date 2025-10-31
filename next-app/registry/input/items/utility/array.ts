@@ -1,4 +1,4 @@
-export const getLastArrayItem = <T>(array: T[]) => array[array.length - 1];
+export const getLastArrayItem = <TItem>(array: TItem[]) => array[array.length - 1];
 
 
 /** Create an array with length, that you can `.map` on */
