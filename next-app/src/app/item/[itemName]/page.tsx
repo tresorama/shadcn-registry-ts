@@ -5,11 +5,10 @@ import z from "zod";
 import { getRegistryItemNames, getRegistryItemByName } from "@/lib/registry/get-next-data";
 import { InstallCommand } from "./_components/client.install-command";
 import { TOC } from "./_components/client.toc";
-import { CodeNotCollapsibleServer } from "./_components/server.code-not-collapsible";
-import { CodeCollapsibleServer } from "./_components/server.code-collapsible";
 
 import { cn } from "@/lib/shadcn/utils";
 import { Badge } from "@/components/shadcn/ui/badge";
+import { MarkdownRendererServer } from "@/components/mine/markdown-renderer/server-component/markdown-renderer";
 
 // 1. Use the registry to generate static paths
 
@@ -92,9 +91,9 @@ export default async function Page(
           {/* Example Usage */}
           <section id="example" className="flex flex-col gap-4">
             <h2 className={cn(typo.sectionHeading)}>Example Usage</h2>
-            <CodeNotCollapsibleServer
-              codeString={item.fileExample.fileContent}
-              codeStringForClipboard={item.fileExample.fileContent}
+            <MarkdownRendererServer
+              markdownString={item.fileExample.fileContent}
+              className="max-w-full"
             />
           </section>
 
@@ -126,10 +125,13 @@ export default async function Page(
             <h2 className={cn(typo.sectionHeading)}>Manual Install</h2>
             {item.filesWithContent.map((fileData) => (
               <div key={fileData.fileName} className="flex flex-col gap-0">
-                <CodeCollapsibleServer
-                  fileTitle={fileData.fileName}
-                  codeString={`\`\`\`ts\n${fileData.fileContent}\n\`\`\``}
-                  codeStringForClipboard={fileData.fileContent}
+                <MarkdownRendererServer
+                  markdownString={[
+                    `\`\`\`ts title=${fileData.fileName} isCollapsible=true`,
+                    fileData.fileContent,
+                    "\`\`\`",
+                  ].join("\n")}
+                  className="max-w-full"
                 />
               </div>
             ))}
@@ -141,10 +143,13 @@ export default async function Page(
             {!item.fileTest ? (
               <p className="text-sm text-muted-foreground">No test</p>
             ) : (
-              <CodeNotCollapsibleServer
-                fileTitle={item.fileTest.fileName}
-                codeString={`\`\`\`ts\n${item.fileTest.fileContent}\n\`\`\``}
-                codeStringForClipboard={item.fileTest.fileContent}
+              <MarkdownRendererServer
+                markdownString={[
+                  `\`\`\`ts title=${item.fileTest.fileName}`,
+                  item.fileTest.fileContent,
+                  "\`\`\`",
+                ].join("\n")}
+                className="max-w-full"
               />
             )}
           </section>
