@@ -6,15 +6,20 @@ import { MarkdownRendererServer } from "@/components/mine/markdown-renderer/serv
 
 export const CodeCollapsibleServer = ({
   fileTitle,
-  codeString
+  codeString,
+  codeStringForClipboard,
 }: {
+  /** Title of the file, showedin the header */
   fileTitle: string,
+  /** mardkdown string that contains the code */
   codeString: string,
+  /** text that will be copied to clipboard when clicking the copy button */
+  codeStringForClipboard: string,
 }) => {
   return (
     <CodeCollapsibleClient
       fileTitle={fileTitle}
-      codeString={codeString}
+      codeStringForClipboard={codeStringForClipboard}
       code={(
         <MarkdownRendererServer
           markdownString={codeString}

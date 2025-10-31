@@ -8,13 +8,13 @@ import { Button } from "@/components/shadcn/ui/button";
 
 export const CodeCollapsibleClient = ({
   fileTitle,
-  codeString,
+  codeStringForClipboard,
   code,
 }: {
   /** Title of the file, showedin the header */
   fileTitle: string,
-  /** code as string, used for copy to clipboard */
-  codeString: string,
+  /** text that will be copied to clipboard when clicking the copy button */
+  codeStringForClipboard: string,
   /** Rendered JSX of the code, rendered in the collapsible content */
   code: React.ReactNode;
 }) => {
@@ -49,7 +49,7 @@ export const CodeCollapsibleClient = ({
             </CollapsibleTrigger>
             {/* BUTTON - COPY TO CLIPBOARD */}
             <ButtonCopyToClipboard
-              text={codeString}
+              text={codeStringForClipboard}
               className="text-muted-foreground"
             />
           </div>

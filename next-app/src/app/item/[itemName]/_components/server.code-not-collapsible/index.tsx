@@ -4,23 +4,23 @@ import { MarkdownRendererServer } from "@/components/mine/markdown-renderer/serv
 
 export const CodeNotCollapsibleServer = ({
   codeString,
+  codeStringForClipboard,
   fileTitle,
 }: {
-  /** code as string, used also for copy to clipboard */
+  /** markdown string that contains the code, for rendering purpose */
   codeString: string,
+  /** text that will be copied to clipboard when clicking the copy button */
+  codeStringForClipboard: string,
   /** Title of the file, showed in the header */
   fileTitle?: string,
 }) => {
-
-  const hasHeader = Boolean(fileTitle);
-
   return (
     <div
       data-name="CODE-NOT-COLLAPSIBLE"
       className="relative border rounded-xl overflow-hidden"
     >
       {/* HEADER */}
-      {hasHeader ? (
+      {fileTitle ? (
         <div
           data-name="CODE-NOT-COLLAPSIBLE--HEADER"
           className="pl-3 pr-2 py-2 flex justify-between items-center gap-2 border-b"
@@ -31,13 +31,13 @@ export const CodeNotCollapsibleServer = ({
           </span>
           {/* BUTTON - COPY TO CLIPBOARD */}
           <ButtonCopyToClipboard
-            text={codeString}
+            text={codeStringForClipboard}
             className="text-muted-foreground"
           />
         </div>
       ) : (
         <ButtonCopyToClipboard
-          text={codeString}
+          text={codeStringForClipboard}
           className="absolute top-2 right-2 text-muted-foreground"
         />
       )}
