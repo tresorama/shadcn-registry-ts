@@ -95,15 +95,15 @@ const inferDeployUrlNetlify: InferDeployUrl = (processEnv) => {
   if (processEnv.NETLIFY === 'true') {
 
     // ...and this git branch is PRODUCTION and we have a Netlify Production Url -> return it
-    if (processEnv.BRANCH === 'main' && processEnv.URL) {
+    if (processEnv.BRANCH === GIT_BRANCH_PRODUCTION && processEnv.URL) {
       return processEnv.URL;
     }
 
     // ...and this git branch is not PRODUCTION and we have a Netlify Deploy Preview or Branch Deploy Url -> return it
-    if (processEnv.BRANCH !== 'main' && processEnv.DEPLOY_PRIME_URL) {
+    if (processEnv.BRANCH !== GIT_BRANCH_PRODUCTION && processEnv.DEPLOY_PRIME_URL) {
       return processEnv.DEPLOY_PRIME_URL;
     }
-    if (processEnv.BRANCH !== 'main' && processEnv.DEPLOY_URL) {
+    if (processEnv.BRANCH !== GIT_BRANCH_PRODUCTION && processEnv.DEPLOY_URL) {
       return processEnv.DEPLOY_URL;
     }
   }
