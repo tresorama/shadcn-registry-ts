@@ -2,30 +2,36 @@ import z from "zod";
 
 
 type Base = {
-  SuccessData: z.ZodSchema;
+  SuccessDataSchema: z.ZodSchema;
   ErrorCodes: readonly [string, ...string[]],
 };
 
 /** 
- * Create a Result Success Zod Schema.  
+ * Create a Result Zod Schema `success` branch.  
  * See {@link schemaResult}
  * */
-export const schemaResultSuccess = <DataSchema extends Base['SuccessData']>(dataSchema: DataSchema) => z.object({
+export const schemaResultSuccess = <TSuccessDataSchema extends Base['SuccessDataSchema']>(
+  /** zod schema of `data` prop @example z.object({ name: z.string() }) */
+  dataSchema: TSuccessDataSchema
+) => z.object({
   status: z.literal('success'),
   data: dataSchema,
 });
 
 /** 
- * Create a Result Error Zod Schema.  
+ * Create a Result Zod Schema `error` branch.  
  * See {@link schemaResult}
  * */
-export const schemaResultError = <ErrorCodes extends Base['ErrorCodes']>(errorCodes: ErrorCodes) => z.object({
+export const schemaResultError = <TErrorCode extends Base['ErrorCodes']>(
+  /** list of error codes @example ['FETCH_FAILED', 'OTHER_ERROR'] as const */
+  errorCodes: TErrorCode
+) => z.object({
   status: z.literal('error'),
   code: z.enum(errorCodes),
   message: z.string(),
 });
 
-/** Create a Result Zod Schema 
+/** Create a Result Zod Schema, containing both `success` and `error` branches.
  * @example
  * const result = schemaResult(
  *   schemaResultSuccess(z.object({ name: z.string() })),
@@ -50,17 +56,22 @@ export const schemaResultError = <ErrorCodes extends Base['ErrorCodes']>(errorCo
  * }
  * */
 export const schemaResult = <
-  S extends Base['SuccessData'],
-  E extends Base['ErrorCodes'],
+  TSuccessDataSchema extends Base['SuccessDataSchema'],
+  TErrorCode extends Base['ErrorCodes'],
 >(
-  schemaSuccess: ReturnType<typeof schemaResultSuccess<S>>,
-  schemaError: ReturnType<typeof schemaResultError<E>>,
+  /** zod schema of `success` branch. created by {@link schemaResultSuccess} */
+  schemaSuccess: ReturnType<typeof schemaResultSuccess<TSuccessDataSchema>>,
+  /** zod schema of `error` branch. created by {@link schemaResultError} */
+  schemaError: ReturnType<typeof schemaResultError<TErrorCode>>,
 ) => z.discriminatedUnion('status', [
   schemaSuccess,
   schemaError,
 ]);
 
-/** Infer Types of a Result. Contains both `success` and `error`.
+/** 
+ * Infer Types of a Result Zod Schema.  
+ * The input is a Result Zod Schema created by {@link schemaResult}.
+ * Returned type contains both `success` and `error` branches.
  * @example
  * const result = schemaResult(
  *   schemaResultSuccess(z.object({ name: z.string() })),
@@ -80,9 +91,11 @@ export const schemaResult = <
  *   message: string 
  * }
  * */
-export type InferResult<R extends ReturnType<typeof schemaResult>> = z.infer<R>;
+export type InferResult<TResult extends ReturnType<typeof schemaResult>> = z.infer<TResult>;
 
-/** Infer Types of a Result Success
+/** 
+ * Infer Types of a Result Zod Schema `success` branch.  
+ * The input is a Result Zod Schema created by {@link schemaResult}.
  * @example
  * const result = schemaResult(
  *   schemaResultSuccess(z.object({ name: z.string() })),
@@ -98,9 +111,11 @@ export type InferResult<R extends ReturnType<typeof schemaResult>> = z.infer<R>;
  *   } 
  * }
  * */
-export type InferResultSuccess<R extends ReturnType<typeof schemaResult>> = Extract<InferResult<R>, { status: 'success'; }>;
+export type InferResultSuccess<TResult extends ReturnType<typeof schemaResult>> = Extract<InferResult<TResult>, { status: 'success'; }>;
 
-/** Infer Types of a Result Error
+/** 
+ * Infer Types of a Result Zod Schema `error` branch.  
+ * The input is a Result Zod Schema created by {@link schemaResult}.
  * @example
  * const result = schemaResult(
  *   schemaResultSuccess(z.object({ name: z.string() })),
@@ -115,26 +130,27 @@ export type InferResultSuccess<R extends ReturnType<typeof schemaResult>> = Extr
  *   message: string 
  * }
  * */
-export type InferResultError<R extends ReturnType<typeof schemaResult>> = Extract<InferResult<R>, { status: 'error'; }>;
+export type InferResultError<TResult extends ReturnType<typeof schemaResult>> = Extract<InferResult<TResult>, { status: 'error'; }>;
 
 
-const getResultSuccess = <
-  S extends Base['SuccessData'],
-  E extends Base['ErrorCodes'],
+const getResultSuccessSchema = <
+  TSuccessDataSchema extends Base['SuccessDataSchema'],
+  TErrorCode extends Base['ErrorCodes'],
 >(
-  result: ReturnType<typeof schemaResult<S, E>>
+  result: ReturnType<typeof schemaResult<TSuccessDataSchema, TErrorCode>>
 ) => result.options[0];
 
-const getResultError = <
-  S extends Base['SuccessData'],
-  E extends Base['ErrorCodes'],
+const getResultErrorSchema = <
+  TSuccessDataSchema extends Base['SuccessDataSchema'],
+  TErrorCode extends Base['ErrorCodes'],
 >(
-  result: ReturnType<typeof schemaResult<S, E>>
+  result: ReturnType<typeof schemaResult<TSuccessDataSchema, TErrorCode>>
 ) => result.options[1];
 
 
 /**
- * Extract Data from a Result Zod Schema
+ * Extract Data from a Result Zod Schema.  
+ * The input is a Result Zod Schema created by {@link schemaResult}.
  * @example
  * const result = schemaResult(
  *   schemaResultSuccess(z.object({ name: z.string() })),
@@ -165,15 +181,20 @@ const getResultError = <
  * 
  */
 export const getResultData = <
-  S extends Base['SuccessData'],
-  E extends Base['ErrorCodes'],
+  TSuccessDataSchema extends Base['SuccessDataSchema'],
+  TErrorCode extends Base['ErrorCodes'],
 >(
-  result: ReturnType<typeof schemaResult<S, E>>
+  /** Result Zod Schema created by {@link schemaResult} */
+  result: ReturnType<typeof schemaResult<TSuccessDataSchema, TErrorCode>>
 ) => {
   return {
-    success: getResultSuccess(result),
-    successData: getResultSuccess(result).shape.data,
-    error: getResultError(result),
-    errorCodes: getResultError(result).shape.code.options,
+    /** full `success` zod schema */
+    success: getResultSuccessSchema(result),
+    /** `data` schema of `success` zod schema */
+    successData: getResultSuccessSchema(result).shape.data,
+    /** full `error` zod schema */
+    error: getResultErrorSchema(result),
+    /** `code` schema of `error` zod schema */
+    errorCodes: getResultErrorSchema(result).shape.code.options,
   };
 };

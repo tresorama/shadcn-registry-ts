@@ -4,29 +4,29 @@ type BaseDbRecord = {
   id: number;
 };
 
-export type DbRecord<Extended extends { [key: string]: unknown; }> = BaseDbRecord & Extended;
+export type DbRecord<TExtended extends { [key: string]: unknown; }> = BaseDbRecord & TExtended;
 
 /**
  * DB Table creator, for a in memory DB.
  * NOTE: USE THIS ONLY FOR PLAYGROUND DB, NOT IN REAL APP
  */
 export const createDbTable = <
-  SelectItem extends BaseDbRecord,
-  InsertItem = Omit<SelectItem, 'id'>,
-  UpdateItem = Partial<Omit<SelectItem, 'id'>>
->(initialRecords: SelectItem[]) => {
+  TSelectItem extends BaseDbRecord,
+  TInsertItem = Omit<TSelectItem, 'id'>,
+  TUpdateItem = Partial<Omit<TSelectItem, 'id'>>
+>(initialRecords: TSelectItem[]) => {
 
-  let items: SelectItem[] = [...initialRecords];
+  let items: TSelectItem[] = [...initialRecords];
 
   const generateId = () => items.length + 1;
 
   return {
     getAll: () => items,
     getById: (id: number) => items.find(item => item.id === id) ?? null,
-    create: (item: InsertItem) => {
+    create: (item: TInsertItem) => {
       const id = generateId();
       // @ts-expect-error ts don't allow unknown properties
-      const newItem: SelectItem = {
+      const newItem: TSelectItem = {
         id,
         ...item
       };
@@ -36,7 +36,7 @@ export const createDbTable = <
 
       return newItem;
     },
-    update: (id: number, item: UpdateItem) => {
+    update: (id: number, item: TUpdateItem) => {
       const index = items.findIndex(item => item.id === id);
       if (index === -1) {
         // 'Item not found'

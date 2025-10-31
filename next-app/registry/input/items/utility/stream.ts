@@ -9,9 +9,9 @@ export const convertWebStreamToNodeStream = async (webStream: ReadableStream<Uin
     async read() {
       const { done, value } = await reader.read();
       if (done) {
-        this.push(null); // Chiude lo stream
+        this.push(null); // finish
       } else {
-        this.push(value); // Passa il chunk
+        this.push(value); // add chunk
       }
     },
   });

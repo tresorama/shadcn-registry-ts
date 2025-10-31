@@ -1,33 +1,33 @@
-/** Create a Result Success type */
-type ResultSuccess<S> = {
+/** Type creator used to create a Result `success` type */
+type ResultSuccess<TData> = {
   status: 'success';
-  data: S;
+  data: TData;
 };
-/** Create a Result Error type */
-type ResultError<Code extends string> = {
+/** Type creator used to create a Result `error` type */
+type ResultError<TCode extends string> = {
   status: 'error';
-  code: Code | 'UNKNOWN_ERROR',
+  code: TCode | 'UNKNOWN_ERROR',
   message: string;
 };
 
 /** 
- * Create a Result type.  
+ * Type creator used to create a Result type.  
  * You must pass two generics:
  * - the first will be the `data` prop of `success` path.
  * - the second will be the `code` prop of `error` path.
  * */
-export type Result<S, E extends string> = ResultSuccess<S> | ResultError<E>;
+export type Result<TSuccessData, TErrorCode extends string> = ResultSuccess<TSuccessData> | ResultError<TErrorCode>;
 
 /** 
  * Create a Result type that cannot have `error` path.
  * You must pass one generic:
  * - will be the `data` prop of `success` path.
  * */
-export type ResultAlwaysSuccess<S> = ResultSuccess<S>;
+export type ResultAlwaysSuccess<TSuccessData> = ResultSuccess<TSuccessData>;
 
 
-/** Utility used to infer the `success` discriminated union of a Result type */
-export type InferResultSuccess<R> = Extract<R, { status: 'success'; }>;
+/** Infer the `success` branch of a Result type */
+export type InferResultSuccess<TResult> = Extract<TResult, { status: 'success'; }>;
 
-/** Utility used to infer the `error` discriminated union of a Result type */
-export type InferResultError<R> = Extract<R, { status: 'error'; }>;
+/** Infer the `error` branch of a Result type */
+export type InferResultError<TResult> = Extract<TResult, { status: 'error'; }>;

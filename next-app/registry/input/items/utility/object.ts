@@ -12,18 +12,18 @@
  * ```
  */
 export const omit = <
-  Obj extends Record<string, any>,
-  KeysToOmit extends Array<keyof Obj>,
-  Output extends Omit<Obj, KeysToOmit[number]>
+  TObj extends Record<string, any>,
+  TKeysToOmit extends Array<keyof TObj>,
+  TOutput extends Omit<TObj, TKeysToOmit[number]>
 >(
-  obj: Obj,
-  keysToOmit: KeysToOmit,
+  obj: TObj,
+  keysToOmit: TKeysToOmit,
 ) => {
   const output = { ...obj };
   keysToOmit.forEach(key => {
     delete output[key];
   });
-  return output as unknown as Output;
+  return output as unknown as TOutput;
 };
 
 
@@ -41,19 +41,19 @@ export const omit = <
  * ```
  */
 export const pick = <
-  Obj extends Record<string, any>,
-  KeysToPick extends Array<keyof Obj>,
-  Output extends Pick<Obj, KeysToPick[number]>
+  TObj extends Record<string, any>,
+  TKeysToPick extends Array<keyof TObj>,
+  TOutput extends Pick<TObj, TKeysToPick[number]>
 >(
-  obj: Obj,
-  keysToPick: KeysToPick,
+  obj: TObj,
+  keysToPick: TKeysToPick,
 ) => {
   const output = {};
   keysToPick.forEach(key => {
     // @ts-expect-error key is not in obj
     output[key] = obj[key];
   });
-  return output as Output;
+  return output as TOutput;
 };
 
 
@@ -80,10 +80,12 @@ export const pick = <
  * }
  * ```
  */
-export const groupBy = <T>(
-  array: T[],
-  getGroupKey: (item: T) => string
-): { [key: string]: T[]; } => {
+export const groupBy = <TItem>(
+  /** The array of items to group by */
+  array: TItem[],
+  /** Fn executed for each item that must return a string that is used as key of group */
+  getGroupKey: (item: TItem) => string
+): { [key: string]: TItem[]; } => {
   return array.reduce((acc, item) => {
     const key = getGroupKey(item);
     if (!acc[key]) {
@@ -91,5 +93,5 @@ export const groupBy = <T>(
     }
     acc[key].push(item);
     return acc;
-  }, {} as { [key: string]: T[]; });
+  }, {} as { [key: string]: TItem[]; });
 };

@@ -3,9 +3,16 @@ import type {
   Response as ExpressResponse,
 } from 'express';
 
+/**
+ * Function that extract common data from Express Request and Response objects.  
+ * Useful for logging and debugging.
+ */
 export const getExpressRequestInfo = (
+  /** Express Request object */
   req: ExpressRequest,
+  /** Express Response object */
   res: ExpressResponse,
+  /** Request identifier. Used only by you to identify it. */
   reqId: string,
 ) => {
 

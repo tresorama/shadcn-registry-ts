@@ -3,9 +3,7 @@ import { addDays, addMonths, formatDate } from "date-fns";
 
 import { createArrayWithLength } from "./array";
 
-/**
- * Convert milliseconds to human readable format (string)
- */
+/** Convert milliseconds to human readable format (string) */
 export const formatMillisecondsToHumanReadable = (milliseconds: number) => {
   return prettyMs(milliseconds, { compact: false });
 };

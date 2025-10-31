@@ -78,7 +78,7 @@ const inferDeployUrlNetlify: InferDeployUrl = (processEnv) => {
   //     - is the git branch of the deployment
   // - URL:
   //     - i.e. `https://my-project.netlify.app`
-  //     - is the fixed production url of the project on Vercel
+  //     - is the fixed production url of the project on Netlify
   //     - does not change across deployments
   //     - if custom domain is used, this is the custom domain
   //     - if no custom domain is used, this is the auto-assigned by netlify production url
