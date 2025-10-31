@@ -5,19 +5,21 @@ import { ButtonCopyToClipboard } from "@/components/mine/button-copy-to-clipboar
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/shadcn/ui/collapsible";
 import { Button } from "@/components/shadcn/ui/button";
 
+export type CodeCollapsibleClientProps = {
+  /** Title of the file, showed in the header */
+  fileTitle?: string;
+  /** Code JSX */
+  codeJsx: React.ReactNode;
+  /** text that will be copied to clipboard when clicking the copy button */
+  codeStringForClipboard?: string;
+};
+
 
 export const CodeCollapsibleClient = ({
   fileTitle,
-  codeString,
-  code,
-}: {
-  /** Title of the file, showedin the header */
-  fileTitle: string,
-  /** code as string, used for copy to clipboard */
-  codeString: string,
-  /** Rendered JSX of the code, rendered in the collapsible content */
-  code: React.ReactNode;
-}) => {
+  codeStringForClipboard,
+  codeJsx,
+}: CodeCollapsibleClientProps) => {
 
   return (
     <Collapsible
@@ -33,9 +35,11 @@ export const CodeCollapsibleClient = ({
           className="pl-3 pr-2 py-2 flex justify-start items-center gap-2 border-b"
         >
           {/* FILE TITLE */}
-          <span className="text-sm text-muted-foreground">
-            {fileTitle}
-          </span>
+          {fileTitle && (
+            <span className="text-sm text-muted-foreground">
+              {fileTitle}
+            </span>
+          )}
           <div className="ml-auto flex items-center gap-[inherit]">
             {/* BUTTON COLLAPSE */}
             <CollapsibleTrigger asChild>
@@ -48,10 +52,12 @@ export const CodeCollapsibleClient = ({
               </Button>
             </CollapsibleTrigger>
             {/* BUTTON - COPY TO CLIPBOARD */}
-            <ButtonCopyToClipboard
-              text={codeString}
-              className="text-muted-foreground"
-            />
+            {codeStringForClipboard && (
+              <ButtonCopyToClipboard
+                text={codeStringForClipboard}
+                className="text-muted-foreground"
+              />
+            )}
           </div>
         </div>
         {/* CODE */}
@@ -59,7 +65,7 @@ export const CodeCollapsibleClient = ({
           data-name="CODE-COLLAPSIBLE--CODE"
           className="[&>*]:prose-pre:mt-0"
         >
-          {code}
+          {codeJsx}
         </div>
       </CollapsibleContent>
       <CollapsibleTrigger

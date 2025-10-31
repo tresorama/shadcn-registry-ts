@@ -1,11 +1,12 @@
-import { remark } from 'remark';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 // import remarkHeadingId, { type RemarkHeadingIdOptions } from 'remark-heading-id';
 import remarkToc, { type Options as RemarkTocOptions } from 'remark-toc';
-import remarkCodeTitle from "remark-code-title";
+// import remarkCodeTitle from "remark-code-title";
 // import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
 import remarkRehype, { type Options as RemarkRehypeOptions } from 'remark-rehype';
-import rehypeRaw from "rehype-raw";
+// import rehypeRaw from "rehype-raw";
 import rehypeShiki, { type RehypeShikiOptions } from '@shikijs/rehype';
 // import rehypeSanitize, { type Options as RehypeSanitizeOptions } from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
@@ -29,7 +30,10 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
   // remark plugins -> they add markdown features
   // rehype plugins -> they add html features
   // remark-rehype -> convert markdown to html
-  const result = await remark()
+
+  const pipeline = unified()
+    // remarkParse -> Markdown -> mdast
+    .use(remarkParse)
     // remark-gfm -> Support for GitHub Flavored Markdown
     .use(remarkGfm)
 
@@ -47,7 +51,7 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
     } satisfies RemarkTocOptions)
 
     // remarkCodeTitle -> Support title in code blocks
-    .use(remarkCodeTitle)
+    // .use(remarkCodeTitle)
 
     // remarkSqueezeParagraphs -> remove empty paragraphs
     // .use(remarkSqueezeParagraphs)
@@ -55,40 +59,19 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
     // remarkRehype -> Convert Markdown to HTML
     .use(remarkRehype, { allowDangerousHtml: true } satisfies RemarkRehypeOptions)
 
-    // rehypeRaw -> keep raw HTML
-    .use(rehypeRaw)
-
     // rehypeShiki -> format code blocks with shiki (it style elements with inline style)
-    .use(rehypeShiki, {
-      themes: {
-        light: 'github-light',
-        dark: 'github-dark'
-      },
-      // override the CSS color code used by shiki for each theme.  
-      // open the Dev Tools to see the `defaultColorCode'
-      // theme: {
-      //   defaultColorCode: 'new value'
-      // }
-      colorReplacements: {
-        "github-dark": {
-          // shiki-dark-bg
-          "#24292e": 'var(--code)',
-        },
-        "github-light": {
-          // background-color
-          "#fff": 'var(--code)',
-        }
-      }
-    } satisfies RehypeShikiOptions)
+    .use(rehypeShiki, rehypeShikiOptions)
+
+    // rehypeRaw -> keep raw HTML
+    // .use(rehypeRaw)
 
     // rehypeSanitize -> sanitize HTML
     // .use(rehypeSanitize, {} satisfies RehypeSanitizeOptions)
 
     // rehypeStringify -> Serialiaze to HTML string
-    .use(rehypeStringify)
+    .use(rehypeStringify);
 
-    .process(transformedMarkdown);
-  const html = result.toString();
+  const html = (await pipeline.process(transformedMarkdown)).toString();
 
   // add additional html
   const finalHtml = [
@@ -142,4 +125,92 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
   ].join('\n');
 
   return finalHtml;
+};
+
+// options
+export type HtmlPreExtraHtmlAttributes = {
+  language: string;
+  code: string;
+  title?: string;
+  isCollapsible?: 'true';
+};
+const rehypeShikiOptions: RehypeShikiOptions = {
+  themes: {
+    light: 'github-light',
+    dark: 'github-dark'
+  },
+  // override the CSS color code used by shiki for each theme.  
+  // open the Dev Tools to see the `defaultColorCode'
+  // theme: {
+  //   defaultColorCode: 'new value'
+  // }
+  colorReplacements: {
+    "github-dark": {
+      // shiki-dark-bg
+      "#24292e": 'var(--code)',
+    },
+    "github-light": {
+      // background-color
+      "#fff": 'var(--code)',
+    }
+  },
+  // parse header props of code blocks (```ts title="hello" oher="value") 
+  // and populate `transformer.pre this.options.meta`
+  parseMetaString(metaString) {
+    const parsed = parseFromRawString(metaString);
+    console.log('parseMetaString', { metaString, parsed });
+    return parsed;
+
+    function parseFromRawString(str = '') {
+      const entries = str
+        .split(' ')
+        .map(entry => {
+          const key = entry.split('=')[0];
+          let value = entry.split('=')[1];
+          if (
+            (value.startsWith('"') && value.endsWith('"'))
+            ||
+            (value.startsWith("'") && value.endsWith("'"))
+          ) {
+            value = value.slice(1, -1);
+          }
+          return [key, value] as const;
+        });
+      const obj = Object.fromEntries(entries);
+      return obj;
+    }
+  },
+  transformers: [
+    {
+      // add html attributes to <pre> element: language, code
+      pre(node) {
+        // console.dir(
+        //   {
+        //     meta: this.meta,
+        //     options: this.options
+        //   },
+        //   { depth: 3 }
+        // );
+
+        // parse attributes from mdast node
+        const extraAttributes: HtmlPreExtraHtmlAttributes = {
+          language: this.options.lang,
+          code: this.source,
+        };
+        if (this.options.meta) {
+          if ('title' in this.options.meta && this.options.meta.title) {
+            extraAttributes.title = this.options.meta.title;
+          }
+          if ('isCollapsible' in this.options.meta && this.options.meta.isCollapsible === 'true') {
+            extraAttributes.isCollapsible = 'true';
+          }
+        }
+        // add attributes to node
+        node.properties = {
+          ...node.properties,
+          ...extraAttributes,
+        };
+      },
+    }
+  ],
 };
