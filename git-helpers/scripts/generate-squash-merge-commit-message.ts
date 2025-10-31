@@ -89,7 +89,7 @@ const indentEveryLines = (str: string, padNumber: number) => str.split('\n').map
 const getIsThisScriptOutputText = (text: String) => text.includes('MERGE SUMMARY');
 
 const output = `
-Merge branch '${branchName}' (PR# ${prData.data.number})
+Merge branch '${branchName}' (PR #${prData.data.number})
 
 ---------------------------------------------
 # 📦 MERGE SUMMARY
