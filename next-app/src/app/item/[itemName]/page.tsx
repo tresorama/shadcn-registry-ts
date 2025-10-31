@@ -94,6 +94,7 @@ export default async function Page(
             <h2 className={cn(typo.sectionHeading)}>Example Usage</h2>
             <CodeNotCollapsibleServer
               codeString={item.fileExample.fileContent}
+              codeStringForClipboard={item.fileExample.fileContent}
             />
           </section>
 
@@ -128,6 +129,7 @@ export default async function Page(
                 <CodeCollapsibleServer
                   fileTitle={fileData.fileName}
                   codeString={`\`\`\`ts\n${fileData.fileContent}\n\`\`\``}
+                  codeStringForClipboard={fileData.fileContent}
                 />
               </div>
             ))}
@@ -142,6 +144,7 @@ export default async function Page(
               <CodeNotCollapsibleServer
                 fileTitle={item.fileTest.fileName}
                 codeString={`\`\`\`ts\n${item.fileTest.fileContent}\n\`\`\``}
+                codeStringForClipboard={item.fileTest.fileContent}
               />
             )}
           </section>
