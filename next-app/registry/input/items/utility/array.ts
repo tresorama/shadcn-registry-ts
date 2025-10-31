@@ -1,3 +1,4 @@
+/** Get the last item from an array */
 export const getLastArrayItem = <TItem>(array: TItem[]) => array[array.length - 1];
 
 

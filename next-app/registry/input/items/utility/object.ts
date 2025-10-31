@@ -81,7 +81,9 @@ export const pick = <
  * ```
  */
 export const groupBy = <TItem>(
+  /** The array of items to group by */
   array: TItem[],
+  /** Fn executed for each item that must return a string that is used as key of group */
   getGroupKey: (item: TItem) => string
 ): { [key: string]: TItem[]; } => {
   return array.reduce((acc, item) => {

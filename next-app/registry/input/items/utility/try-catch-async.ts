@@ -9,6 +9,9 @@ type ResultSuccess<TData> = {
 
 type Result<TSuccessData> = ResultError | ResultSuccess<TSuccessData>;
 
+/**
+ * Function that run an asyn cfunction inside a try catch block.
+ */
 export const tryCatchAsync = async <TReturn>(fn: () => Promise<TReturn>): Promise<Result<TReturn>> => {
   try {
     const data = await fn();

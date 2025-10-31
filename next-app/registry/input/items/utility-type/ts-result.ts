@@ -1,9 +1,9 @@
-/** Create a Result Success type */
+/** Type creator used to create a Result `success` type */
 type ResultSuccess<TData> = {
   status: 'success';
   data: TData;
 };
-/** Create a Result Error type */
+/** Type creator used to create a Result `error` type */
 type ResultError<TCode extends string> = {
   status: 'error';
   code: TCode | 'UNKNOWN_ERROR',
@@ -11,7 +11,7 @@ type ResultError<TCode extends string> = {
 };
 
 /** 
- * Create a Result type.  
+ * Type creator used to create a Result type.  
  * You must pass two generics:
  * - the first will be the `data` prop of `success` path.
  * - the second will be the `code` prop of `error` path.
@@ -26,8 +26,8 @@ export type Result<TSuccessData, TErrorCode extends string> = ResultSuccess<TSuc
 export type ResultAlwaysSuccess<TSuccessData> = ResultSuccess<TSuccessData>;
 
 
-/** Utility used to infer the `success` discriminated union of a Result type */
+/** Infer the `success` branch of a Result type */
 export type InferResultSuccess<TResult> = Extract<TResult, { status: 'success'; }>;
 
-/** Utility used to infer the `error` discriminated union of a Result type */
+/** Infer the `error` branch of a Result type */
 export type InferResultError<TResult> = Extract<TResult, { status: 'error'; }>;
