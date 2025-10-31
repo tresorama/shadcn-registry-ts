@@ -1,7 +1,3 @@
-/**
- * Source: http://localhost:3000
- */
-
 import getRandomEmoji from '@sefinek/random-emoji';
 
 type EmojyItem = ReturnType<typeof getRandomEmoji.emojis>['content'];

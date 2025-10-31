@@ -1,7 +1,3 @@
-/**
- * Source: http://localhost:3000
- */
-
 // export const repeat = (times: number) => new Array(times).fill('');
 
 type BaseDbRecord = {

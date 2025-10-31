@@ -1,7 +1,3 @@
-/**
- * Source: http://localhost:3000
- */
-
 type ResultError = {
   status: 'error';
   error: unknown;

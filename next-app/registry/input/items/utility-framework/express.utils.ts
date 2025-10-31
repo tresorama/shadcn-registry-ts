@@ -1,7 +1,3 @@
-/**
- * Source: http://localhost:3000
- */
-
 import type {
   Request as ExpressRequest,
   Response as ExpressResponse,

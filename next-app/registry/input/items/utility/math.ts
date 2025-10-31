@@ -1,8 +1,4 @@
 /**
- * Source: http://localhost:3000
- */
-
-/**
  * Clamp function, constraints a value to be in a range.
  * Outliers will be clamped to the relevant extreme of the range.
  */
