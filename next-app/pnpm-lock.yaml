@@ -92,9 +92,6 @@ importers:
       rehype-stringify:
         specifier: ^10.0.1
         version: 10.0.1
-      remark:
-        specifier: ^15.0.1
-        version: 15.0.1
       remark-code-title:
         specifier: ^0.2.5
         version: 0.2.5
@@ -3570,9 +3567,6 @@ packages:
 
   remark-toc@9.0.0:
     resolution: {integrity: sha512-KJ9txbo33GjDAV1baHFze7ij4G8c7SGYoY8Kzsm2gzFpbhL/bSoVpMMzGa3vrNDSWASNd/3ppAqL7cP2zD6JIA==}
-
-  remark@15.0.1:
-    resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -7913,15 +7907,6 @@ snapshots:
     dependencies:
       '@types/mdast': 4.0.4
       mdast-util-toc: 7.1.0
-
-  remark@15.0.1:
-    dependencies:
-      '@types/mdast': 4.0.4
-      remark-parse: 11.0.0
-      remark-stringify: 11.0.0
-      unified: 11.0.5
-    transitivePeerDependencies:
-      - supports-color
 
   require-directory@2.1.1: {}
 
