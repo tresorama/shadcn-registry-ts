@@ -10,7 +10,6 @@ import { CodeCollapsibleServer } from "./_components/server.code-collapsible";
 
 import { cn } from "@/lib/shadcn/utils";
 import { Badge } from "@/components/shadcn/ui/badge";
-import { MarkdownRendererServer } from "@/components/mine/markdown-renderer/server-component/markdown-renderer";
 
 // 1. Use the registry to generate static paths
 
@@ -93,9 +92,8 @@ export default async function Page(
           {/* Example Usage */}
           <section id="example" className="flex flex-col gap-4">
             <h2 className={cn(typo.sectionHeading)}>Example Usage</h2>
-            <MarkdownRendererServer
-              markdownString={item.fileExample.fileContent}
-              className="prose dark:prose-invert max-w-full prose-pre:p-4 prose-pre:rounded-xl"
+            <CodeNotCollapsibleServer
+              codeString={item.fileExample.fileContent}
             />
           </section>
 

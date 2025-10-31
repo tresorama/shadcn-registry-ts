@@ -72,11 +72,11 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
       colorReplacements: {
         "github-dark": {
           // shiki-dark-bg
-          "#24292e": 'var(--muted)'
+          "#24292e": 'var(--code)',
         },
         "github-light": {
           // background-color
-          "#fff": 'var(--muted)'
+          "#fff": 'var(--code)',
         }
       }
     } satisfies RehypeShikiOptions)
