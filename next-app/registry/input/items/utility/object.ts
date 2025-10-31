@@ -1,8 +1,4 @@
 /**
- * Source: http://localhost:3000
- */
-
-/**
  * Omit keys from an object
  * 
  * @example

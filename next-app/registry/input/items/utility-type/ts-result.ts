@@ -1,8 +1,3 @@
-/**
- * Source: http://localhost:3000
- */
-
-
 /** Create a Result Success type */
 type ResultSuccess<S> = {
   status: 'success';

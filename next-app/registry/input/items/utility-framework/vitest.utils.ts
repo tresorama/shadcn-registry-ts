@@ -1,8 +1,4 @@
 /**
- * Source: http://localhost:3000
- */
-
-/**
  * Repaet a function a number of times. Sync version, that accept only a sync function.
  */
 export function repeatSyncFn(

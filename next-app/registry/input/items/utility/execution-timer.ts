@@ -1,7 +1,3 @@
-/**
- * Source: http://localhost:3000
- */
-
 import { formatMillisecondsToHumanReadable } from "./date-time";
 
 /**

@@ -1,7 +1,3 @@
-/**
- * Source: http://localhost:3000
- */
-
 import { lerp, clamp } from './math';
 
 /** Get a random string in format `1642345678-12345`. Always 19 characters. */

@@ -1,7 +1,3 @@
-/**
- * Source: http://localhost:3000
- */
-
 import prettyMs from 'pretty-ms';
 import { addDays, addMonths, formatDate } from "date-fns";
 
