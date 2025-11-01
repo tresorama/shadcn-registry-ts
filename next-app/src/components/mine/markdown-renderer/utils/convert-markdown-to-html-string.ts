@@ -70,6 +70,7 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
     // rehypeSlug -> add id HTML attributes to headings (h1 id="heading-1", h2 id="heading-2", etc)
     .use(rehypeSlug)
 
+    // rehypeAutolinkHeadings -> add link to headings
     .use(rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions)
 
     // rehypeRaw -> keep raw HTML
