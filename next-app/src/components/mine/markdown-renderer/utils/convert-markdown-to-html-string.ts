@@ -77,6 +77,7 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
     // rehypeShiki -> format code blocks with shiki (it style elements with inline style)
     .use(rehypeShiki, rehypeShikiOptions)
 
+    // rehypeSlug -> add id HTML attributes to headings (h1 id="heading-1", h2 id="heading-2", etc)
     .use(rehypeSlug)
 
     // rehypeRaw -> keep raw HTML
