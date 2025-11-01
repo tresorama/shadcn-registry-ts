@@ -11,6 +11,8 @@ import { tryCatchAsync } from './try-catch-async';
 
 const result = await tryCatchAsync(
   async () => {
+    const isSuccess = Math.random() > 0.5;
+    if (!isSuccess) throw new Error('Fake error');
     return {
       message: 'hello',
     };
