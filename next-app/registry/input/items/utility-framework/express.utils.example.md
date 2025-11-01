@@ -1,9 +1,11 @@
+**getExpressRequestInfo**
+
 ```ts
 import { getExpressRequestInfo } from './express.utils';
 
 const reqInfo = getExpressRequestInfo(
-  req,
-  res,
+  req, // Express Request object
+  res, // Express Response object
   'an-id-for-this-request-used-only-by-you-to-identify-it',
 );
 // ⏬

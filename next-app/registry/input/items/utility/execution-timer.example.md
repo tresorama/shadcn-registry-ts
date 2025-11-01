@@ -1,3 +1,5 @@
+**createExecutionTimeMeter**
+
 ```ts
 import { createExecutionTimeMeter } from "./execution-timer";
 

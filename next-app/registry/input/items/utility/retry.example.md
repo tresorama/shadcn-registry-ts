@@ -1,3 +1,5 @@
+**retry**
+
 ```ts
 import { retry } from './retry';
 
@@ -10,6 +12,7 @@ async function myOperation(a:number, b:number) {
 } 
 
 // Usage 1: run inline
+
 // NOTE: don't forget the extra `()` at the end
 const result = await retry({
   fn: myOperation,
@@ -23,6 +26,7 @@ const result = await retry({
 
 
 // Usage 2: create then run
+
 const myOperationWithRetry = retry({
   fn: myOperation,
   times: 10,

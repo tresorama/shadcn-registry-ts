@@ -1,6 +1,8 @@
+**repeatSyncFn**
+
 ```ts
 import { it, expect } from 'vitest';
-import { repeatSyncFn, repeatAsyncFn } from './vitest.utils';
+import { repeatSyncFn } from './vitest.utils';
 
 // repeatSyncFn
 it('use repeatSyncFn', () => {
@@ -8,7 +10,13 @@ it('use repeatSyncFn', () => {
     expect(true).toBe(true);
   });
 }))
+```
 
+**repeatAsyncFn**
+
+```ts
+import { it, expect } from 'vitest';
+import { repeatAsyncFn } from './vitest.utils';
 
 // repeatAsyncFn - Internally this uses Promise.all
 it('use repeatAsyncFn', async () => {

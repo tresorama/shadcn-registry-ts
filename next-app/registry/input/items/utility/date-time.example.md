@@ -1,16 +1,18 @@
-```ts
-import { 
-  formatMillisecondsToHumanReadable,
-  createTimeRanges,
-} from './date-time';
+**formatMillisecondsToHumanReadable**
 
-// formatMillisecondsToHumanReadable
+```ts
+import { formatMillisecondsToHumanReadable } from './date-time';
+
 formatMillisecondsToHumanReadable(2000);
 // ⏬
  '2s'
+```
 
+**createTimeRanges**
 
-// createTimeRanges
+```ts
+import { createTimeRanges } from './date-time';
+
 const data = [
   {
     price: 90,

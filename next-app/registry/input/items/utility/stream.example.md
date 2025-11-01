@@ -1,5 +1,7 @@
+**convertWebStreamToNodeStream**
+
 ```ts
-// express handler example
+// we use express handler for this example
 
 import express from 'express';
 import { openai } from 'ai/openai';
@@ -21,8 +23,11 @@ app.get('/stream', async (req, res) => {
 })
 ```
 
+**readWebStreamIntoString**
+
 ```ts
-// vitest example
+
+// we use vitest for this example
 
 import { it, expect } from 'vitest';
 
@@ -33,10 +38,10 @@ it('should convert WebStream to string', async () => {
   // ai sdk stream
   const aiStream = openai.createChatCompletion({ mode: 'XXX', stream: true });
 
-  // convert the stream to a single string
+  // read all the chunks of the stream into a single string
   const resultString = await readWebStreamIntoString(aiStream.body);
 
-// check the result
+  // check the result
   expect(resultString).toBe('hello');
 })
 ```

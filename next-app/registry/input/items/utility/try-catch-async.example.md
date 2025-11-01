@@ -1,3 +1,5 @@
+**tryCatchAsync**
+
 ```ts
 import { tryCatchAsync } from './try-catch-async';
 
@@ -7,11 +9,13 @@ import { tryCatchAsync } from './try-catch-async';
 // - in case "cb" throws, "tryCatchAsync" returns a discriminated union with "status === 'error'" and "error"
 // - in case "cb" doesn't throw, "tryCatchAsync" returns a discriminated union with "status === 'success'" and "data" 
 
-const result = await tryCatchAsync(async () => {
-  return {
-    message: 'hello',
-  };
-})
+const result = await tryCatchAsync(
+  async () => {
+    return {
+      message: 'hello',
+    };
+  }
+);
 
 // you must check the discriminated union on "status"
 if (result.status === 'error') {

@@ -1,7 +1,8 @@
-```ts
-import { omit, pick, groupBy } from './object';
+**omit**
 
-// omit
+```ts
+import { omit } from './object';
+
 const item = {
   id: 56,
   name: 'Luke',
@@ -11,8 +12,13 @@ omit(item, ['id'])
 { 
   name: 'Luke' 
 }
+```
 
-// pick
+**pick**
+
+```ts
+import { pick } from './object';
+
 const item = {
   id: 56,
   name: 'Luke',
@@ -21,8 +27,13 @@ pick(item, ['id'])
 { 
   id: 56 
 }
+```
 
-// groupBy
+**groupBy**
+
+```ts
+import { groupBy } from './object';
+
 const items = [
   { group: 'one', name: 'Luke' },
   { group: 'one', name: 'Leia' },
