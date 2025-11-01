@@ -1,26 +1,26 @@
 **fakePromiseThatCanRandomlyThrow**
 
+This utility is meant to be used for testing code that must handle promise resolve and reject.  
+It can randomly:
+- return `true` (simulate success)
+- throw an error (simulate failure)
+
 ```ts
 import { fakePromiseThatCanRandomlyThrow } from './promise';
-
-// NOTE:
-// This utility is meant to be used for testing code that must handle promise success/failure reliably.
-// After testing remove the call and replace it with the code of your app.
-
 
 // with then/catch
 
 fakePromiseThatCanRandomlyThrow()
-  .then(() => console.log('1 seconds passed and success'))
-  .catch(() => console.log('1 seconds passed and failure'));
+  .then(() => console.log('success'))
+  .catch(() => console.log('failure'));
 
 
 // with async/await
 
 try {
   await fakePromiseThatCanRandomlyThrow();
-  console.log('1 seconds passed and success');
+  console.log('success');
 } catch (error) {
-  console.log('1 seconds passed and failure');
+  console.log('failure');
 }
 ```
