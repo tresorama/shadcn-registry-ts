@@ -1,20 +1,10 @@
 ### clamp
 
-:::tip
-**clamp** and **wrap** can be confused, but **clamp** return the surpassed edge, while **wrap** return the opposite edge.
-```ts
-clamp({ min: 0, max: 100, value: 200 }); // 100
-wrap({  min: 0, max: 100, value: 200 }); // 0
-```
-:::
-
 Keep a number within a minimum and maximum range — if it’s too low or too high, it’s pushed back inside the limits.
-
 
 The mental model is: 
 - if the value is lower than min, min is returned
 - if the value is greater than max, max is returned
-
 
 ```ts
 import { clamp } from "./math"
@@ -29,8 +19,6 @@ clamp({ min: 0, max: 100, value: -50 }) // 0
 clamp({ min: 0, max: 100, value: 150 }) // 100
 ```
 
-### wrap
-
 :::tip
 **clamp** and **wrap** can be confused, but **clamp** return the surpassed edge, while **wrap** return the opposite edge.
 ```ts
@@ -38,6 +26,8 @@ clamp({ min: 0, max: 100, value: 200 }); // 100
 wrap({  min: 0, max: 100, value: 200 }); // 0
 ```
 :::
+
+### wrap
 
 Keep a number inside a range by looping it around — if it goes past the max, it starts again from the min.  
 
@@ -57,6 +47,14 @@ wrap({ min: 0, max: 100, value: 75 })  // 75
 wrap({ min: 0, max: 100, value: 200 }); // 0
 wrap({ min: 0, max: 100, value: -10 }); // 100
 ```
+
+:::tip
+**clamp** and **wrap** can be confused, but **clamp** return the surpassed edge, while **wrap** return the opposite edge.
+```ts
+clamp({ min: 0, max: 100, value: 200 }); // 100
+wrap({  min: 0, max: 100, value: 200 }); // 0
+```
+:::
 
 ### lerp
 
