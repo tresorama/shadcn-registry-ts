@@ -1,4 +1,4 @@
-**retry**
+### retry
 
 ```ts
 import { retry } from './retry';

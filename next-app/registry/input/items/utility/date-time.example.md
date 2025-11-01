@@ -1,4 +1,4 @@
-**formatMillisecondsToHumanReadable**
+### formatMillisecondsToHumanReadable
 
 ```ts
 import { formatMillisecondsToHumanReadable } from './date-time';
@@ -8,7 +8,7 @@ formatMillisecondsToHumanReadable(2000);
  '2s'
 ```
 
-**createTimeRanges**
+### createTimeRanges
 
 ```ts
 import { createTimeRanges } from './date-time';

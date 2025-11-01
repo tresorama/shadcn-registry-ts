@@ -1,4 +1,4 @@
-**getLastArrayItem**
+### getLastArrayItem
 
 ```ts
 import { getLastArrayItem } from "./array"
@@ -8,7 +8,7 @@ getLastArrayItem([0, 100, 50]);
 50
 ```
 
-**createArrayWithLength**
+### createArrayWithLength
 
 ```tsx
 import { createArrayWithLength } from "./array"

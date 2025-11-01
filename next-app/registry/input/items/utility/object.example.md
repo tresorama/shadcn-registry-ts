@@ -1,4 +1,4 @@
-**omit**
+### omit
 
 ```ts
 import { omit } from './object';
@@ -14,7 +14,7 @@ omit(item, ['id'])
 }
 ```
 
-**pick**
+### pick
 
 ```ts
 import { pick } from './object';
@@ -29,7 +29,7 @@ pick(item, ['id'])
 }
 ```
 
-**groupBy**
+### groupBy
 
 ```ts
 import { groupBy } from './object';

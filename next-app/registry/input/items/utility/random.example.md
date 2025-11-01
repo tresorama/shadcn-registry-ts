@@ -1,4 +1,4 @@
-**getRandomString**
+### getRandomString
 
 ```ts
 import { getRandomString } from './random';
@@ -6,7 +6,7 @@ import { getRandomString } from './random';
 getRandomString(); // 1642345678-12345
 ```
 
-**getRandomString2**
+### getRandomString2
 
 ```ts
 import { getRandomString2 } from './random';
@@ -14,7 +14,7 @@ import { getRandomString2 } from './random';
 getRandomString2() // 12345
 ```
 
-**getRandomInteger**
+### getRandomInteger
 
 ```ts
 import { getRandomInteger } from './random';
@@ -24,7 +24,7 @@ getRandomInteger(1, 10); // 2
 getRandomInteger(1, 10); // 10
 ```
 
-**getRandomArrayItem**
+### getRandomArrayItem
 
 ```ts
 import { getRandomArrayItem } from './random';
@@ -33,7 +33,7 @@ getRandomArrayItem([1, 2, 3]); // 2
 getRandomArrayItem([1, 2, 3]); // 3
 ```
 
-**getRandomColor**
+### getRandomColor
 
 ```ts
 import { getRandomColor } from './random';
@@ -55,7 +55,7 @@ getRandomColor({h: 50, l: 50});
 // { h: 50, s: 50, l: 50, hsl: 'hsl(50 50% 50% )' }
 ```
 
-**getRandomImage**
+### getRandomImage
 
 ```ts
 import { getRandomImage } from './random';
@@ -69,7 +69,7 @@ getRandomImage({ w: 600, h: 400 });
 // https://picsum.photos/600/400?random=2
 ```
 
-**getRandomDateInRange**
+### getRandomDateInRange
 
 ```ts
 import { getRandomDateInRange } from './random';

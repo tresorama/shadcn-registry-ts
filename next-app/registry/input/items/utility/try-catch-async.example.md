@@ -1,4 +1,4 @@
-**tryCatchAsync**
+### tryCatchAsync
 
 ```ts
 import { tryCatchAsync } from './try-catch-async';

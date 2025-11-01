@@ -1,4 +1,4 @@
-**clamp**
+### clamp
 
 :::tip
 **clamp** and **wrap** can be confused, but **clamp** return the surpassed edge, while **wrap** return the opposite edge.
@@ -29,7 +29,7 @@ clamp({ min: 0, max: 100, value: -50 }) // 0
 clamp({ min: 0, max: 100, value: 150 }) // 100
 ```
 
-**wrap**
+### wrap
 
 :::tip
 **clamp** and **wrap** can be confused, but **clamp** return the surpassed edge, while **wrap** return the opposite edge.
@@ -58,7 +58,7 @@ wrap({ min: 0, max: 100, value: 200 }); // 0
 wrap({ min: 0, max: 100, value: -10 }); // 100
 ```
 
-**lerp**
+### lerp
 
 Find a value between two numbers based on a progress value from 0 to 1 — for example, halfway (0.5) gives the middle point.
 
@@ -81,7 +81,7 @@ lerp({ min: 0, max: 100, t: -0.5 }) // 0
 lerp({ min: 0, max: 100, t: 1.5 })  // 100
 ```
 
-**lerpInverse**
+### lerpInverse
 
 Find how far a number is between two limits — returns a value between 0 and 1 representing its position within the range.  
 
@@ -104,7 +104,7 @@ lerpInverse({ min: 0, max: 100, value: -50 }) // 0
 lerpInverse({ min: 0, max: 100, value: 150 }) // 1
 ```
 
-**sum**
+### sum
 
 Add together all the numbers in an array — returns 0 if the list is empty.
 
@@ -115,7 +115,7 @@ sum([]); // 0
 sum([1, 2, 3]); // 6
 ```
 
-**mean**
+### mean
 
 Calculate the average of a list of numbers — the result is the total divided by how many numbers there are.
 
@@ -133,7 +133,7 @@ mean([1, 2, 3, 4]); // 10 / 4 = 2.5
 mean([0, 0, 10]); // 3.3333333333333335
 ```
 
-**numIsBetween**
+### numIsBetween
 
 Check whether a number falls inside a given range, with the option to include or exclude the boundaries.
 
@@ -152,7 +152,7 @@ numIsBetween({ min: 1, max: 10, num: 5, isInclusive: false }); // false
 numIsBetween({ min: 1, max: 10, num: 10, isInclusive: false }); // false
 ```
 
-**calculateFrequenciesStats**
+### calculateFrequenciesStats
 
 Convert a set of counts into total and percentage values for each group, making it easy to compare proportions.
 

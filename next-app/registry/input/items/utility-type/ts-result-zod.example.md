@@ -56,7 +56,7 @@ type MyResult = InferResult<typeof schemaMyResult>;
 ```
 
 
-**Basic Usage**  
+### Basic Usage
 
 ```ts
 import z from 'zod';
@@ -166,7 +166,7 @@ async function main() {
 
 ```
 
-**Infer Types**  
+### Infer Types
 
 ```ts
 import z from 'zod';
@@ -229,7 +229,7 @@ type SimpleResultError = InferResultError<typeof simpleResult>;
 }
 ```
 
-**Wrap Result in an other Result**  
+### Wrap Result in an other Result
 
 ```ts
 import z from 'zod';

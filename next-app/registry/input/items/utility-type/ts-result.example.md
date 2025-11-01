@@ -21,7 +21,7 @@ type Result<TSuccessData, TErrorCodes> = (
 ```
 
 
-**Basic Usage**
+### Basic Usage
 
 ```ts
 import type { Result } from './ts-result';
@@ -130,7 +130,7 @@ async function main() {
 }
 ```
 
-**ResultAlwaysSuccess**
+### ResultAlwaysSuccess
 
 Use this if you know that error is not possible, or if you want to treat error as success.
 
@@ -156,7 +156,7 @@ const fn2 = async (): Promise<Fn2Result> => {
 };
 ```
 
-**Infer Types and Wrap Types**
+### Infer Types and Wrap Types
 
 ```ts
 import type { Result, InferResultSuccess, InferResultError } from './ts-result';
@@ -224,7 +224,7 @@ const wrappedFn = async (text: string): Promise<WrappedResult> => {
 
 ```
 
-**Add Zod Schema**
+### Add Zod Schema
 
 :::tip
 There is also a dedicated utility [Ts Result Zod](/item/util-ts-result-zod), that is more complete.

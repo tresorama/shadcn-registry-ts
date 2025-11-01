@@ -1,4 +1,4 @@
-**sortArrayByDate**
+### sortArrayByDate
 
 ```ts
 import { sortArrayByDate } from './array-sort';
@@ -28,7 +28,7 @@ const sortedDesc = input
 ['C', 'B', 'A']
 ```
 
-**sortArrayByNumber**
+### sortArrayByNumber
 
 ```ts
 import { sortArrayByNumber } from './array-sort';
@@ -46,7 +46,7 @@ const sortedDesc = input.toSorted((a, b) => sortArrayByNumber(a, b, 'desc'));
 [3, 2, 1]
 ```
 
-**sortArrayByString**
+### sortArrayByString
 
 ```ts
 import { sortArrayByString } from './array-sort';

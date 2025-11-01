@@ -1,4 +1,4 @@
-**fakePromiseThatCanRandomlyThrow**
+### fakePromiseThatCanRandomlyThrow
 
 This utility is meant to be used for testing code that must handle promise resolve and reject.  
 It can randomly:

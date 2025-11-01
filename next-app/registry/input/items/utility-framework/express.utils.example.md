@@ -1,4 +1,4 @@
-**getExpressRequestInfo**
+### getExpressRequestInfo
 
 ```ts
 import { getExpressRequestInfo } from './express.utils';

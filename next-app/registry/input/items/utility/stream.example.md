@@ -1,4 +1,4 @@
-**convertWebStreamToNodeStream**
+### convertWebStreamToNodeStream
 
 ```ts
 // we use express handler for this example
@@ -23,7 +23,7 @@ app.get('/stream', async (req, res) => {
 })
 ```
 
-**readWebStreamIntoString**
+### readWebStreamIntoString
 
 ```ts
 

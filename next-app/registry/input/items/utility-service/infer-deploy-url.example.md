@@ -1,4 +1,4 @@
-**getInferredDeployUrl**
+### getInferredDeployUrl
 
 ```ts
 // constants.ts

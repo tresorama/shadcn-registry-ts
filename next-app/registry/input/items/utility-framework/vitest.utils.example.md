@@ -1,4 +1,4 @@
-**repeatSyncFn**
+### repeatSyncFn
 
 ```ts
 import { it, expect } from 'vitest';
@@ -12,7 +12,7 @@ it('use repeatSyncFn', () => {
 }))
 ```
 
-**repeatAsyncFn**
+### repeatAsyncFn
 
 ```ts
 import { it, expect } from 'vitest';

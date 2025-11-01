@@ -1,4 +1,4 @@
-**createDbTable - inferred automatically from usage**
+### createDbTable - inferred automatically from usage
 
 ```ts
 import { createDbTable } from './db.mock.utils';
@@ -23,7 +23,7 @@ const updatedItem = table.update(1, {name: 'Obi-Wan'});
 const deletedItem = table.delete(2);
 
 ```
-**createDbTable - explicit type**
+### createDbTable - explicit type
 
 ```ts
 import { createDbTable } from './db.mock.utils';

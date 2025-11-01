@@ -1,4 +1,4 @@
-**randomEmojiCreator**
+### randomEmojiCreator
 
 ```ts
 import { randomEmojiCreator } from './emoji-generator'
