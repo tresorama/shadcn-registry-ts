@@ -1,5 +1,9 @@
 ### retry
 
+Return a new function that internally calls the original function, with retry logic on top.  
+
+The function to wrap must be async, and must never throw.
+
 ```ts
 import { retry } from './retry';
 

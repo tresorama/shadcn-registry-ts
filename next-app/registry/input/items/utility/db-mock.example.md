@@ -1,5 +1,8 @@
 ### createDbTable - inferred automatically from usage
 
+Create an in-memory DB table that you can use to mock a database.  
+Simple and naive, DO NOT USE IN PRODUCTION!
+
 ```ts
 import { createDbTable } from './db.mock.utils';
 

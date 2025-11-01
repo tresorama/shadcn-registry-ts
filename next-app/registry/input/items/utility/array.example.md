@@ -1,5 +1,7 @@
 ### getLastArrayItem
 
+Return the last item from an array.
+
 ```ts
 import { getLastArrayItem } from "./array"
 
@@ -9,6 +11,9 @@ getLastArrayItem([0, 100, 50]);
 ```
 
 ### createArrayWithLength
+
+Create an array with an arbitrary length, that you can `.map` on.  
+Useful for skeleton of list items, or for creating fixed-length array (even if the array is still mutable).
 
 ```tsx
 import { createArrayWithLength } from "./array"

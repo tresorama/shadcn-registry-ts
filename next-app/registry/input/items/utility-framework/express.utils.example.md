@@ -1,5 +1,7 @@
 ### getExpressRequestInfo
 
+Utilities that extract common used data for logging/debugging from *express*'s **Request** and **Response** objects.
+
 ```ts
 import { getExpressRequestInfo } from './express.utils';
 
