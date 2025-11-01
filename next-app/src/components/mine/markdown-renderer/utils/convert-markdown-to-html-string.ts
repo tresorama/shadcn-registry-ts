@@ -15,6 +15,7 @@ import remarkRehype, { type Options as RemarkRehypeOptions } from 'remark-rehype
 // import rehypeRaw from "rehype-raw";
 import rehypeShiki, { type RehypeShikiOptions } from '@shikijs/rehype';
 import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings, { type Options as RehypeAutolinkHeadingsOptions } from 'rehype-autolink-headings';
 // import rehypeSanitize, { type Options as RehypeSanitizeOptions } from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
 
@@ -79,6 +80,8 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
 
     // rehypeSlug -> add id HTML attributes to headings (h1 id="heading-1", h2 id="heading-2", etc)
     .use(rehypeSlug)
+
+    .use(rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions)
 
     // rehypeRaw -> keep raw HTML
     // .use(rehypeRaw)
@@ -257,4 +260,16 @@ const rehypeShikiOptions: RehypeShikiOptions = {
       },
     }
   ],
+};
+
+
+// rehypeAutolinkHeadings
+export type HtmlAnchorExtraHtmlAttributes = {
+  "data-kind"?: "heading-autolink";
+};
+export const rehypeAutolinkHeadingsOptions: RehypeAutolinkHeadingsOptions = {
+  behavior: 'wrap',
+  properties: {
+    "data-kind": "heading-autolink"
+  } satisfies HtmlAnchorExtraHtmlAttributes
 };
