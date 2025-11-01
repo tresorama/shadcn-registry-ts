@@ -42,7 +42,7 @@
       ],
       "type": "registry:file",
       "title": "Date Time",
-      "description": "Utilities for working with Date adn Time.",
+      "description": "Utilities for working with Date and Time.",
       "files": [
         {
           "path": "registry/input/items/utility/date-time.ts",
