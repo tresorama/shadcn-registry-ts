@@ -192,7 +192,7 @@ const rehypeShikiOptions: RehypeShikiOptions = {
   // and populate `transformer.pre this.options.meta`
   parseMetaString(metaString) {
     const parsed = parseFromRawString(metaString);
-    console.log('parseMetaString', { metaString, parsed });
+    // console.log('parseMetaString', { metaString, parsed });
     return parsed;
 
     function parseFromRawString(str = '') {
