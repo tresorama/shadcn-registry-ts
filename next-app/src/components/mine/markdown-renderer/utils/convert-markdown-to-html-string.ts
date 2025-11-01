@@ -146,7 +146,6 @@ export type HtmlDivExtraHtmlAttributes = {
 const remarkDirectiveCustomElementTip: Plugin = () => {
   return (tree) => {
     visit(tree, "containerDirective", (node: ContainerDirective) => {
-      console.log(node);
       if (node.name === "tip") {
         node.data = {
           hName: "div",
