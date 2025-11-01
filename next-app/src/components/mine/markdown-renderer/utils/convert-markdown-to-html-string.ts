@@ -1,10 +1,13 @@
-import { unified } from 'unified';
+import { unified, type Plugin } from 'unified';
+import { visit } from "unist-util-visit";
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 // import remarkHeadingId, { type RemarkHeadingIdOptions } from 'remark-heading-id';
 import remarkToc, { type Options as RemarkTocOptions } from 'remark-toc';
 // import remarkCodeTitle from "remark-code-title";
 // import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
+import remarkDirective from 'remark-directive';
+import type { ContainerDirective } from "mdast-util-directive"; // tip fornito dal pacchetto remark-directive
 import remarkRehype, { type Options as RemarkRehypeOptions } from 'remark-rehype';
 // import rehypeRaw from "rehype-raw";
 import rehypeShiki, { type RehypeShikiOptions } from '@shikijs/rehype';
@@ -55,6 +58,10 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
 
     // remarkSqueezeParagraphs -> remove empty paragraphs
     // .use(remarkSqueezeParagraphs)
+
+    // remarkDirective -> Support directives (:::tip, :::note)
+    .use(remarkDirective)
+    .use(remarkDirectiveCustomElementTip)
 
     // remarkRehype -> Convert Markdown to HTML
     .use(remarkRehype, { allowDangerousHtml: true } satisfies RemarkRehypeOptions)
@@ -127,7 +134,34 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
   return finalHtml;
 };
 
-// options
+// ===============================================
+//     Remark Plugins
+// ===============================================
+
+// remarkDirectiveCustomElementXXX
+
+export type HtmlDivExtraHtmlAttributes = {
+  "data-kind"?: "tip";
+};
+const remarkDirectiveCustomElementTip: Plugin = () => {
+  return (tree) => {
+    visit(tree, "containerDirective", (node: ContainerDirective) => {
+      console.log(node);
+      if (node.name === "tip") {
+        node.data = {
+          hName: "div",
+          hProperties: { "data-kind": "tip" } satisfies HtmlDivExtraHtmlAttributes,
+        };
+      }
+    });
+  };
+};
+
+// ===============================================
+//     Rehype Plugins
+// ===============================================
+
+// rehypeShiki
 export type HtmlPreExtraHtmlAttributes = {
   language: string;
   code: string;
