@@ -5,10 +5,11 @@ import parseHtmlToReact, {
   type HTMLReactParserOptions,
 } from 'html-react-parser';
 
-import type { HtmlPreExtraHtmlAttributes } from './convert-markdown-to-html-string';
+import type { HtmlDivExtraHtmlAttributes, HtmlPreExtraHtmlAttributes } from './convert-markdown-to-html-string';
 
 import { CodeNotCollapsibleServer } from '@/components/mine/code-not-collapsible';
 import { CodeCollapsibleClient } from '@/components/mine/code-collapsible';
+import { Alert, AlertDescription, AlertTitle } from '@/components/shadcn/ui/alert';
 
 
 export function convertHtmlStringToReactJsx(htmlString: string) {
@@ -18,6 +19,8 @@ export function convertHtmlStringToReactJsx(htmlString: string) {
 
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {
+
+    // replace code block ```language
     if (domNode instanceof Element && domNode.tagName === 'pre') {
 
       // 1. get raw html attributes of `<pre>`
@@ -63,6 +66,22 @@ const options: HTMLReactParserOptions = {
         />
       );
 
+    }
+
+    // replace :::tip
+    if (domNode instanceof Element && domNode.tagName === 'div') {
+      const divHtmlAttributes = domNode.attribs as unknown as HtmlDivExtraHtmlAttributes;
+      if (divHtmlAttributes['data-kind'] === 'tip') {
+        return (
+          <Alert>
+            <HandHelpingIcon />
+            <AlertTitle>Tip</AlertTitle>
+            <AlertDescription className='[&>*]:my-1'>
+              {domToReact(domNode.children)}
+            </AlertDescription>
+          </Alert>
+        );
+      }
     }
   }
 
