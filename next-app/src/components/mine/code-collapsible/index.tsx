@@ -29,42 +29,42 @@ export const CodeCollapsibleClient = ({
     <Collapsible
       className={cn("relative border rounded-xl overflow-hidden", className)}
     >
+      {/* HEADER */}
+      <div
+        data-name="CODE-COLLAPSIBLE--HEADER"
+        className="pl-3 pr-2 py-2 flex justify-start items-center gap-2 border-b"
+      >
+        {/* FILE TITLE */}
+        {fileTitle && (
+          <span className="text-sm text-muted-foreground">
+            {fileTitle}
+          </span>
+        )}
+        <div className="ml-auto flex items-center gap-[inherit]">
+          {/* BUTTON COLLAPSE */}
+          <CollapsibleTrigger asChild>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="data-[state=closed]:hidden text-muted-foreground"
+            >
+              Collapse
+            </Button>
+          </CollapsibleTrigger>
+          {/* BUTTON - COPY TO CLIPBOARD */}
+          {codeStringForClipboard && (
+            <ButtonCopyToClipboard
+              text={codeStringForClipboard}
+              className="text-muted-foreground"
+            />
+          )}
+        </div>
+      </div>
+      {/* CODE */}
       <CollapsibleContent
         forceMount
-        className="relative overflow-hidden data-[state=closed]:h-60"
+        className="relative overflow-hidden data-[state=closed]:max-h-60 bg-code"
       >
-        {/* HEADER */}
-        <div
-          data-name="CODE-COLLAPSIBLE--HEADER"
-          className="pl-3 pr-2 py-2 flex justify-start items-center gap-2 border-b"
-        >
-          {/* FILE TITLE */}
-          {fileTitle && (
-            <span className="text-sm text-muted-foreground">
-              {fileTitle}
-            </span>
-          )}
-          <div className="ml-auto flex items-center gap-[inherit]">
-            {/* BUTTON COLLAPSE */}
-            <CollapsibleTrigger asChild>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="data-[state=closed]:hidden text-muted-foreground"
-              >
-                Collapse
-              </Button>
-            </CollapsibleTrigger>
-            {/* BUTTON - COPY TO CLIPBOARD */}
-            {codeStringForClipboard && (
-              <ButtonCopyToClipboard
-                text={codeStringForClipboard}
-                className="text-muted-foreground"
-              />
-            )}
-          </div>
-        </div>
-        {/* CODE */}
         <div
           data-name="CODE-COLLAPSIBLE--CODE"
           className="[&>*]:prose-pre:mt-0"
