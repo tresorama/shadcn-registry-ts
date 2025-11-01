@@ -80,6 +80,7 @@ const options: HTMLReactParserOptions = {
             <HandHelpingIcon />
             <AlertTitle>Tip</AlertTitle>
             <AlertDescription className='[&>*]:my-1'>
+              {/*@ts-expect-error Childnode[] is not assignable to DOMNode[] */}
               {domToReact(domNode.children)}
             </AlertDescription>
           </Alert>
