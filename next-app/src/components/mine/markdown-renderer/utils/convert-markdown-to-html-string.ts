@@ -4,7 +4,6 @@ import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkToc, { type Options as RemarkTocOptions } from 'remark-toc';
 // import remarkCodeTitle from "remark-code-title";
-// import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
 import remarkDirective from 'remark-directive';
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
@@ -53,9 +52,6 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
 
     // remarkCodeTitle -> Support title in code blocks
     // .use(remarkCodeTitle)
-
-    // remarkSqueezeParagraphs -> remove empty paragraphs
-    // .use(remarkSqueezeParagraphs)
 
     // remarkDirective -> Support directives (:::tip, :::note)
     .use(remarkDirective)
