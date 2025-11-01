@@ -6,7 +6,7 @@ import parseHtmlToReact, {
 } from 'html-react-parser';
 import { HandHelpingIcon } from 'lucide-react';
 
-import type { HtmlDivExtraHtmlAttributes, HtmlPreExtraHtmlAttributes } from './convert-markdown-to-html-string';
+import type { HtmlAnchorExtraHtmlAttributes, HtmlDivExtraHtmlAttributes, HtmlPreExtraHtmlAttributes } from './convert-markdown-to-html-string';
 
 import { CodeNotCollapsibleServer } from '@/components/mine/code-not-collapsible';
 import { CodeCollapsibleClient } from '@/components/mine/code-collapsible';
@@ -84,6 +84,23 @@ const options: HTMLReactParserOptions = {
               {domToReact(domNode.children)}
             </AlertDescription>
           </Alert>
+        );
+      }
+    }
+
+    // replace heading with autolink
+    if (domNode instanceof Element && domNode.tagName === 'a') {
+      const aHtmlAttributes = domNode.attribs as unknown as HtmlAnchorExtraHtmlAttributes;
+      if (aHtmlAttributes['data-kind'] === 'heading-autolink') {
+        const aProps = attributesToProps(domNode.attribs);
+        return (
+          <a
+            {...aProps}
+            className='group no-underline flex items-center gap-2 hover:underline hover:underline-offset-4'
+          >
+            {/*@ts-expect-error Childnode[] is not assignable to DOMNode[] */}
+            {domToReact(domNode.children)}
+          </a>
         );
       }
     }
