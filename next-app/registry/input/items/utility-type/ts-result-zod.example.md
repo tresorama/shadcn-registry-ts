@@ -84,14 +84,14 @@ const fn1 = async (): Promise<Fn1Result> => {
   try {
 
     // do fetch
-    const result = await fetch('https://api.example.com');
+    const response = await fetch('https://api.example.com');
 
     // if fetch status is not ok...
-    if (!result.ok) {
+    if (!response.ok) {
       return {
         status: 'error',
         code: 'FETCH_FAILED',
-        message: 'Fetch status is not ok: ' + result.status,
+        message: 'Fetch status is not ok: ' + response.status,
       };
     }
 
@@ -101,7 +101,7 @@ const fn1 = async (): Promise<Fn1Result> => {
     const dataSchema = getResultData(schemaFn1Result).successData;
 
     // check that data has expected shape
-    const parsed = dataSchema.safeParse(await result.json());
+    const parsed = dataSchema.safeParse(await response.json());
 
     // if invalid data
     if (!parsed.success) {
