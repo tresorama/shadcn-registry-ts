@@ -27,7 +27,13 @@ export async function MarkdownRendererServer({
   const reactJsxTree = convertHtmlStringToReactJsx(htmlString);
 
   return (
-    <div className={cn('MARKDOWN-RENDERER prose dark:prose-invert', className)}>
+    <div
+      data-name="MARKDOWN-RENDERER"
+      className={cn(
+        "prose dark:prose-invert",
+        "prose-h3:font-medium prose-h3:tracking-tight [&_h3>a[data-kind=heading-autolink]]:[font:inherit]",
+        className)}
+    >
       {reactJsxTree}
     </div>
   );

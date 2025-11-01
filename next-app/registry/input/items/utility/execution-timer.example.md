@@ -1,3 +1,8 @@
+### createExecutionTimeMeter
+
+Returns an object with a function to get the elapsed time.  
+The start time is set when the function is called.
+
 ```ts
 import { createExecutionTimeMeter } from "./execution-timer";
 

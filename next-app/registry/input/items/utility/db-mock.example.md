@@ -1,3 +1,8 @@
+### createDbTable - inferred automatically from usage
+
+Create an in-memory DB table that you can use to mock a database.  
+Simple and naive, DO NOT USE IN PRODUCTION!
+
 ```ts
 import { createDbTable } from './db.mock.utils';
 
@@ -20,10 +25,20 @@ const createdItem = table.create({name: 'Yoda'});
 const updatedItem = table.update(1, {name: 'Obi-Wan'});
 const deletedItem = table.delete(2);
 
+```
+### createDbTable - explicit type
 
-// with explicit type
+```ts
+import { createDbTable } from './db.mock.utils';
 
-const table = createDbTable<{id: number, name: string}>([
+// explicit type
+
+type Item = {
+  id: number,
+  name: string
+}
+
+const table = createDbTable<Item>([
   {
     id: 1,
     name: 'Luke'

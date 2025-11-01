@@ -15,11 +15,11 @@ We are using [Vercel](https://vercel.com) to deploy the app
 
 Follow the guide of the PaaS provider (Vercel, Netlify, etc), and when you need to customize env var and build script, follow the following steps:
 
-- **Environment Variables**: read [Envirnoment Variables for Prod](./environments.md#production)
+- **Environment Variables**: read [Envirnoment Variables for Prod](./06-environments.md#production)
 - **Build script**: `cd next-app && pnpm run prod:build`
 - **Start script** `cd next-app && pnpm run prod:start`
 
 
 ## How to work with Branch and Pull Requests?
 
-Refer to [Git and Github Workflow](./git-and-github--workflow.md)
+Refer to [Git and Github Workflow](./05-git-and-github--workflow.md)
