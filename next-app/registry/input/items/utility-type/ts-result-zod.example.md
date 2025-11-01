@@ -197,8 +197,8 @@ type SimpleResult = InferResult<typeof simpleResult>;
 {
   status: "success";
   data: {
-      name: string;
-      age: number;
+    name: string;
+    age: number;
   };
 } | {
   status: "error";
@@ -213,8 +213,8 @@ type SimpleResultSuccess = InferResultSuccess<typeof simpleResult>;
 {
   status: "success";
   data: {
-      name: string;
-      age: number;
+    name: string;
+    age: number;
   };
 }
 
