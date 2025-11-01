@@ -73,7 +73,7 @@ export const CodeCollapsibleClient = ({
         </div>
       </CollapsibleContent>
       <CollapsibleTrigger
-        className="data-[state=open]:hidden absolute left-0 right-0 bottom-[-2px] h-16 flex justify-center items-center bg-gradient-to-b from-code/5 from-0% to-code to-50%"
+        className="cursor-pointer data-[state=open]:hidden absolute left-0 right-0 bottom-[-2px] h-16 flex justify-center items-center bg-gradient-to-b from-code/5 from-0% to-code to-50%"
       >
         <span className="text-sm">Expand</span>
       </CollapsibleTrigger>
