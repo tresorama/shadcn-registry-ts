@@ -43,8 +43,8 @@ const options: HTMLReactParserOptions = {
         style: {
           ...(prePropsOriginal.style ?? {}),
           margin: 0,
-          paddingTop: '1rem',
-          paddingBottom: '2rem',
+          paddingTop: 'calc(var(--spacing) * 4)',
+          paddingBottom: 'calc(var(--spacing) * 4)',
         },
         children: prePropsChildren
       };
