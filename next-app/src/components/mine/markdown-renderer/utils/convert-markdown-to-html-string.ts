@@ -7,6 +7,9 @@ import remarkToc, { type Options as RemarkTocOptions } from 'remark-toc';
 // import remarkCodeTitle from "remark-code-title";
 // import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
 import remarkDirective from 'remark-directive';
+import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
+import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
+import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
 import type { ContainerDirective } from "mdast-util-directive"; // tip fornito dal pacchetto remark-directive
 import remarkRehype, { type Options as RemarkRehypeOptions } from 'remark-rehype';
 // import rehypeRaw from "rehype-raw";
@@ -65,6 +68,10 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
 
     // remarkRehype -> Convert Markdown to HTML
     .use(remarkRehype, { allowDangerousHtml: true } satisfies RemarkRehypeOptions)
+
+    .use(remarkPresetLintConsistent)
+    .use(remarkPresetLintRecommended)
+    .use(remarkPresetLintMarkdownStyleGuide)
 
     // rehypeShiki -> format code blocks with shiki (it style elements with inline style)
     .use(rehypeShiki, rehypeShikiOptions)
