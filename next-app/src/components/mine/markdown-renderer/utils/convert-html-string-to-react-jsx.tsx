@@ -79,7 +79,7 @@ const options: HTMLReactParserOptions = {
           <Alert className='my-5'>
             <HandHelpingIcon />
             <AlertTitle>Tip</AlertTitle>
-            <AlertDescription className='[&>*]:my-1'>
+            <AlertDescription className='[&>*]:my-1 [&_pre]:w-full'>
               {/*@ts-expect-error Childnode[] is not assignable to DOMNode[] */}
               {domToReact(domNode.children)}
             </AlertDescription>
