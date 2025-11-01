@@ -14,6 +14,7 @@ import type { ContainerDirective } from "mdast-util-directive"; // tip fornito d
 import remarkRehype, { type Options as RemarkRehypeOptions } from 'remark-rehype';
 // import rehypeRaw from "rehype-raw";
 import rehypeShiki, { type RehypeShikiOptions } from '@shikijs/rehype';
+import rehypeSlug from 'rehype-slug';
 // import rehypeSanitize, { type Options as RehypeSanitizeOptions } from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
 
@@ -75,6 +76,8 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
 
     // rehypeShiki -> format code blocks with shiki (it style elements with inline style)
     .use(rehypeShiki, rehypeShikiOptions)
+
+    .use(rehypeSlug)
 
     // rehypeRaw -> keep raw HTML
     // .use(rehypeRaw)
