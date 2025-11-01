@@ -4,6 +4,7 @@
 import { ButtonCopyToClipboard } from "@/components/mine/button-copy-to-clipboard";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/shadcn/ui/collapsible";
 import { Button } from "@/components/shadcn/ui/button";
+import { cn } from "@/lib/shadcn/utils";
 
 export type CodeCollapsibleClientProps = {
   /** Title of the file, showed in the header */
@@ -12,6 +13,8 @@ export type CodeCollapsibleClientProps = {
   codeJsx: React.ReactNode;
   /** text that will be copied to clipboard when clicking the copy button */
   codeStringForClipboard?: string;
+
+  className?: React.ComponentProps<'div'>['className'];
 };
 
 
@@ -19,11 +22,12 @@ export const CodeCollapsibleClient = ({
   fileTitle,
   codeStringForClipboard,
   codeJsx,
+  className,
 }: CodeCollapsibleClientProps) => {
 
   return (
     <Collapsible
-      className="relative border rounded-xl overflow-hidden"
+      className={cn("relative border rounded-xl overflow-hidden", className)}
     >
       <CollapsibleContent
         forceMount
