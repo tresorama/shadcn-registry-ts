@@ -42,7 +42,7 @@
       ],
       "type": "registry:file",
       "title": "Date Time",
-      "description": "Utilities for working with Date and time.",
+      "description": "Utilities for working with Date adn Time.",
       "files": [
         {
           "path": "registry/input/items/utility/date-time.ts",
@@ -81,7 +81,7 @@
       ],
       "type": "registry:file",
       "title": "Emoji Generator",
-      "description": "Simple generator of random emoji, that do not generator emoji previously used.",
+      "description": "Simple generator of random emoji, with a memory to avoid duplicates.",
       "files": [
         {
           "path": "registry/input/items/utility/emoji-generator.ts",
@@ -100,7 +100,7 @@
       ],
       "type": "registry:file",
       "title": "Execution Timer",
-      "description": "Utility for calculating the time taken to execute a piece of code.",
+      "description": "Utility for measuring time taken to execute a piece of code.",
       "files": [
         {
           "path": "registry/input/items/utility/execution-timer.ts",
@@ -119,7 +119,7 @@
       ],
       "type": "registry:file",
       "title": "Math",
-      "description": "Math utilities like lerp, clamp, etc.",
+      "description": "Math utilities like lerp, clamp...",
       "files": [
         {
           "path": "registry/input/items/utility/math.ts",
@@ -170,7 +170,7 @@
       ],
       "type": "registry:file",
       "title": "Random",
-      "description": "Random utilities like getRandomString, etc.",
+      "description": "Utilities for createing random things like string, numbers, image urls...",
       "files": [
         {
           "path": "registry/input/items/utility/random.ts",
@@ -237,7 +237,7 @@
       ],
       "type": "registry:file",
       "title": "Try Catch Async",
-      "description": "Utility for handling async functions, and forcing you to handle error cases.",
+      "description": "Utility for make async functions not throwable.",
       "files": [
         {
           "path": "registry/input/items/utility/try-catch-async.ts",
@@ -253,7 +253,7 @@
       ],
       "type": "registry:file",
       "title": "Ts Result",
-      "description": "Result pattern.",
+      "description": "Result pattern, type-only version, with Typescript Types as source.",
       "files": [
         {
           "path": "registry/input/items/utility-type/ts-result.ts",
@@ -269,7 +269,7 @@
       ],
       "type": "registry:file",
       "title": "Ts Result Zod",
-      "description": "Result pattern with Zod instead of Typescript Types a source.",
+      "description": "Result pattern, runtime version, with Zod instead of Typescript Types as source.",
       "files": [
         {
           "path": "registry/input/items/utility-type/ts-result-zod.ts",
@@ -326,7 +326,7 @@
       ],
       "type": "registry:file",
       "title": "Infer Deploy Url",
-      "description": "Utilities for inferring deploy url from auto-injected env vars on platform like Vercel or Netlify.",
+      "description": "Utilities for inferring deploy url from auto-injected env vars on platforms like Vercel or Netlify.",
       "files": [
         {
           "path": "registry/input/items/utility-service/infer-deploy-url.ts",
