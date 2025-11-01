@@ -271,11 +271,11 @@ type WrappedResult = InferResult<typeof wrappedResult>;
 {
   status: "success";
   data: {
-      simpleData: {
-          name: string;
-          age: number;
-      };
-      extraInfo: string;
+    simpleData: {
+      name: string;
+      age: number;
+    };
+    extraInfo: string;
   };
 } | {
   status: "error";
