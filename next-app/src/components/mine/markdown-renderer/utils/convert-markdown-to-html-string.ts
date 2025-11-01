@@ -2,7 +2,6 @@ import { unified, type Plugin } from 'unified';
 import { visit } from "unist-util-visit";
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
-// import remarkHeadingId, { type RemarkHeadingIdOptions } from 'remark-heading-id';
 import remarkToc, { type Options as RemarkTocOptions } from 'remark-toc';
 // import remarkCodeTitle from "remark-code-title";
 // import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
@@ -44,12 +43,6 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
     .use(remarkParse)
     // remark-gfm -> Support for GitHub Flavored Markdown
     .use(remarkGfm)
-
-    // remarkHeadingId -> add heading id attributes
-    // .use(remarkHeadingId, { 
-    //   defaults: true, 
-    //   uniqueDefaults: true 
-    // } satisfies RemarkHeadingIdOptions)
 
     // remarkToc -> Popoulate TOC section
     .use(remarkToc, {
