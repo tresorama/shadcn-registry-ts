@@ -32,7 +32,7 @@ const options: HTMLReactParserOptions = {
 
       // get react jsx of `<pre>` children
       // @ts-expect-error Childnode[] is not assignable to DOMNode[]
-      const prePropsChildren = domToReact(domNode.children);
+      const prePropsChildren = domToReact(domNode.children, options);
 
       // convert `<pre>` HTML attributes to React props
       const prePropsOriginal = attributesToProps(domNode.attribs);
@@ -82,7 +82,7 @@ const options: HTMLReactParserOptions = {
             <AlertTitle>Tip</AlertTitle>
             <AlertDescription className='[&>*]:my-1 [&_pre]:w-full'>
               {/*@ts-expect-error Childnode[] is not assignable to DOMNode[] */}
-              {domToReact(domNode.children)}
+              {domToReact(domNode.children, options)}
             </AlertDescription>
           </Alert>
         );
@@ -111,7 +111,7 @@ const options: HTMLReactParserOptions = {
         // @ts-expect-error next/link think that href is not present in props
         <Link {...attributesToProps(domNode.attribs)}>
           {/*@ts-expect-error Childnode[] is not assignable to DOMNode[] */}
-          {domToReact(domNode.children)}
+          {domToReact(domNode.children, options)}
         </Link>
       );
     }
