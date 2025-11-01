@@ -1,16 +1,22 @@
-```ts
-import { 
-  formatMillisecondsToHumanReadable,
-  createTimeRanges,
-} from './date-time';
+### formatMillisecondsToHumanReadable
 
-// formatMillisecondsToHumanReadable
+Format milliseconds to a human readable string.
+
+```ts
+import { formatMillisecondsToHumanReadable } from './date-time';
+
 formatMillisecondsToHumanReadable(2000);
 // ⏬
  '2s'
+```
 
+### createTimeRanges
 
-// createTimeRanges
+Create an array of **Range** objects, that can be used to group data by month.
+
+```ts
+import { createTimeRanges } from './date-time';
+
 const data = [
   {
     price: 90,

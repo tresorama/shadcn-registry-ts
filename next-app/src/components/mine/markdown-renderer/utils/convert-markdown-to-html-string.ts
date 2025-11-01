@@ -1,13 +1,19 @@
-import { unified } from 'unified';
+import { unified, type Plugin } from 'unified';
+import { visit } from "unist-util-visit";
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
-// import remarkHeadingId, { type RemarkHeadingIdOptions } from 'remark-heading-id';
 import remarkToc, { type Options as RemarkTocOptions } from 'remark-toc';
 // import remarkCodeTitle from "remark-code-title";
-// import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
+import remarkDirective from 'remark-directive';
+import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
+import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
+import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
+import type { ContainerDirective } from "mdast-util-directive"; // tip fornito dal pacchetto remark-directive
 import remarkRehype, { type Options as RemarkRehypeOptions } from 'remark-rehype';
 // import rehypeRaw from "rehype-raw";
 import rehypeShiki, { type RehypeShikiOptions } from '@shikijs/rehype';
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings, { type Options as RehypeAutolinkHeadingsOptions } from 'rehype-autolink-headings';
 // import rehypeSanitize, { type Options as RehypeSanitizeOptions } from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
 
@@ -37,12 +43,6 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
     // remark-gfm -> Support for GitHub Flavored Markdown
     .use(remarkGfm)
 
-    // remarkHeadingId -> add heading id attributes
-    // .use(remarkHeadingId, { 
-    //   defaults: true, 
-    //   uniqueDefaults: true 
-    // } satisfies RemarkHeadingIdOptions)
-
     // remarkToc -> Popoulate TOC section
     .use(remarkToc, {
       heading: 'contents',
@@ -53,14 +53,25 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
     // remarkCodeTitle -> Support title in code blocks
     // .use(remarkCodeTitle)
 
-    // remarkSqueezeParagraphs -> remove empty paragraphs
-    // .use(remarkSqueezeParagraphs)
+    // remarkDirective -> Support directives (:::tip, :::note)
+    .use(remarkDirective)
+    .use(remarkDirectiveCustomElementTip)
 
     // remarkRehype -> Convert Markdown to HTML
     .use(remarkRehype, { allowDangerousHtml: true } satisfies RemarkRehypeOptions)
 
+    .use(remarkPresetLintConsistent)
+    .use(remarkPresetLintRecommended)
+    .use(remarkPresetLintMarkdownStyleGuide)
+
     // rehypeShiki -> format code blocks with shiki (it style elements with inline style)
     .use(rehypeShiki, rehypeShikiOptions)
+
+    // rehypeSlug -> add id HTML attributes to headings (h1 id="heading-1", h2 id="heading-2", etc)
+    .use(rehypeSlug)
+
+    // rehypeAutolinkHeadings -> add link to headings
+    .use(rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions)
 
     // rehypeRaw -> keep raw HTML
     // .use(rehypeRaw)
@@ -127,7 +138,33 @@ export const convertMarkdownToHTMLString = async ({ markdown, addTOC = true }: R
   return finalHtml;
 };
 
-// options
+// ===============================================
+//     Remark Plugins
+// ===============================================
+
+// remarkDirectiveCustomElementXXX
+
+export type HtmlDivExtraHtmlAttributes = {
+  "data-kind"?: "tip";
+};
+const remarkDirectiveCustomElementTip: Plugin = () => {
+  return (tree) => {
+    visit(tree, "containerDirective", (node: ContainerDirective) => {
+      if (node.name === "tip") {
+        node.data = {
+          hName: "div",
+          hProperties: { "data-kind": "tip" } satisfies HtmlDivExtraHtmlAttributes,
+        };
+      }
+    });
+  };
+};
+
+// ===============================================
+//     Rehype Plugins
+// ===============================================
+
+// rehypeShiki
 export type HtmlPreExtraHtmlAttributes = {
   language: string;
   code: string;
@@ -158,7 +195,7 @@ const rehypeShikiOptions: RehypeShikiOptions = {
   // and populate `transformer.pre this.options.meta`
   parseMetaString(metaString) {
     const parsed = parseFromRawString(metaString);
-    console.log('parseMetaString', { metaString, parsed });
+    // console.log('parseMetaString', { metaString, parsed });
     return parsed;
 
     function parseFromRawString(str = '') {
@@ -213,4 +250,16 @@ const rehypeShikiOptions: RehypeShikiOptions = {
       },
     }
   ],
+};
+
+
+// rehypeAutolinkHeadings
+export type HtmlAnchorExtraHtmlAttributes = {
+  "data-kind"?: "heading-autolink";
+};
+export const rehypeAutolinkHeadingsOptions: RehypeAutolinkHeadingsOptions = {
+  behavior: 'wrap',
+  properties: {
+    "data-kind": "heading-autolink"
+  } satisfies HtmlAnchorExtraHtmlAttributes
 };

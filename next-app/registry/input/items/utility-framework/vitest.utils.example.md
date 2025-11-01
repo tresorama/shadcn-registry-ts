@@ -1,6 +1,10 @@
+### repeatSyncFn
+
+Use this function to repeat a **sync** function a certain number of times.
+
 ```ts
 import { it, expect } from 'vitest';
-import { repeatSyncFn, repeatAsyncFn } from './vitest.utils';
+import { repeatSyncFn } from './vitest.utils';
 
 // repeatSyncFn
 it('use repeatSyncFn', () => {
@@ -8,16 +12,27 @@ it('use repeatSyncFn', () => {
     expect(true).toBe(true);
   });
 }))
+```
 
+### repeatAsyncFn
 
-// repeatAsyncFn - Internally this uses Promise.all
+Use this function to repeat an **async** function a certain number of times.  
+
+Internally this uses **Promise.all**.
+
+```ts
+import { it, expect } from 'vitest';
+import { repeatAsyncFn } from './vitest.utils';
+
+// when you don't care about the return value
 it('use repeatAsyncFn', async () => {
-  // when you don't care about the return value
   await repeatAsyncFn(10_000, async () => {
     expect(true).toBe(true);
   })
+});
 
-  // when you care about the return value
+// when you care about the return value
+it('use repeatAsyncFn', async () => {
   const result = await repeatAsyncFn(10_000, async () => {
     if (Math.random() > 0.5) return true;
     return false;

@@ -19,27 +19,61 @@ Then the item must be added to the registry input file.
 In this example, we add a `logger` item.
 :::
 
-1. Create the following files:  
-   
-   ```bash
-    # main code (required)
-    next-app/registry/input/items/logger.ts
+The process, in short is:
+1. Create files (main code, example, test)
+2. Add the item to the registry array
 
-    # example file (required)
-    next-app/registry/input/items/logger.example.md
-    # look at one of the existing examples to know what to do
+#### Create Main Code file
 
-    # test file (optional)
-    next-app/registry/input/items/logger.test.ts
-    # look at one of the existing tests to know what to do
-   ```
-1. Add the item to the registry input file
-   
-   ```bash
-   # registry input file
-   next-app/registry/input/registry.input.json
-   ```
-    ```json
+This file is **required**.  
+It contains the code for the item.  
+
+*Location*:
+```bash
+next-app/registry/input/items/logger.ts
+```
+*Content*:
+```ts
+// example content
+export const logger = (message: string) => {
+  // ...
+}
+```
+#### Create Example file
+
+This file is **requried**, and must be a markdown file (.md).  
+This markdown will be rendered on the documentation page, under "Example Usage" section.  
+
+*Location*:
+```bash
+next-app/registry/input/items/logger.example.md
+```
+*Content*:
+
+We extended the markdown with some new blocks or special behavior, to make it more usable.  
+Read our guide at  
+`next-app/src/components/mine/markdown-renderer/server-component/readme.md`.
+
+#### Create Test file
+
+This file is **optional**, and must be a typescript file (*.test.ts).
+
+*Location*:
+```bash
+next-app/registry/input/items/logger.test.ts
+```
+#### Add the item to the registry input file
+
+The regitry input file is
+```bash
+next-app/registry/input/registry.input.json
+```
+
+You must add the item to the items array.
+```json
+{
+  "items": [
+    // other items
     {
       // name of the item, prefixed with util-
       "name": "util-array", 
@@ -51,21 +85,22 @@ In this example, we add a `logger` item.
       "title": "Array", 
       // page description of the item documentation page
       "description": "Utilities for working with arrays.", 
-      "files": [
         // only code files must be added here.
         // test and example are automatically read
+      "files": [
         {
+          "type": "registry:file",
           // where the file is located in the disk
           "path": "registry/input/items/utility/array.ts",
-          "type": "registry:file",
           // where the file will placed in the consumer project
           // when he run npx shadcn@latest add [registry-item-name]
           "target": "utils/array.ts"
         }
       ]
     }
-    ```
-1. Then when you re-run the next.js app, the item will be added to the registry
+  ]
+}
+```
 
 ### Update a registry item
 

@@ -2,7 +2,6 @@
 
 import { usePackageManager, type PackageManagerKey } from "./use-package-manager";
 
-import { cn } from "@/lib/shadcn/utils";
 import { Button } from "@/components/shadcn/ui/button";
 import { ButtonCopyToClipboard } from "@/components/mine/button-copy-to-clipboard";
 
@@ -34,9 +33,8 @@ export const InstallCommand = ({
             onClick={() => setPackageManager(option.packageManager)}
             variant="ghost"
             size="sm"
-            className={cn(
-              activeOption.packageManager === option.packageManager && "bg-muted"
-            )}
+            data-is-active={activeOption.packageManager === option.packageManager}
+            className={"data-[is-active=true]:bg-muted data-[is-active=false]:not-hover:text-muted-foreground/50"}
           >
             {option.packageManager}
           </Button>

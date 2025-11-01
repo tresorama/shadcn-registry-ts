@@ -58,8 +58,8 @@ export async function generateMetadata(
 
 
 const typo = {
-  pageTitle: "text-3xl font-medium tracking-tight",
-  sectionHeading: "text-lg font-medium tracking-tight",
+  pageTitle: "text-5xl font-medium tracking-tight",
+  sectionHeading: "text-2xl font-medium tracking-tight",
 };
 
 export default async function Page(

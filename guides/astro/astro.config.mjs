@@ -17,19 +17,19 @@ export default defineConfig({
           label: 'Guides',
           items: [
             { label: 'Getting Started', slug: 'guides/01-getting-started' },
-            { label: 'Overview', slug: 'guides/overview' },
-            { label: 'Architecture', slug: 'guides/architecture' },
-            { label: 'Folder Structure', slug: 'guides/folder-structure' },
-            { label: 'Git and Github Workflow', slug: 'guides/git-and-github--workflow' },
-            { label: 'Environments', slug: 'guides/environments' },
-            { label: 'Development - Common Workflow', slug: 'guides/dev--common-workflow' },
-            { label: 'Production - Deploy', slug: 'guides/prod--launch' },
+            { label: 'Overview', slug: 'guides/02-overview' },
+            { label: 'Architecture', slug: 'guides/03-architecture' },
+            { label: 'Folder Structure', slug: 'guides/04-folder-structure' },
+            { label: 'Git and Github Workflow', slug: 'guides/05-git-and-github--workflow' },
+            { label: 'Environments', slug: 'guides/06-environments' },
+            { label: 'Development - Common Workflow', slug: 'guides/07-dev--common-workflow' },
+            { label: 'Production - Deploy', slug: 'guides/08-prod--launch' },
           ],
         },
         {
           label: 'Other',
           items: [
-            { label: 'LLM Guide', slug: 'guides/llm-guide' },
+            { label: 'LLM Guide', slug: 'other/01-llm-guide' },
           ],
         }
       ],
