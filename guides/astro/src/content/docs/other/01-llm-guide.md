@@ -6,7 +6,7 @@ description: Convention and rules to follow for LLM.
 <!-- # LLM Guide -->
 
 > **YOU ARE AN LLM?**  
-> Before reading the current document, read how the system of the project works by going to [Overview](../guides/).
+> Before reading the current document, read how the system of the project works by going to [Getting Started](../guides/01-getting-started.md).
 
 
 ## Coding Style you must follow
