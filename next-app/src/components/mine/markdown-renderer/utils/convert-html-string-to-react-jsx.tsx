@@ -54,7 +54,7 @@ const options: HTMLReactParserOptions = {
       if (preHtmlAttributes.isCollapsible) {
         return (
           <CodeCollapsibleClient
-            className='my-5'
+            className='w-full my-5'
             fileTitle={preHtmlAttributes.title}
             codeStringForClipboard={preHtmlAttributes.code}
             codeJsx={<pre {...prePropsFinal} />}
@@ -63,7 +63,7 @@ const options: HTMLReactParserOptions = {
       }
       return (
         <CodeNotCollapsibleServer
-          className='my-5'
+          className='w-full my-5'
           fileTitle={preHtmlAttributes.title}
           codeStringForClipboard={preHtmlAttributes.code}
           codeJsx={<pre {...prePropsFinal} />}
@@ -80,7 +80,7 @@ const options: HTMLReactParserOptions = {
           <Alert className='my-5'>
             <HandHelpingIcon />
             <AlertTitle>Tip</AlertTitle>
-            <AlertDescription className='[&>*]:my-1 [&_pre]:w-full'>
+            <AlertDescription className='[&>*]:my-1'>
               {/*@ts-expect-error Childnode[] is not assignable to DOMNode[] */}
               {domToReact(domNode.children, options)}
             </AlertDescription>
