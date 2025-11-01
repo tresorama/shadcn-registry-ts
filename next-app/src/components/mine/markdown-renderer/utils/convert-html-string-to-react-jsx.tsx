@@ -4,6 +4,7 @@ import parseHtmlToReact, {
   domToReact,
   type HTMLReactParserOptions,
 } from 'html-react-parser';
+import { HandHelpingIcon } from 'lucide-react';
 
 import type { HtmlDivExtraHtmlAttributes, HtmlPreExtraHtmlAttributes } from './convert-markdown-to-html-string';
 
@@ -52,6 +53,7 @@ const options: HTMLReactParserOptions = {
       if (preHtmlAttributes.isCollapsible) {
         return (
           <CodeCollapsibleClient
+            className='my-5'
             fileTitle={preHtmlAttributes.title}
             codeStringForClipboard={preHtmlAttributes.code}
             codeJsx={<pre {...prePropsFinal} />}
@@ -60,6 +62,7 @@ const options: HTMLReactParserOptions = {
       }
       return (
         <CodeNotCollapsibleServer
+          className='my-5'
           fileTitle={preHtmlAttributes.title}
           codeStringForClipboard={preHtmlAttributes.code}
           codeJsx={<pre {...prePropsFinal} />}
@@ -73,7 +76,7 @@ const options: HTMLReactParserOptions = {
       const divHtmlAttributes = domNode.attribs as unknown as HtmlDivExtraHtmlAttributes;
       if (divHtmlAttributes['data-kind'] === 'tip') {
         return (
-          <Alert>
+          <Alert className='my-5'>
             <HandHelpingIcon />
             <AlertTitle>Tip</AlertTitle>
             <AlertDescription className='[&>*]:my-1'>
