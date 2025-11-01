@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import parseHtmlToReact, {
   Element,
   attributesToProps,
@@ -88,21 +89,31 @@ const options: HTMLReactParserOptions = {
       }
     }
 
-    // replace heading with autolink
+    // replace links
     if (domNode instanceof Element && domNode.tagName === 'a') {
       const aHtmlAttributes = domNode.attribs as unknown as HtmlAnchorExtraHtmlAttributes;
+      // replace heading with autolink
       if (aHtmlAttributes['data-kind'] === 'heading-autolink') {
         const aProps = attributesToProps(domNode.attribs);
         return (
-          <a
+          // @ts-expect-error next/link think that href is not present in props
+          <Link
             {...aProps}
             className='group no-underline flex items-center gap-2 hover:underline hover:underline-offset-4'
           >
             {/*@ts-expect-error Childnode[] is not assignable to DOMNode[] */}
             {domToReact(domNode.children)}
-          </a>
+          </Link>
         );
       }
+      // replace other links
+      return (
+        // @ts-expect-error next/link think that href is not present in props
+        <Link {...attributesToProps(domNode.attribs)}>
+          {/*@ts-expect-error Childnode[] is not assignable to DOMNode[] */}
+          {domToReact(domNode.children)}
+        </Link>
+      );
     }
   }
 
