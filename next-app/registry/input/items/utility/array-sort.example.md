@@ -13,7 +13,7 @@ const sortedAsc = input
   .toSorted((a, b) => sortArrayByDate(a.date, b.date, 'asc'))
   .map(item => item.name);
 // ⏬
-['A', 'C', 'B']
+['A', 'B', 'C']
 
 // desc
 const input = [

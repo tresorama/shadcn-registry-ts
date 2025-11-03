@@ -146,7 +146,7 @@ numIsBetween({ min: 1, max: 10, num: 10, }); // true
 
 // isInclusive=false
 numIsBetween({ min: 1, max: 10, num: 1, isInclusive: false }); // false
-numIsBetween({ min: 1, max: 10, num: 5, isInclusive: false }); // false
+numIsBetween({ min: 1, max: 10, num: 5, isInclusive: false }); // true
 numIsBetween({ min: 1, max: 10, num: 10, isInclusive: false }); // false
 ```
 
