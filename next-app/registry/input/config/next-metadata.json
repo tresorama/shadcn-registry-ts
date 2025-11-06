@@ -1,0 +1,19 @@
+{
+  "newItemsNames": {
+    "description": "List of registry-item names that are considered new and should be marked as new in the UI",
+    "items": [
+      "util-retry"
+    ]
+  },
+  "sidebar": {
+    "pageGroupsMap": {
+      "description": "This map is used to build the sidebar page groups. The key is the category name defined in registry.input json (item.categories[0]), and the value is the group name showed in sidebar",
+      "map": {
+        "utility": "Utility",
+        "utility-type": "Utility Type",
+        "utility-framework": "Utility Framework",
+        "utility-service": "Utility Service"
+      }
+    }
+  }
+}

@@ -53,6 +53,10 @@ export type RegistryForNextItem = {
     packageManager: PackageManagerKey,
     command: string;
   }>;
+  /**
+   * Indicate if the item is a new item
+   */
+  isNew: boolean;
 };
 
 

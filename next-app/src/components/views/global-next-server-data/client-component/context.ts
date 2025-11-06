@@ -2,19 +2,10 @@
 
 import { createContext, useContext } from "react";
 
-import type { NextData } from "@/lib/registry/get-next-data";
-
-
-/** 
- * Global next server data, used in all pages.  
- * This data is fetched in server component, and make available in all client component via react context 
- * */
-export type GlobalServerNextData = {
-  sidebarData: NextData['sidebarData'],
-};
+import type { GlobalNextServerData } from "../data";
 
 /** React Context (client) that holds the global next server data, received from the server */
-export const ctx = createContext<GlobalServerNextData>({} as GlobalServerNextData);
+export const ctx = createContext<GlobalNextServerData>({} as GlobalNextServerData);
 
 /** `React Client Hook` - that returns the global next server data */
 export const useGlobalNextServerData = () => {

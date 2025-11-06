@@ -1,8 +1,11 @@
-import MAP_CATEGORY_TO_LABEL from "#root/registry/input/config/sidebar-page-groups-map.json";
+import METADATA from "#root/registry/input/config/next-metadata.json";
 
 import type { StaticSidebarData, StaticSidebarPageGroup } from "./types";
 
 import { getRegistryInput } from "../../get-registry-input";
+
+const MAP_CATEGORY_TO_LABEL = METADATA.sidebar.pageGroupsMap;
+const IS_NEW_ITEMS_NAMES = METADATA.newItemsNames.items;
 
 export const calculateStaticSidebarData = async (): Promise<StaticSidebarData> => {
   const regitryInput = await getRegistryInput();
@@ -39,6 +42,9 @@ export const calculateStaticSidebarData = async (): Promise<StaticSidebarData> =
     pagesGroupsMap[groupKey].pages.push({
       label: item.title,
       to: `/item/${item.name}`,
+      meta: {
+        isNew: IS_NEW_ITEMS_NAMES.includes(item.name),
+      }
     });
   });
 
