@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { AxeIcon } from "lucide-react";
 
-import { useGlobalNextServerData, type GlobalServerNextData } from "@/components/views/global-next-server-data/client-component/context";
+import { useGlobalNextServerData } from "@/components/views/global-next-server-data/client-component/context";
+import { type GlobalNextServerData } from "@/components/views/global-next-server-data/data";
 
 
 /**
@@ -19,11 +20,26 @@ export const useCommandItems = () => {
   const router = useRouter();
 
   // data
-  const items = useMemo(() => createCommandItemsFromStaticData(sidebarData, router), [sidebarData, router]);
-  return items;
+  return useMemo(
+    () => createRuntimeData(sidebarData, router),
+    [sidebarData, router]
+  );
 };
 
 // data mapper
+
+type RuntimeData = {
+  groups: CommandItemGroup[];
+};
+
+function createRuntimeData(
+  staticSidebarData: GlobalNextServerData['sidebarData'],
+  appRouter: AppRouterInstance
+): RuntimeData {
+  return {
+    groups: createCommandItemsFromStaticData(staticSidebarData, appRouter),
+  };
+}
 
 type CommandItemGroup = {
   label: string,
@@ -35,10 +51,10 @@ type CommandItemGroup = {
 };
 
 const createCommandItemsFromStaticData = (
-  sidebarData: GlobalServerNextData['sidebarData'],
+  sidebarData: GlobalNextServerData['sidebarData'],
   appRouter: AppRouterInstance
 ): CommandItemGroup[] => {
-  const groups = sidebarData.pagesGroups.map(group => {
+  const groups: CommandItemGroup[] = sidebarData.pagesGroups.map(group => {
     return {
       label: group.label,
       items: group.pages.map(page => ({
@@ -48,7 +64,7 @@ const createCommandItemsFromStaticData = (
           appRouter.push(page.to);
         },
       }))
-    } satisfies CommandItemGroup;
+    };
   });
   return groups;
 };

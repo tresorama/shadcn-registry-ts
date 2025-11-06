@@ -1,3 +1,5 @@
+import "@/lib/utils/server-only";
+
 import { cache } from 'react';
 
 import { APP_DATA_MODE } from '@/constants/server';
@@ -51,8 +53,5 @@ export const getRegistryItemByName = cache(
 );
 
 export const getSidebarData = cache(
-  async () => {
-    const data = await getInputData.sidebarData();
-    return data;
-  }
+  async () => getInputData.sidebarData()
 );

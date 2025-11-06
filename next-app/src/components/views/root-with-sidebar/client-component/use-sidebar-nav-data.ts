@@ -3,23 +3,19 @@
 import { useMemo } from "react";
 import { usePathname } from "next/navigation";
 
-import { useGlobalNextServerData, type GlobalServerNextData } from "@/components/views/global-next-server-data/client-component/context";
+import { useGlobalNextServerData } from "@/components/views/global-next-server-data/client-component/context";
+import { type GlobalNextServerData } from "@/components/views/global-next-server-data/data";
 
 /**
  * `React Client Hook` - that returns sidebar navigation data with runtime data
  */
-export const useSidebarNavData = () => {
+export const useSidebarNavData = (): RuntimeSidebarNavData => {
   const { sidebarData } = useGlobalNextServerData();
   const pathname = usePathname();
+
   return useMemo(
-    () => ({
-      pagesGroups: sidebarData.pagesGroups.map(group => convertStaticPagesGroupToRuntime(group, pathname)),
-      activePage: calculateActivePage(sidebarData.pagesGroups, pathname),
-    }),
-    [
-      sidebarData,
-      pathname
-    ]
+    () => createRuntimeData(sidebarData, pathname),
+    [sidebarData, pathname]
   );
 };
 
@@ -27,11 +23,26 @@ export const useSidebarNavData = () => {
 
 // data mappers
 
-type StaticSidebarPageGroup = GlobalServerNextData['sidebarData']['pagesGroups'][number];
+type StaticSidebarNavData = GlobalNextServerData['sidebarData'];
+type RuntimeSidebarNavData = ReturnType<typeof createRuntimeData>;
+
+function createRuntimeData(sidebarData: StaticSidebarNavData, pathname: string) {
+  return {
+    pagesGroups: sidebarData.pagesGroups.map(group => convertStaticPagesGroupToRuntime(group, pathname)),
+    activePage: calculateActivePage(sidebarData.pagesGroups, pathname)
+  };
+}
+
+
+
+
+
+type StaticSidebarPageGroup = GlobalNextServerData['sidebarData']['pagesGroups'][number];
 type StaticSidebarPage = StaticSidebarPageGroup['pages'][number];
 
 type RuntimeSidebarPage = StaticSidebarPage & { isActive: boolean; };
 type RuntimeSidebarPageGroup = Omit<StaticSidebarPageGroup, 'pages'> & { pages: RuntimeSidebarPage[]; };
+
 const convertStaticPagesGroupToRuntime = (group: StaticSidebarPageGroup, pathname: string): RuntimeSidebarPageGroup => {
   return {
     ...group,

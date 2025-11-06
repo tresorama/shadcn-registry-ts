@@ -1,6 +1,4 @@
-import { getSidebarData } from "@/lib/registry/get-next-data";
-
-import { type GlobalServerNextData } from './client-component/context';
+import { createGlobalNextServerData } from "./data";
 import { GlobalNextServerDataClientProvider } from "./client-component/provider";
 
 /**
@@ -12,9 +10,7 @@ export async function GlobalNextServerDataProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const data: GlobalServerNextData = {
-    sidebarData: await getSidebarData(),
-  };
+  const data = await createGlobalNextServerData();
 
   return (
     <GlobalNextServerDataClientProvider globalNextServerData={data}>

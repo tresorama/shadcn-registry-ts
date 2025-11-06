@@ -36,7 +36,7 @@ export const CommandPalette = () => {
   const [isOpen, setIsOpen] = useAtom(atomIsCommandPaletteOpen);
 
   // local state
-  const itemsGroups = useCommandItems();
+  const commandItems = useCommandItems();
 
   // on key press -> open dialog
   useEffect(
@@ -58,7 +58,7 @@ export const CommandPalette = () => {
       <CommandInput placeholder="Type an utilities name..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        {itemsGroups.map((group, groupIndex) => (
+        {commandItems.groups.map((group, groupIndex) => (
           <Fragment key={group.label}>
             {groupIndex > 0 && <CommandSeparator />}
             <CommandGroup heading={group.label}>
