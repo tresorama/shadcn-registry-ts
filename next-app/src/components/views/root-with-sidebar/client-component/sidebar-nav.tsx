@@ -13,6 +13,7 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from "@/components/shadcn/ui/sidebar";
+import { Badge } from "@/components/shadcn/ui/badge";
 
 // component
 
@@ -39,7 +40,16 @@ export const SidebarNav = () => {
                     }
                   }}
                 >
-                  <Link href={page.to}>{page.label}</Link>
+                  <Link
+                    href={page.to}
+                  >
+                    {page.label}
+                    {page.meta.isNew && (
+                      <Badge className="text-[0.65rem]">
+                        New
+                      </Badge>
+                    )}
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}

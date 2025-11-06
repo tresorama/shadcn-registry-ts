@@ -3,6 +3,8 @@ import {
   type RegistryItem as ShadcnRegistryItem,
 } from 'shadcn/registry';
 
+import METADATA from "#root/registry/input/config/next-metadata.json";
+
 import type { RegistryForNext, RegistryForNextItem } from './types.registry';
 import { getRegistryInput } from '../../get-registry-input';
 
@@ -92,6 +94,9 @@ async function calculateRegistryForNextItem(item: ShadcnRegistryItem): Promise<R
     { packageManager: "bun", command: `bunx --bun shadcn@latest add ${itemRegistryUrlTemplate.replace('{{ITEM_NAME}}', item.name)}` },
   ];
 
+  // calculate "isNew"
+  const isNew = METADATA.newItemsNames.items.includes(item.name);
+
   // return
   return {
     name: item.name,
@@ -102,6 +107,7 @@ async function calculateRegistryForNextItem(item: ShadcnRegistryItem): Promise<R
     fileTest,
     allDependencies,
     installCommands,
+    isNew,
   };
 }
 
