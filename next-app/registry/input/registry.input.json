@@ -36,6 +36,22 @@
       ]
     },
     {
+      "name": "util-benchmark",
+      "categories": [
+        "utility"
+      ],
+      "type": "registry:file",
+      "title": "Benchmark",
+      "description": "Utilities for benchmarking.",
+      "files": [
+        {
+          "path": "registry/input/items/utility/benchmark.ts",
+          "type": "registry:file",
+          "target": "utils/benchmark.ts"
+        }
+      ]
+    },
+    {
       "name": "util-date-time",
       "categories": [
         "utility"
