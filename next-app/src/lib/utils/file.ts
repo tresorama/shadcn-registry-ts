@@ -30,6 +30,8 @@ type FileData = {
   fileAbsolutePath: string;
   /** File Last modified date: `number` @example  1672531200000 */
   lastModifiedDate: number;
+  /** File extension: `string | null` @example "ts" */
+  fileExtension: string | null;
 };
 const getFileDataCache = {
   items: {} as Record<string, { fileData: FileData; lastModifiedDate: number; }>
@@ -58,13 +60,15 @@ export const getFileData = async (fileAbsolutePath: string): Promise<FileData> =
   // if modified or not cached -> read file, cache result -> return it
   const fileName = path.basename(fileAbsolutePath);
   const fileContent = await fs.readFile(fileAbsolutePath, "utf-8");
+  const fileExtension = path.extname(fileName) === '' ? null : path.extname(fileName).slice(1);
   getFileDataCache.items[fileAbsolutePath] = {
     lastModifiedDate,
     fileData: {
       fileName,
       fileContent,
       fileAbsolutePath,
-      lastModifiedDate
+      lastModifiedDate,
+      fileExtension,
     },
   };
   return getFileDataCache.items[fileAbsolutePath].fileData;
