@@ -48,6 +48,7 @@ async function calculateRegistryForNextItem(item: RegistryInputJsonItem): Promis
       return {
         ...file,
         fileName: fileData.fileName,
+        fileExtension: fileData.fileExtension,
         fileContent: fileData.fileContent,
       } satisfies RegistryForNextItem['filesWithContent'][number];
     })
@@ -67,6 +68,7 @@ async function calculateRegistryForNextItem(item: RegistryInputJsonItem): Promis
   const fileExample: RegistryForNextItem['fileExample'] = await getFileData(getFilePathFromRoot(fileExamplePath))
     .then(fileData => ({
       fileName: fileData.fileName,
+      fileExtension: fileData.fileExtension,
       fileContent: fileData.fileContent,
     }));
 
