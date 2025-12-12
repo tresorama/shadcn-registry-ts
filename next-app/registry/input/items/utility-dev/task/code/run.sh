@@ -13,7 +13,7 @@ getScripts() {
     exit 1
   fi
 
-  for file in "$SCRIPTS_DIR"/*.sh; do
+  for file in "$SCRIPTS_DIR"/*; do
     if [ -f "$file" ] && [ -x "$file" ]; then
       SCRIPTS_FILES+=("$file")
       SCRIPT_NAMES+=("$(basename "$file")")
@@ -48,7 +48,7 @@ runScript() {
 
   # run script
   echo "Executing Script: ${SCRIPT_TO_RUN_FILE} ..."
-  bash "$SCRIPT_TO_RUN_FILE"
+  "$SCRIPT_TO_RUN_FILE"
   # "${SCRIPT_TO_RUN_FILE}"
 }
 
