@@ -49,17 +49,23 @@ When you need cross-platform support or more features, reach these:
 - Maki – https://github.com/grillazz/maki
 :::
 
+### First Time Install
+
+1. Follow `Auto Install` or `Manual Install` instructions to get the files in your project
+2. Make `task/run.sh` executable  
+  Run `chmod +x task/run.sh`
+3. Make `task/scripts/*` executable  
+  Run `chmod +x task/scripts/*`
+
 
 ### Run a script
 
-Go to the root of the project directory.  
-
-Run the script launcher
-```bash 
-./task/run.sh
-```  
-
-Select the script with arrows and press enter.
+1. Go to the root of the project directory.  
+2. Run the script launcher  
+    ```bash 
+    ./task/run.sh
+    ```  
+3. Select the script with arrows and press enter.
 
 ### Add new script
 
