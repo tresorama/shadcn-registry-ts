@@ -1,8 +1,11 @@
 # Task Runner
 
-This task runner:
-- read every script files in scripts dir to popoulate the list
-- ask the user which script to run
+A simple task runner.  
+
+Features: 
+- **Auto-Discovery of scripts** from `task/scripts` directory to populate the launcher
+- **Easy Launcher UX**: Select script with Arrow up/down and press Enter to execute
+- **All script languages support**: Script are simple scripts files, they can be anything that can be launched in the machine
 
 ## Run a script
 
