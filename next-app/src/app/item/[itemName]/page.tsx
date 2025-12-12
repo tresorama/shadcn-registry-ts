@@ -133,9 +133,9 @@ export default async function Page(
                 <div key={fileData.fileName} className="flex flex-col gap-0">
                   <MarkdownRendererServer
                     markdownString={[
-                      `\`\`\`${language} title=${fileData.fileName} isCollapsible=true`,
+                      `\`\`\`\`${language} title=${fileData.fileName} isCollapsible=true`,
                       fileData.fileContent,
-                      "\`\`\`",
+                      "\`\`\`\`",
                     ].join("\n")}
                     className="max-w-full"
                   />
