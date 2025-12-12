@@ -1,4 +1,4 @@
-import { registrySchema } from "shadcn/registry";
+import { schemaRegistryInputJson } from "./get-registry-input.schema";
 
 import { getFileData, getFilePathFromRoot } from "@/lib/utils/file";
 
@@ -16,7 +16,7 @@ export const getRegistryInput = async () => {
   const registryInputJson = await getFileData(FILE_PATHS.REGISTRY_INPUT)
     .then(fileData => JSON.parse(fileData.fileContent));
 
-  const parsed = registrySchema.safeParse(registryInputJson);
+  const parsed = schemaRegistryInputJson.safeParse(registryInputJson);
   if (!parsed.success) {
     throw new Error(parsed.error.message);
   }
