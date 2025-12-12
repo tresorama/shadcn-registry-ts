@@ -22,10 +22,16 @@ export const writeFileJson = async (fileAbsolutePath: string, dataJson: unknown)
 
 
 type FileData = {
+  /** File Name: `string` @example  "util-hello.ts" */
   fileName: string;
+  /** File content: `string` @example "export const hello = () => console.log('hello')" */
   fileContent: string;
+  /** File absolute path: `string` @example "/root/path/to/file.extension" */
   fileAbsolutePath: string;
+  /** File Last modified date: `number` @example  1672531200000 */
   lastModifiedDate: number;
+  /** File extension: `string | null` @example "ts" */
+  fileExtension: string | null;
 };
 const getFileDataCache = {
   items: {} as Record<string, { fileData: FileData; lastModifiedDate: number; }>
@@ -35,10 +41,7 @@ const getFileDataCache = {
  * If called multiple times with the same path, the file will be read only once (comparing last modified date).  
  * The cache is a global singleton.  
  * 
- * The data extracted is an object with:
- * - `fileName`: (.i.e. util-hello.ts)
- * - `fileContent`: content of file as text (string)
- * - `fileAbsolutePath`: absolute file path 
+ * The data extracted is {@link FileData} object with:
  */
 export const getFileData = async (fileAbsolutePath: string): Promise<FileData> => {
 
@@ -57,13 +60,15 @@ export const getFileData = async (fileAbsolutePath: string): Promise<FileData> =
   // if modified or not cached -> read file, cache result -> return it
   const fileName = path.basename(fileAbsolutePath);
   const fileContent = await fs.readFile(fileAbsolutePath, "utf-8");
+  const fileExtension = path.extname(fileName) === '' ? null : path.extname(fileName).slice(1);
   getFileDataCache.items[fileAbsolutePath] = {
     lastModifiedDate,
     fileData: {
       fileName,
       fileContent,
       fileAbsolutePath,
-      lastModifiedDate
+      lastModifiedDate,
+      fileExtension,
     },
   };
   return getFileDataCache.items[fileAbsolutePath].fileData;

@@ -1,15 +1,12 @@
-import {
-  // type Registry as ShadcnRegistry,
-  type RegistryItem as ShadcnRegistryItem,
-} from 'shadcn/registry';
-
-import METADATA from "#root/registry/input/config/next-metadata.json";
+import { getRegistryInput } from '../../get-registry-input';
+import { type RegistryInputJsonItem } from '../../get-registry-input.schema';
 
 import type { RegistryForNext, RegistryForNextItem } from './types.registry';
-import { getRegistryInput } from '../../get-registry-input';
+import METADATA from "#root/registry/input/config/next-metadata.json";
 
 import { APP_BASE_URL } from '@/constants/server';
 import { getFileData, getFilePathFromRoot } from "@/lib/utils/file";
+import { createLogger } from '../../_utils/logger';
 
 
 /**
@@ -35,7 +32,9 @@ export async function calculateRegistryForNext(): Promise<RegistryForNext> {
  * This functions return {@link RegistryForNextItem}
  * @param item registry item as it comes from the `registry.input.json`
  */
-async function calculateRegistryForNextItem(item: ShadcnRegistryItem): Promise<RegistryForNextItem> {
+async function calculateRegistryForNextItem(item: RegistryInputJsonItem): Promise<RegistryForNextItem> {
+
+  const logger = createLogger(`[calculateRegistryForNextItem:${item.name}]`);
 
   // ensure that at least one "file" is present
   if (!item.files?.length) {
@@ -49,31 +48,50 @@ async function calculateRegistryForNextItem(item: ShadcnRegistryItem): Promise<R
       return {
         ...file,
         fileName: fileData.fileName,
+        fileExtension: fileData.fileExtension,
         fileContent: fileData.fileContent,
       } satisfies RegistryForNextItem['filesWithContent'][number];
     })
   );
+  filesWithContent.forEach((fileData, i) => {
+    logger.debug(`filesWithContent[${i}]: `, fileData.path);
+  });
+
 
   // get file example
-  const fileExamplePath = item.files[0].path.replace('.ts', '.example.md');
+  const fileExamplePath = (
+    item.EXTRA_METADATA_FOR_NEXT?.fileExample
+      ? item.EXTRA_METADATA_FOR_NEXT.fileExample.path
+      : item.files[0].path.replace('.ts', '.example.md')
+  );
+  logger.debug(`fileExamplePath: `, fileExamplePath);
   const fileExample: RegistryForNextItem['fileExample'] = await getFileData(getFilePathFromRoot(fileExamplePath))
     .then(fileData => ({
       fileName: fileData.fileName,
+      fileExtension: fileData.fileExtension,
       fileContent: fileData.fileContent,
     }));
 
   // get (if present) file test
-  const fileTestPath = item.files[0].path.replace('.ts', '.test.ts');
+  const fileTestPath = (
+    item.EXTRA_METADATA_FOR_NEXT
+      ? item.EXTRA_METADATA_FOR_NEXT.fileTest?.path ?? undefined
+      : item.files[0].path.replace('.ts', '.test.ts')
+  );
+  logger.debug(`fileTestPath: `, fileTestPath);
   let fileTest: RegistryForNextItem['fileTest'] | undefined;
-  try {
-    const fileData = await getFileData(getFilePathFromRoot(fileTestPath));
-    fileTest = {
-      fileName: fileData.fileName,
-      fileContent: fileData.fileContent,
-    };
-  } catch (error) {
-    // fail silently because test file is optional
+  if (undefined !== fileTestPath) {
+    try {
+      const fileData = await getFileData(getFilePathFromRoot(fileTestPath));
+      fileTest = {
+        fileName: fileData.fileName,
+        fileExtension: fileData.fileExtension,
+        fileContent: fileData.fileContent,
+      };
+    } catch (error) {
+      // fail silently because test file is optional
 
+    }
   }
 
   // calculate all dependencies in a single list

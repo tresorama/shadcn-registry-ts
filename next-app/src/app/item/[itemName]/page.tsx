@@ -123,18 +123,25 @@ export default async function Page(
           {/* Manual Install */}
           <section id="manual-install" className="flex flex-col gap-4">
             <h2 className={cn(typo.sectionHeading)}>Manual Install</h2>
-            {item.filesWithContent.map((fileData) => (
-              <div key={fileData.fileName} className="flex flex-col gap-0">
-                <MarkdownRendererServer
-                  markdownString={[
-                    `\`\`\`ts title=${fileData.fileName} isCollapsible=true`,
-                    fileData.fileContent,
-                    "\`\`\`",
-                  ].join("\n")}
-                  className="max-w-full"
-                />
-              </div>
-            ))}
+            {item.filesWithContent.map((fileData) => {
+              const language = (
+                ['txt', 'md', null].includes(fileData.fileExtension)
+                  ? 'plaintext'
+                  : fileData.fileExtension
+              );
+              return (
+                <div key={fileData.fileName} className="flex flex-col gap-0">
+                  <MarkdownRendererServer
+                    markdownString={[
+                      `\`\`\`\`${language} title=${fileData.fileName} isCollapsible=true`,
+                      fileData.fileContent,
+                      "\`\`\`\`",
+                    ].join("\n")}
+                    className="max-w-full"
+                  />
+                </div>
+              );
+            })}
           </section>
 
           {/* Test */}

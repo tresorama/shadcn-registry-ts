@@ -1,4 +1,5 @@
 import { getRegistryInput } from '../../get-registry-input';
+import { registrySchema } from './schema';
 
 import { APP_BASE_URL } from '@/constants/server';
 
@@ -9,9 +10,15 @@ import { APP_BASE_URL } from '@/constants/server';
  */
 export async function calculateRegistryForShadcnCli() {
   const registryInput = await getRegistryInput();
+
+  const parsed = registrySchema.safeParse(registryInput);
+  if (!parsed.success) {
+    throw new Error(parsed.error.message);
+  }
+
   return {
-    ...registryInput,
-    items: registryInput.items.map((item) => {
+    ...parsed.data,
+    items: parsed.data.items.map((item) => {
       return {
         ...item,
         registryDependencies: item.registryDependencies?.map((dep) => {

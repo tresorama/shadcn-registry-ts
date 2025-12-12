@@ -1,7 +1,4 @@
-import {
-  // type Registry as ShadcnRegistry,
-  type RegistryItem as ShadcnRegistryItem,
-} from 'shadcn/registry';
+import { type RegistryInputJsonItem } from '../../get-registry-input.schema';
 
 import type { PackageManagerKey } from './types.package-manager';
 
@@ -12,15 +9,17 @@ import type { PackageManagerKey } from './types.package-manager';
  */
 export type RegistryForNextItem = {
   /** direct copy from `registry.input.json` */
-  name: ShadcnRegistryItem['name'],
+  name: RegistryInputJsonItem['name'],
   /** direct copy from `registry.input.json` */
-  description: ShadcnRegistryItem['description'],
+  description: RegistryInputJsonItem['description'],
   /** direct copy from `registry.input.json` */
-  title: ShadcnRegistryItem['title'],
+  title: RegistryInputJsonItem['title'],
   /** get file with content of file example (XXX.example.md) */
   fileExample: {
     /** File name. i.e. util-hello.example.md */
     fileName: string,
+    /** File extension. i.e. md */
+    fileExtension: string | null,
     /** content of file as markdown string */
     fileContent: string,
   },
@@ -28,13 +27,17 @@ export type RegistryForNextItem = {
   fileTest?: {
     /** File name. i.e. util-hello.test.ts */
     fileName: string,
+    /** File extension. i.e. md */
+    fileExtension: string | null,
     /** content of file as string */
     fileContent: string,
   },
   /** get file with content for every item `files` */
-  filesWithContent: Array<NonNullable<ShadcnRegistryItem['files']>[number] & {
+  filesWithContent: Array<NonNullable<RegistryInputJsonItem['files']>[number] & {
     /** File name. i.e. util-hello.ts */
     fileName: string,
+    /** File extension. i.e. md */
+    fileExtension: string | null,
     /** content of file as text */
     fileContent: string,
   }>,

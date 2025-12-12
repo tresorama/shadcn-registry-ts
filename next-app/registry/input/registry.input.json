@@ -350,6 +350,47 @@
           "target": "utils/infer-deploy-url.ts"
         }
       ]
+    },
+    {
+      "name": "util-dev-task-runner",
+      "categories": [
+        "utility-dev"
+      ],
+      "type": "registry:file",
+      "title": "Task Runner",
+      "description": "Simple task/script runner with auto-discovery of scripts from a directory and with arrows+enter launcher UX.",
+      "files": [
+        {
+          "path": "registry/input/items/utility-dev/task/code/run.sh",
+          "type": "registry:file",
+          "target": "~/task/run.sh"
+        },
+        {
+          "path": "registry/input/items/utility-dev/task/code/readme.md",
+          "type": "registry:file",
+          "target": "~/task/readme.md"
+        },
+        {
+          "path": "registry/input/items/utility-dev/task/code/scripts/0--MISC--make-scripts-executable.sh",
+          "type": "registry:file",
+          "target": "~/task/scripts/0--MISC--make-scripts-executable.sh"
+        },
+        {
+          "path": "registry/input/items/utility-dev/task/code/scripts/1-demo-bash.sh",
+          "type": "registry:file",
+          "target": "~/task/scripts/1-demo-bash.sh"
+        },
+        {
+          "path": "registry/input/items/utility-dev/task/code/scripts/1-demo-node.js",
+          "type": "registry:file",
+          "target": "~/task/scripts/1-demo-node.js"
+        }
+      ],
+      "EXTRA_METADATA_FOR_NEXT": {
+        "fileExample": {
+          "path": "registry/input/items/utility-dev/task/example.md"
+        }
+      }
     }
   ]
 }

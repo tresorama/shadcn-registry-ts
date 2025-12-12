@@ -13,7 +13,8 @@
         "utility": "Utility",
         "utility-type": "Utility Type",
         "utility-framework": "Utility Framework",
-        "utility-service": "Utility Service"
+        "utility-service": "Utility Service",
+        "utility-dev": "Utility Dev"
       }
     }
   }
