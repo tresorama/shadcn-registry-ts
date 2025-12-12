@@ -1,11 +1,11 @@
 
-It's common  in a project to have a lot of development task that you execute with the CLI in your local machine.  
+It's common in a project to have a lot of development tasks that you execute with the CLI in your local machine.  
 This **Task Runner** will help you to automate those tasks.  
 
 Features:
-- Auto-Discovery every script files in `task/scripts` to populate the launcher
-- Arrow up/down + Enter are uesd to navigate and launch the script
-- Script are simple bash scripts files, but can be anything that can be launched
+- **Auto-Discovery of scripts** from `task/scripts` directory to populate the launcher
+- **Easy Launcher UX**: Select script with Arrow up/down and press Enter to execute
+- **Support all script languages**: Script are simple scripts files, they can be anything that can be launched in the machine
 
 Imagine that your project has this file tree structure:
 
@@ -26,15 +26,16 @@ Imagine that your project has this file tree structure:
 ```
 
 When you need to run a task:
-- you go to the root of the project directory
-- you run the `task/run.sh` script
-- select the script with arrows and press enter
-- done
+- You first go to the root of the project directory with the CLI
+- Then run `task/run.sh` in the CLI to launch the script launcher
+- Select the script with arrows and press enter to run
+- Done!
 
 
 :::tip
-This is not a complex solution, but it's a good starting point to automate the CLI.  
-When you need cross-platform support or more, reach these:
+This **Task Runner** is not a complex solution, but it's a good starting point to automate the CLI.  
+
+When you need cross-platform support or more features, reach these:
 - Taskfile – https://taskfile.dev/
 - Make – https://www.gnu.org/software/make/
 - Just – https://just.systems/
@@ -56,27 +57,31 @@ Go to the root of the project directory.
 Run the script launcher
 ```bash 
 ./task/run.sh
-```
-select the script with arrows and press enter
+```  
+
+Select the script with arrows and press enter.
 
 ### Add new script
 
-You just need to create a new bash script in the `task/scripts` directory, and make it executable.
+1. Create a script file in the `task/scripts` directory (or duplicate an existing one)  
+    :::tip
+    By default the Launcher search for script files in the `task/scripts` directory.  
+    If you want to change the `scripts` directory name, do it, but then update the constant `SCRIPTS_DIR` in `task/run.sh`.
+    :::
+2. Rename the file as you'd like it to be called in the launcher UI  
+3. Code it  
+    :::tip
+    Because you launch the script launcher from the root of the project, it's recommended that the code inside the script assumes that the current working directory is the root of the project.
+    :::
+4. Make it executable  
+    Run `chmod +x SCRIPT_FILE_PATH`  
 
-Steps:
-- create a new bash script file in the `task/scripts` directory (or duplicate an existing one)
-- rename the file as as you would like it to be called it in the launcher
-- code it
-- make it executable (directly with `chmod +x SCRIPT_FILE_PATH` or run the `0--MISC--make-scripts-executable.sh` script)
+    :::tip
+    To simplify the process, we provide a pre-made script that will make all the scripts in the `task/scripts` directory executable.  
+    Just run `./task/run.sh` and select the `0--MISC--make-scripts-executable.sh` script.  
 
-:::tip
-You can alter the constants in `task/run.sh` to change the scripts directory location.
-:::
+    **NOTE:** if you updated the scripts directory name, you must update the `0--MISC--make-scripts-executable.sh` script too.
+    :::
+5. Now if you run `./task/run.sh` you will see the new script in the launcher
 
-:::tip
-A `0--MISC--make-scripts-executable.sh` script is included in the `task/scripts` directory, you can use it to make the scripts executable after you created it.
-:::
 
-:::tip
-Because you launch the script launcher from the root of the project, it's recommended that the code of the script assumes that the current working directory is the root of the project.
-:::
