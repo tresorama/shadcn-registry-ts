@@ -6,6 +6,7 @@ import METADATA from "#root/registry/input/config/next-metadata.json";
 
 import { APP_BASE_URL } from '@/constants/server';
 import { getFileData, getFilePathFromRoot } from "@/lib/utils/file";
+import { createLogger } from '../../_utils/logger';
 
 
 /**
@@ -33,6 +34,7 @@ export async function calculateRegistryForNext(): Promise<RegistryForNext> {
  */
 async function calculateRegistryForNextItem(item: RegistryInputJsonItem): Promise<RegistryForNextItem> {
 
+  const logger = createLogger(`[calculateRegistryForNextItem:${item.name}]`);
 
   // ensure that at least one "file" is present
   if (!item.files?.length) {
@@ -50,6 +52,10 @@ async function calculateRegistryForNextItem(item: RegistryInputJsonItem): Promis
       } satisfies RegistryForNextItem['filesWithContent'][number];
     })
   );
+  filesWithContent.forEach((fileData, i) => {
+    logger.debug(`filesWithContent[${i}]: `, fileData.path);
+  });
+
 
   // get file example
   const fileExamplePath = (
@@ -57,6 +63,7 @@ async function calculateRegistryForNextItem(item: RegistryInputJsonItem): Promis
       ? item.EXTRA_METADATA_FOR_NEXT.fileExample.path
       : item.files[0].path.replace('.ts', '.example.md')
   );
+  logger.debug(`fileExamplePath: `, fileExamplePath);
   const fileExample: RegistryForNextItem['fileExample'] = await getFileData(getFilePathFromRoot(fileExamplePath))
     .then(fileData => ({
       fileName: fileData.fileName,
@@ -69,6 +76,7 @@ async function calculateRegistryForNextItem(item: RegistryInputJsonItem): Promis
       ? item.EXTRA_METADATA_FOR_NEXT.fileTest?.path ?? undefined
       : item.files[0].path.replace('.ts', '.test.ts')
   );
+  logger.debug(`fileTestPath: `, fileTestPath);
   let fileTest: RegistryForNextItem['fileTest'] | undefined;
   if (undefined !== fileTestPath) {
     try {
