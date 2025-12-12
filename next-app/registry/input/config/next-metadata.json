@@ -3,7 +3,8 @@
     "description": "List of registry-item names that are considered new and should be marked as new in the UI",
     "items": [
       "util-retry",
-      "util-benchmark"
+      "util-benchmark",
+      "util-dev-task-runner"
     ]
   },
   "sidebar": {
