@@ -22,9 +22,13 @@ export const writeFileJson = async (fileAbsolutePath: string, dataJson: unknown)
 
 
 type FileData = {
+  /** File Name: `string` @example  "util-hello.ts" */
   fileName: string;
+  /** File content: `string` @example "export const hello = () => console.log('hello')" */
   fileContent: string;
+  /** File absolute path: `string` @example "/root/path/to/file.extension" */
   fileAbsolutePath: string;
+  /** File Last modified date: `number` @example  1672531200000 */
   lastModifiedDate: number;
 };
 const getFileDataCache = {
@@ -35,10 +39,7 @@ const getFileDataCache = {
  * If called multiple times with the same path, the file will be read only once (comparing last modified date).  
  * The cache is a global singleton.  
  * 
- * The data extracted is an object with:
- * - `fileName`: (.i.e. util-hello.ts)
- * - `fileContent`: content of file as text (string)
- * - `fileAbsolutePath`: absolute file path 
+ * The data extracted is {@link FileData} object with:
  */
 export const getFileData = async (fileAbsolutePath: string): Promise<FileData> => {
 
