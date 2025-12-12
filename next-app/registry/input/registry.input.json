@@ -376,9 +376,14 @@
           "target": "~/task/scripts/0--MISC--make-scripts-executable.sh"
         },
         {
-          "path": "registry/input/items/utility-dev/task/code/scripts/1-demo.sh",
+          "path": "registry/input/items/utility-dev/task/code/scripts/1-demo-bash.sh",
           "type": "registry:file",
-          "target": "~/task/scripts/1-demo.sh"
+          "target": "~/task/scripts/1-demo-bash.sh"
+        },
+        {
+          "path": "registry/input/items/utility-dev/task/code/scripts/1-demo-node.js",
+          "type": "registry:file",
+          "target": "~/task/scripts/1-demo-node.js"
         }
       ],
       "EXTRA_METADATA_FOR_NEXT": {
