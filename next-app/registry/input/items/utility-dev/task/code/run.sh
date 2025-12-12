@@ -47,9 +47,13 @@ runScript() {
   fi
 
   # run script
-  echo "Executing Script: ${SCRIPT_TO_RUN_FILE} ..."
+  echo ""
+  echo "=========================================="
+  echo "Executing Script..."
+  echo "Script: ${SCRIPT_TO_RUN_FILE}"
+  echo "=========================================="
+  echo ""
   "$SCRIPT_TO_RUN_FILE"
-  # "${SCRIPT_TO_RUN_FILE}"
 }
 
 # Menu interattivo robusto con frecce
